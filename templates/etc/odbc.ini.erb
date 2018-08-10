@@ -1,0 +1,16 @@
+[DEFAULT]
+Driver = wombat
+
+[wombat]
+Description         = Connection to Wombat PostgreSQL
+Driver              = PostgreSQL Unicode
+Database            = <%= @db_name %>
+Servername          = <%= @db_host %>
+UserName            = <%= @db_username %>
+Password            = <%= @db_password %>
+Port                = <%= @db_port %>
+Protocol            = 9.3
+ReadOnly            = Yes
+RowVersioning       = No
+ShowSystemTables    = No
+ConnSettings        =

@@ -1,0 +1,13 @@
+wombat::packages:
+  - unixodbc
+  - odbcinst
+  - odbc-postgresql
+  - clickhouse-client
+  - python3-pip
+wombat::db_name: wombat
+wombat::db_host: localhost
+wombat::db_username: wombat
+wombat::db_password: wombat
+wombat::db_port: 5432
+wombat::odbc_file: /etc/odbc.ini
+wombat::package_src: 'puppet:///modules/wombat/share/wombat_server.whl'
