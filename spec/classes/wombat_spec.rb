@@ -14,7 +14,17 @@ describe 'wombat' do
 
       describe 'check default config' do
         it { is_expected.to compile.with_all_deps }
-            
+        it do
+          [
+            'unixodbc',
+            'odbcinst',
+            'odbc-postgresql',
+            'clickhouse-client',
+            'python3-wombat-server'
+          ].each do |package|
+            is_expected.to contain_package(package)
+          end
+        end
         it do
           is_expected.to contain_file(
             '/etc/odbc.ini'
@@ -28,21 +38,6 @@ describe 'wombat' do
             %r{Password\s+=\s+wombat}
           ).with_content(
             %r{Port\s+=\s+5432}
-          )
-        end
-        it do
-          is_expected.to contain_file(
-            '/usr/local/share/wombat_server.whl'
-          ).with_ensure('file').with_source(
-            'puppet:///modules/wombat/share/wombat_server.whl'
-          )
-        end
-        it do
-          is_expected.to contain_exec(
-            '/usr/bin/pip3 install /usr/local/share/wombat_server.whl'
-          ).with(
-            refreshonly: true,
-            subscribe: 'File[/usr/local/share/wombat_server.whl]',
           )
         end
       end
@@ -112,17 +107,6 @@ describe 'wombat' do
           it { is_expected.to compile }
           it { is_expected.to contain_file('/foo/bar').with_ensure('file') }
         end
-        context 'package_src' do
-          before(:each) { params.merge!(package_src: 'puppet:///modules/foobar') }
-          it { is_expected.to compile }
-          it do
-            is_expected.to contain_file(
-              '/usr/local/share/wombat_server.whl'
-            ).with_ensure('file').with_source(
-              'puppet:///modules/foobar'
-            )
-          end
-        end
       end
       describe 'check bad type' do
         context 'packages' do
@@ -151,10 +135,6 @@ describe 'wombat' do
         end
         context 'odbc_file' do
           before(:each) { params.merge!(odbc_file: true) }
-          it { is_expected.to raise_error(Puppet::Error) }
-        end
-        context 'package_src' do
-          before(:each) { params.merge!(package_src: true) }
           it { is_expected.to raise_error(Puppet::Error) }
         end
       end

@@ -3,7 +3,7 @@ wombat::packages:
   - odbcinst
   - odbc-postgresql
   - clickhouse-client
-  - python3-pip
+  - python3-wombat-server
 wombat::db_name: wombat
 wombat::db_host: localhost
 wombat::db_username: wombat
