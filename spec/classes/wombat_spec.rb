@@ -20,24 +20,24 @@ describe 'wombat' do
             'odbcinst',
             'odbc-postgresql',
             'clickhouse-client',
-            'python3-wombat-server'
+            'python3-wombat-server',
           ].each do |package|
             is_expected.to contain_package(package)
           end
         end
         it do
           is_expected.to contain_file(
-            '/etc/odbc.ini'
+            '/etc/odbc.ini',
           ).with_ensure('file').with_content(
-            %r{Database\s+=\s+wombat}
+            %r{Database\s+=\s+wombat},
           ).with_content(
-            %r{Servername\s+=\s+localhost}
+            %r{Servername\s+=\s+localhost},
           ).with_content(
-            %r{UserName\s+=\s+wombat}
+            %r{UserName\s+=\s+wombat},
           ).with_content(
-            %r{Password\s+=\s+wombat}
+            %r{Password\s+=\s+wombat},
           ).with_content(
-            %r{Port\s+=\s+5432}
+            %r{Port\s+=\s+5432},
           )
         end
       end
@@ -52,9 +52,9 @@ describe 'wombat' do
           it { is_expected.to compile }
           it do
             is_expected.to contain_file(
-              '/etc/odbc.ini'
+              '/etc/odbc.ini',
             ).with_ensure('file').with_content(
-              %r{Servername\s+=\s+foo.bar}
+              %r{Servername\s+=\s+foo.bar},
             )
           end
         end
@@ -63,9 +63,9 @@ describe 'wombat' do
           it { is_expected.to compile }
           it do
             is_expected.to contain_file(
-              '/etc/odbc.ini'
+              '/etc/odbc.ini',
             ).with_ensure('file').with_content(
-              %r{Database\s+=\s+foobar}
+              %r{Database\s+=\s+foobar},
             )
           end
         end
@@ -74,9 +74,9 @@ describe 'wombat' do
           it { is_expected.to compile }
           it do
             is_expected.to contain_file(
-              '/etc/odbc.ini'
+              '/etc/odbc.ini',
             ).with_ensure('file').with_content(
-              %r{UserName\s+=\s+foobar}
+              %r{UserName\s+=\s+foobar},
             )
           end
         end
@@ -85,9 +85,9 @@ describe 'wombat' do
           it { is_expected.to compile }
           it do
             is_expected.to contain_file(
-              '/etc/odbc.ini'
+              '/etc/odbc.ini',
             ).with_ensure('file').with_content(
-              %r{Password\s+=\s+foobar}
+              %r{Password\s+=\s+foobar},
             )
           end
         end
@@ -96,9 +96,9 @@ describe 'wombat' do
           it { is_expected.to compile }
           it do
             is_expected.to contain_file(
-              '/etc/odbc.ini'
+              '/etc/odbc.ini',
             ).with_ensure('file').with_content(
-              %r{Port\s+=\s+42}
+              %r{Port\s+=\s+42},
             )
           end
         end
