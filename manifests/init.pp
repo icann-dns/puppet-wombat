@@ -7,7 +7,6 @@
 # @param db_password database password
 # @param db_port database port
 # @param odbc_file location of odbc file
-# @param package_src source of wombat-server python wheel
 #
 class wombat(
   Array[String[1]]   $packages,

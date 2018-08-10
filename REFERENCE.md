@@ -59,9 +59,3 @@ Data type: `Stdlib::Unixpath`
 
 location of odbc file
 
-##### `package_src`
-
-Data type: `Stdlib::Filesource`
-
-source of wombat-server python wheel
-
