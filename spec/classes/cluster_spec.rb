@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'wombat' do
+describe 'wombat::cluster' do
   let(:node) { 'wombat.example.com' }
   let(:params) { {} }
 

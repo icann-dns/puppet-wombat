@@ -1,0 +1,30 @@
+[datastore]
+path=<%= @data_path %>
+incoming_dir_pattern=<%= @incoming_dir_pattern %>
+reload_dir_pattern=<%= @reload_dir_pattern %>
+pcap_dir_pattern=<%= @pcap_dir_pattern %>
+
+[postgres]
+database=<%= @db_name %>
+user=<%= @db_user %>
+host=<%= @db_host %>
+
+[clickhouse]
+servers=<%= @clickhouse_servers.join(',') %>
+
+[loggers]
+keys=<%= @loggers.keys.join(',') %>
+
+<%- @loggers.each_pair do |logger, config| -%>
+[logger_<%= logger %>]
+level=<%= config['level'] %>
+<%- if config.fetch('qualname', false) -%>
+qualname=<%= config['qualname'] %>
+<%- end -%>
+<%# propogate is set to True by default -%>
+<%- unless config.fetch('propagate', true) -%>
+propagate=0
+<%- end -%>
+handlers=<%= config['handlers'] %>
+
+<%- end -%>

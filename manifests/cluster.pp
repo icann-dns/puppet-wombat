@@ -8,7 +8,7 @@
 # @param db_port database port
 # @param odbc_file location of odbc file
 #
-class wombat(
+class wombat::cluster (
   Array[String[1]]   $packages,
   Stdlib::Host       $db_host,
   String[1]          $db_name,

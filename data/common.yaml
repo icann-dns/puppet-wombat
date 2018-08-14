@@ -1,12 +1,39 @@
-wombat::packages:
+wombat::cluster::packages:
   - unixodbc
   - odbcinst
   - odbc-postgresql
   - clickhouse-client
   - python3-wombat-server
-wombat::db_name: wombat
-wombat::db_host: localhost
-wombat::db_username: wombat
-wombat::db_password: wombat
-wombat::db_port: 5432
-wombat::odbc_file: /etc/odbc.ini
+wombat::cluster::db_name: wombat
+wombat::cluster::db_host: localhost
+wombat::cluster::db_username: wombat
+wombat::cluster::db_password: wombat
+wombat::cluster::db_port: 5432
+wombat::cluster::odbc_file: /etc/odbc.ini
+wombat::datastore::packages:
+  - clickhouse-client
+  - python3-wombat-server
+  - python3-psycopg2
+  - python3-gear
+  - dns-stats-inspector
+  - dns-stats-cdnsdumper
+wombat::datastore::conf_dir: /etc/wombat
+wombat::datastore::clickhouse_template: 'puppet:///modules/etc/wombat/tsv-clickhouse.tpl'
+wombat::datastore::data_path: /srv/wombat
+wombat::datastore::incoming_dir_pattern: '*/*/incoming'
+wombat::datastore::reload_dir_pattern: '*/*/cbor'
+wombat::datastore::pcap_dir_pattern: '*/*/pcap'
+wombat::datastore::db_name: wombat
+wombat::datastore::db_user: wombat
+wombat::datastore::db_host: localhost
+wombat::datastore::clickhouse_servers:
+  - localhost
+wombat::datastore::loggers:
+  root:
+    level: DEBUG
+    handlers: syslog
+  gear:
+    level: ERROR
+    qualname: gear
+    propagate: false
+    handlers: syslog
