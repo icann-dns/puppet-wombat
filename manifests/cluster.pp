@@ -20,6 +20,7 @@ class wombat::cluster (
   ensure_packages($packages)
   file {$odbc_file:
     ensure  => file,
+    mode    => '0600',
     content => template('wombat/etc/odbc.ini.erb'),
   }
 }

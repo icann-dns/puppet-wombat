@@ -32,6 +32,9 @@ class wombat::datastore (
     ensure => file,
     source => $clickhouse_template,
   }
+  file {$conf_dir:
+    ensure => directory,
+  }
   file {"${conf_dir}/wombat.cfg":
     ensure  => file,
     content => template('wombat/etc/wombat/wombat.cfg.erb'),
