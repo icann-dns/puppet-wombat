@@ -3,6 +3,7 @@ wombat::cluster::packages:
   - odbcinst
   - odbc-postgresql
   - clickhouse-client
+  - clickhouse-server
   - python3-wombat-server
 wombat::cluster::db_name: wombat
 wombat::cluster::db_host: localhost
@@ -17,6 +18,9 @@ wombat::datastore::packages:
   - python3-gear
   - dns-stats-inspector
   - dns-stats-cdnsdumper
+  - gearman-tools
+  - gearman-job-server
+  - supervisor
 wombat::datastore::conf_dir: /etc/wombat
 wombat::datastore::clickhouse_template: 'puppet:///modules/wombat/etc/wombat/tsv-clickhouse.tpl'
 wombat::datastore::data_path: /srv/wombat
