@@ -3,7 +3,6 @@ wombat::cluster::packages:
   - odbcinst
   - odbc-postgresql
   - clickhouse-client
-  - clickhouse-server
   - python3-wombat-server
 wombat::cluster::db_name: wombat
 wombat::cluster::db_host: localhost
