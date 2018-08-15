@@ -25,6 +25,7 @@ class wombat::datastore (
   String[1]                       $db_user,
   Stdlib::Host                    $db_host,
   Array[Stdlib::Host]             $clickhouse_servers,
+  Stdlib::Unixpath                $archive_dir,
   Hash[String[1], Wombat::Logger] $loggers,
 ) {
   ensure_packages($packages)
@@ -32,7 +33,7 @@ class wombat::datastore (
     ensure => file,
     source => $clickhouse_template,
   }
-  file {$conf_dir:
+  file {[$conf_dir, $archive_dir]:
     ensure => directory,
   }
   file {"${conf_dir}/wombat.cfg":

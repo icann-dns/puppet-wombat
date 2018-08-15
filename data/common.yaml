@@ -31,6 +31,7 @@ wombat::datastore::db_user: wombat
 wombat::datastore::db_host: localhost
 wombat::datastore::clickhouse_servers:
   - localhost
+wombat::datastore::archive_dir: /var/pg_wal
 wombat::datastore::loggers:
   root:
     level: DEBUG

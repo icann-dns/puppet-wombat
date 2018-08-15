@@ -26,6 +26,8 @@ describe 'wombat::datastore' do
             is_expected.to contain_package(package)
           end
         end
+        it { is_expected.to contain_file('/etc/wombat').with_ensure('directory') } 
+        it { is_expected.to contain_file('/var/pg_wal').with_ensure('directory') } 
         it do
           is_expected.to contain_file('/etc/wombat/tsv-clickhouse.tpl').with(
             ensure: 'file',
