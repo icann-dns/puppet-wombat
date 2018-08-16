@@ -30,9 +30,15 @@ class wombat::datastore (
   Boolean                         $standby,
 ) {
   ensure_packages($packages)
+  include postgresql::server
   file {"${conf_dir}/tsv-clickhouse.tpl":
     ensure => file,
     source => $clickhouse_template,
+  }
+  file { $archive_dir:
+    ensure => directory,
+    owner  => $postgresql::server::user,
+    group  => $postgresql::server::group,
   }
   file {[$conf_dir, $archive_dir]:
     ensure => directory,
