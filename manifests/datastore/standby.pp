@@ -2,8 +2,8 @@
 #
 class wombat::datastore::standby (
   Stdlib::IP::Address $db_host,
-  Stdlib::IP::Address $db_username,
-  Stdlib::IP::Address $db_password,
+  String              $db_username,
+  String              $db_password,
 ) {
   assert_private()
   include wombat::datastore
