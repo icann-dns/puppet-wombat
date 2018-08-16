@@ -3,6 +3,7 @@
 class wombat::datastore::primary (
   Stdlib::IP::Address::V4 $ipv4_address,
   Stdlib::IP::Address::V6 $ipv6_address,
+  Hash[String, Hash]      $roles,
 ) {
   assert_private()
   include wombat::datastore
@@ -40,6 +41,11 @@ class wombat::datastore::primary (
   postgresql::server::config_entry { 'hot_standby': ensure => absent }
   file {'/etc/postgresql/10/main/recovery.conf':
     ensure => absent,
+  }
+  $roles.each |$rolename, $role| {
+    postgresql::server::role { $rolename:
+      * => $role,
+    }
   }
   postgresql::server::db { 'wombat':
     user     => 'wombat',
