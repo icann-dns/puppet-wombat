@@ -40,3 +40,4 @@ wombat::datastore::loggers:
     qualname: gear
     propagate: false
     handlers: syslog
+wombat::datastore::standby: false

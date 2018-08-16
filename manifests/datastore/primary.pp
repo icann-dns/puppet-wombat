@@ -46,6 +46,7 @@ class wombat::datastore::primary (
     ensure => present,
     value  => 'replica',
   }
+  postgresql::server::config_entry { 'hot_standby': ensure => absent }
   file {'/etc/postgresql/10/main/recovery.conf':
     ensure => absent,
   }

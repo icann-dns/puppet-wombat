@@ -27,6 +27,7 @@ class wombat::datastore (
   Array[Stdlib::Host]             $clickhouse_servers,
   Stdlib::Unixpath                $archive_dir,
   Hash[String[1], Wombat::Logger] $loggers,
+  Boolean                         $standby,
 ) {
   ensure_packages($packages)
   file {"${conf_dir}/tsv-clickhouse.tpl":
@@ -39,5 +40,10 @@ class wombat::datastore (
   file {"${conf_dir}/wombat.cfg":
     ensure  => file,
     content => template('wombat/etc/wombat/wombat.cfg.erb'),
+  }
+  if $standby {
+    include wombat::datastore::standby
+  } else {
+    include wombat::datastore::primary
   }
 }

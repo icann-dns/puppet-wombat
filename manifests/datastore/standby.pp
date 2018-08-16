@@ -18,6 +18,10 @@ class wombat::datastore::standby (
     ensure => absent,
   }
   postgresql::server::config_entry { 'wal_level': ensure => absent }
+  postgresql::server::config_entry { 'hot_standby':
+    ensure => present,
+    valude => 'on',
+  }
   file {'/etc/postgresql/10/main/recovery.conf':
     ensure  => file,
     content => template('wombat/etc/postgresql/10/main/recovery.conf.erb'),
