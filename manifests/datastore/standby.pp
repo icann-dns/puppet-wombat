@@ -10,7 +10,7 @@ class wombat::datastore::standby (
 
   $archive_dir = $wombat::datastore::archive_dir
   postgresql::server::pg_hba_rule { 'replication_v4': ensure => absent }
-  postgresql::server::pg_hba_rule { 'replication_v4': ensure => absent }
+  postgresql::server::pg_hba_rule { 'replication_v6': ensure => absent }
   postgresql::server::config_entry { 'archive_command': ensure => absent }
   postgresql::server::config_entry { 'archive_mode': ensure => absent }
   postgresql::server::config_entry { 'max_wal_senders': ensure => absent }

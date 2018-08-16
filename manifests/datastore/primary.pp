@@ -1,8 +1,8 @@
 # @summary class to ensure postgress is configuered as the primary database
 #
 class wombat::datastore::primary (
-  Stdlib::IP::Adress::V4 $ipv4_address,
-  Stdlib::IP::Adress::V6 $ipv6_address,
+  Stdlib::IP::Address::V4 $ipv4_address,
+  Stdlib::IP::Address::V6 $ipv6_address,
 ) {
   assert_private()
   include wombat::datastore
@@ -17,7 +17,7 @@ class wombat::datastore::primary (
     type        => 'host',
     user        => 'wombat_replication',
   }
-  postgresql::server::pg_hba_rule { 'replication_v4':
+  postgresql::server::pg_hba_rule { 'replication_v6':
     ensure      => present,
     address     => $ipv6_address,
     auth_method => 'md5',
