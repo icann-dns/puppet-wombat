@@ -19,7 +19,6 @@ wombat::datastore::packages:
   - dns-stats-cdnsdumper
   - gearman-tools
   - gearman-job-server
-  - supervisor
 wombat::datastore::conf_dir: /etc/wombat
 wombat::datastore::clickhouse_template: 'puppet:///modules/wombat/etc/wombat/tsv-clickhouse.tpl'
 wombat::datastore::data_path: /srv/wombat
