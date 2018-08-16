@@ -1,9 +1,9 @@
 # @summary class to ensure postgress is configuered as the standby database
 #
 class wombat::datastore::standby (
-  Stdlib::IP::Address $db_host,
-  String              $db_username,
-  String              $db_password,
+  Stdlib::Host $db_host,
+  String       $db_username,
+  String       $db_password,
 ) {
   assert_private()
   include wombat::datastore
