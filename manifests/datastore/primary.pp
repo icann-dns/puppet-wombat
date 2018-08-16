@@ -18,6 +18,14 @@ class wombat::datastore::primary (
     type        => 'host',
     user        => 'wombat_replication',
   }
+  postgresql::server::pg_hba_rule { 'replication_v6':
+    address     => $ipv6_address,
+    auth_method => 'md5',
+    database    => 'replication',
+    order       => 6,
+    type        => 'host',
+    user        => 'wombat_replication',
+  }
   postgresql::server::config_entry { 'archive_command':
     ensure => present,
     value  => "test ! -f ${archive_dir}/%f && cp %p ${archive_dir}/%f",
