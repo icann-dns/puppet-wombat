@@ -20,9 +20,9 @@ class wombat::datastore::standby (
     ensure => present,
     value  => 'on',
   }
-  file {'/etc/postgresql/10/main/recovery.conf':
+  file {'/var/lib/postgresql/10/main/recovery.conf':
     ensure  => file,
-    content => template('wombat/etc/postgresql/10/main/recovery.conf.erb'),
+    content => template('wombat/var/lib/postgresql/10/main/recovery.conf.erb'),
     notify  => Service[$postgresql::server::service_name],
   }
 }
