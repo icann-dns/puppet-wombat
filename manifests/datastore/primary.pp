@@ -9,7 +9,6 @@ class wombat::datastore::primary (
 
   $archive_dir = $wombat::datastore::archive_dir
   postgresql::server::pg_hba_rule { 'replication_v4':
-    ensure      => present,
     address     => $ipv4_address,
     auth_method => 'md5',
     database    => 'replication',
@@ -18,7 +17,6 @@ class wombat::datastore::primary (
     user        => 'wombat_replication',
   }
   postgresql::server::pg_hba_rule { 'replication_v6':
-    ensure      => present,
     address     => $ipv6_address,
     auth_method => 'md5',
     database    => 'replication',
