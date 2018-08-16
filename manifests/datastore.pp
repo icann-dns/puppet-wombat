@@ -40,7 +40,7 @@ class wombat::datastore (
     owner  => $postgresql::server::user,
     group  => $postgresql::server::group,
   }
-  file {[$conf_dir, $archive_dir]:
+  file {$conf_dir:
     ensure => directory,
   }
   file {"${conf_dir}/wombat.cfg":
