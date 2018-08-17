@@ -71,4 +71,8 @@ class wombat::datastore::primary (
       * => $role,
     }
   }
+  $schema = '/usr/share/wombat-server/sql/postgres/ddl'
+  exec {"/usr/bin/wombat-postgres-update ${schema}":
+    unless => "/usr/bin/wombat-postgres-update -r ${schema}",
+  }
 }
