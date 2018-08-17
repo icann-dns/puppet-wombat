@@ -16,9 +16,7 @@ class wombat::datastore::primary (
   postgresql::server::db { 'wombat':
     user     => 'wombat',
     password => 'NOT USED AS USER CREATED WITH ROLES',
-  } -> postgresql::server::config_entry { 'synchronous_commit':
-    ensure => present,
-    value  => 'remote_apply',
+    before   => Postgresql::Server::Config_entry['synchronous_standby_names'],
   }
   postgresql::server::pg_hba_rule { 'replication_v4':
     address     => $ipv4_address,
@@ -47,6 +45,10 @@ class wombat::datastore::primary (
   postgresql::server::config_entry { 'wal_keep_segments':
     ensure => present,
     value  => '10',
+  }
+  postgresql::server::config_entry { 'synchronous_commit':
+    ensure => present,
+    value  => 'remote_apply',
   }
   postgresql::server::config_entry { 'max_wal_senders':
     ensure => present,
