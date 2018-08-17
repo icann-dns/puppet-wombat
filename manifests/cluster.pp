@@ -23,4 +23,8 @@ class wombat::cluster (
     mode    => '0600',
     content => template('wombat/etc/odbc.ini.erb'),
   }
+  $schema = '/usr/share/wombat-server/sql/clickhouse/ddl'
+  exec {"/usr/bin/wombat-clickhouse-update ${schema}":
+    unless => "/usr/bin/wombat-clickhouse-update -r ${schema}",
+  }
 }
