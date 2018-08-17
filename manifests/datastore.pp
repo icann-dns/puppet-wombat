@@ -9,6 +9,7 @@
 # @param pcap_dir_pattern bash expansion fo pcap files
 # @param db_name database name
 # @param db_user database user
+# @param db_user database password
 # @param db_host database host
 # @param clickhouse_servers list of clickhouse servers
 # @param archive_dir location of archive directory
@@ -25,6 +26,7 @@ class wombat::datastore (
   String[1]                       $pcap_dir_pattern,
   String[1]                       $db_name,
   String[1]                       $db_user,
+  String[1]                       $db_pass,
   Stdlib::Host                    $db_host,
   Array[Stdlib::Host]             $clickhouse_servers,
   Stdlib::Unixpath                $archive_dir,
