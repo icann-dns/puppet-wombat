@@ -16,10 +16,12 @@ class wombat::cluster (
   String[1]          $db_password,
   Stdlib::Port       $db_port,
   Stdlib::Unixpath   $odbc_file,
+  String[1]          $owner,
 ) {
   ensure_packages($packages)
   file {$odbc_file:
     ensure  => file,
+    owner   => $owner,
     mode    => '0600',
     content => template('wombat/etc/odbc.ini.erb'),
   }

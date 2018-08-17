@@ -10,6 +10,7 @@ wombat::cluster::db_username: wombat
 wombat::cluster::db_password: wombat
 wombat::cluster::db_port: 5432
 wombat::cluster::odbc_file: /etc/odbc.ini
+wombat::cluster::owner: clickhouse
 wombat::datastore::packages:
   - clickhouse-client
   - wombat-server
