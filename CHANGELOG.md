@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.1.4
+* correct odbc permissions
+
 ## Release 0.1.3
 * expose sync method as yaml param
 
