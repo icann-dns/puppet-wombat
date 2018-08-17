@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.1.3
+* expose sync method as yaml param
+
 ## Release 0.1.2
 * manage schema installation
 
