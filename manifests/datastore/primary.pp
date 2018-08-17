@@ -13,6 +13,11 @@ class wombat::datastore::primary (
 
   $archive_dir = $wombat::datastore::archive_dir
 
+  postgresql::server::db { 'wombat':
+    user     => 'wombat',
+    password => 'NOT USED AS USER CREATED WITH ROLES',
+    before   => Postgresql::Server::Config_entry['synchronous_commit'],
+  }
   postgresql::server::pg_hba_rule { 'replication_v4':
     address     => $ipv4_address,
     auth_method => 'md5',
@@ -65,9 +70,5 @@ class wombat::datastore::primary (
     postgresql::server::role { $rolename:
       * => $role,
     }
-  }
-  postgresql::server::db { 'wombat':
-    user     => 'wombat',
-    password => 'NOT USED AS USER CREATED WITH ROLES',
   }
 }
