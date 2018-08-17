@@ -4,9 +4,10 @@
 # @param ipv6_address ipv4 address to allow for replication
 # @param roles a hash of roles to be used with postgresql::server::role
 class wombat::datastore::primary (
-  Stdlib::IP::Address::V4 $ipv4_address,
-  Stdlib::IP::Address::V6 $ipv6_address,
-  Hash[String, Hash]      $roles,
+  Stdlib::IP::Address::V4    $ipv4_address,
+  Stdlib::IP::Address::V6    $ipv6_address,
+  Hash[String, Hash]         $roles,
+  Wombat::Synchronous_commit $synchronous_commit,
 ) {
   assert_private()
   include wombat::datastore
@@ -48,7 +49,7 @@ class wombat::datastore::primary (
   }
   postgresql::server::config_entry { 'synchronous_commit':
     ensure => present,
-    value  => 'remote_apply',
+    value  => $synchronous_commit,
   }
   postgresql::server::config_entry { 'max_wal_senders':
     ensure => present,
