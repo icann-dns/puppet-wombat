@@ -1,5 +1,8 @@
 # Changelog
 
-## Release 0.1.0 2018 Aug 17
+## Release 0.1.1
+* update package name
+
+## Release 0.1.0
 * initial release
 
