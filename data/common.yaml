@@ -3,7 +3,7 @@ wombat::cluster::packages:
   - odbcinst
   - odbc-postgresql
   - clickhouse-client
-  - python3-wombat-server
+  - wombat-server
 wombat::cluster::db_name: wombat
 wombat::cluster::db_host: localhost
 wombat::cluster::db_username: wombat
@@ -12,7 +12,7 @@ wombat::cluster::db_port: 5432
 wombat::cluster::odbc_file: /etc/odbc.ini
 wombat::datastore::packages:
   - clickhouse-client
-  - python3-wombat-server
+  - wombat-server
   - python3-psycopg2
   - python3-gear
   - dns-stats-inspector
