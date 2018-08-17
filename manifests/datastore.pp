@@ -5,13 +5,15 @@
 # @param clickhouse_template clickhouse tsv template
 # @param data_path path where data is stored
 # @param incoming_dir_pattern bash expansion fo incoming files
-# @param reload_dir_patter bash expansion fo cbor files
-# @param pcap_dir_patter bash expansion fo pcap files
+# @param reload_dir_pattern bash expansion fo cbor files
+# @param pcap_dir_pattern bash expansion fo pcap files
 # @param db_name database name
 # @param db_user database user
 # @param db_host database host
 # @param clickhouse_servers list of clickhouse servers
+# @param archive_dir location of archive directory
 # @param loggers Hash of logger configueration
+# @param indicate if this system is a standby or primary DB
 #
 class wombat::datastore (
   Array[String[1]]                $packages,

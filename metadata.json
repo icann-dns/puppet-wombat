@@ -2,9 +2,9 @@
   "name": "icann-wombat",
   "version": "0.1.0",
   "author": "john.bond@icann.org",
-  "summary": "",
+  "summary": "module to manage wombat system",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "git@git.dns.icann.org:dns-eng/puppet-wombat.git",
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 4.25.1 <5.0.0"}
   ],

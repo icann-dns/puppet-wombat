@@ -1,5 +1,8 @@
 # @summary class to ensure postgress is configuered as the standby database
 #
+# @param db_host db server to replicate from
+# @param db_username db user with replicate permissions
+# @param db_password db password with replicate permissions
 class wombat::datastore::standby (
   Stdlib::Host $db_host,
   String       $db_username,

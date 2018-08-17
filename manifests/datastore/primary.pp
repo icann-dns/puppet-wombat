@@ -1,5 +1,8 @@
 # @summary class to ensure postgress is configuered as the primary database
 #
+# @param ipv4_address ipv4 address to allow for replication
+# @param ipv6_address ipv4 address to allow for replication
+# @param roles a hash of roles to be used with postgresql::server::role
 class wombat::datastore::primary (
   Stdlib::IP::Address::V4 $ipv4_address,
   Stdlib::IP::Address::V6 $ipv6_address,
@@ -33,6 +36,14 @@ class wombat::datastore::primary (
   postgresql::server::config_entry { 'archive_mode':
     ensure => present,
     value  => 'on',
+  }
+  postgresql::server::config_entry { 'synchronous_commit':
+    ensure => present,
+    value  => 'remote_apply',
+  }
+  postgresql::server::config_entry { 'wal_keep_segments':
+    ensure => present,
+    value  => '10',
   }
   postgresql::server::config_entry { 'max_wal_senders':
     ensure => present,
