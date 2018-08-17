@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.1.2
+* manage schema installation
+
 ## Release 0.1.1
 * update package name
 
