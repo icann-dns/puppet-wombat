@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.1.6
+* create dependency on schema creation
+
 ## Release 0.1.5
 * add hostaddr to connection string
 
