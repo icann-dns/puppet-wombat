@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.1.5
+* add hostaddr to connection string
+
 ## Release 0.1.4
 * correct odbc permissions
 
