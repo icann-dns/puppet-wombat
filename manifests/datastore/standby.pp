@@ -4,9 +4,10 @@
 # @param db_username db user with replicate permissions
 # @param db_password db password with replicate permissions
 class wombat::datastore::standby (
-  Stdlib::Host $db_host,
-  String       $db_username,
-  String       $db_password,
+  Stdlib::Host               $db_host,
+  Array[Stdlib::IP::Address] $db_hostaddr,
+  String                     $db_username,
+  String                     $db_password,
 ) {
   assert_private()
   include wombat::datastore

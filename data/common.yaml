@@ -48,5 +48,7 @@ wombat::datastore::primary::ipv6_address: 2001:db8::0/48
 wombat::datastore::primary::roles: {}
 wombat::datastore::primary::synchronous_commit: 'on'
 wombat::datastore::standby::db_host: localhost
+wombat::datastore::standby::db_hostaddr:
+  - 127.0.0.1
 wombat::datastore::standby::db_username: wombat
 wombat::datastore::standby::db_password: wombat
