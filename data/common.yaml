@@ -35,7 +35,7 @@ wombat::datastore::clickhouse_servers:
 wombat::datastore::archive_dir: /var/pg_wal
 wombat::datastore::loggers:
   root:
-    level: DEBUG
+    level: INFO
     handlers: syslog
   gear:
     level: ERROR
@@ -43,6 +43,7 @@ wombat::datastore::loggers:
     propagate: false
     handlers: syslog
 wombat::datastore::standby: false
+wombat::datastore::queue_user: wombat
 wombat::datastore::primary::ipv4_address: 192.0.2.0/24
 wombat::datastore::primary::ipv6_address: 2001:db8::0/48
 wombat::datastore::primary::roles: {}

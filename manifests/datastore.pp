@@ -32,6 +32,7 @@ class wombat::datastore (
   Stdlib::Unixpath                $archive_dir,
   Hash[String[1], Wombat::Logger] $loggers,
   Boolean                         $standby,
+  String[1]                       $queue_user,
 ) {
   ensure_packages($packages)
   include postgresql::server
@@ -50,6 +51,11 @@ class wombat::datastore (
   file {"${conf_dir}/wombat.cfg":
     ensure  => file,
     content => template('wombat/etc/wombat/wombat.cfg.erb'),
+  }
+  cron {'wombat queue manager':
+    commad => '/usr/bin/wombat-import -s incoming',
+    user   => $queue_user,
+    minute => '*/5',
   }
   if $standby {
     include wombat::datastore::standby
