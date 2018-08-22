@@ -1,5 +1,9 @@
 # Changelog
 
+## Release 0.1.7
+* create cron job to manage queues
+* change logging defaults
+
 ## Release 0.1.6
 * create dependency on schema creation
 
