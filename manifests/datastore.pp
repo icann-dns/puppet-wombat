@@ -53,9 +53,9 @@ class wombat::datastore (
     content => template('wombat/etc/wombat/wombat.cfg.erb'),
   }
   cron {'wombat queue manager':
-    commad => '/usr/bin/wombat-import -s incoming',
-    user   => $queue_user,
-    minute => '*/5',
+    command => '/usr/bin/wombat-import -s incoming',
+    user    => $queue_user,
+    minute  => '*/5',
   }
   if $standby {
     include wombat::datastore::standby
