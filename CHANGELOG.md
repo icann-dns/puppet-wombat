@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.1.8
+* manage LogDir in odbcinst
+
 ## Release 0.1.7
 * create cron job to manage queues
 * change logging defaults
