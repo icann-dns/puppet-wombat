@@ -16,6 +16,8 @@ class wombat::cluster (
   String[1]          $db_password,
   Stdlib::Port       $db_port,
   Stdlib::Unixpath   $odbc_file,
+  Stdlib::Unixpath   $odbcinst_file,
+  Stdlib::Unixpath   $odbc_logdir,
   String[1]          $owner,
 ) {
   ensure_packages($packages)
@@ -24,6 +26,17 @@ class wombat::cluster (
     owner   => $owner,
     mode    => '0600',
     content => template('wombat/etc/odbc.ini.erb'),
+  }
+  file {$odbc_logdir:
+    ensure => directory,
+    owner  => $owner,
+  }
+  ini_setting {'set log file':
+    ensure  => present,
+    path    => $odbcinst_file,
+    section => 'PostgreSQL Unicode',
+    setting => 'Logdir',
+    value   => $odbc_logdir,
   }
   $schema = '/usr/share/wombat-server/sql/clickhouse/ddl'
   exec {"/usr/bin/wombat-clickhouse-update ${schema}":

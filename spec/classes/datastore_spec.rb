@@ -58,7 +58,7 @@ describe 'wombat::datastore' do
           ).with_content(
             %r{
             \[logger_root\]\n
-            level=DEBUG\n
+            level=INFO\n
             handlers=syslog\n
             }x,
           ).with_content(
