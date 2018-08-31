@@ -32,11 +32,12 @@ class wombat::cluster (
     owner  => $owner,
   }
   ini_setting {'set log file':
-    ensure  => present,
-    path    => $odbcinst_file,
-    section => 'PostgreSQL Unicode',
-    setting => 'Logdir',
-    value   => $odbc_logdir,
+    ensure            => present,
+    path              => $odbcinst_file,
+    section           => 'PostgreSQL Unicode',
+    setting           => 'Logdir',
+    key_val_separator => '=',
+    value             => $odbc_logdir,
   }
   $schema = '/usr/share/wombat-server/sql/clickhouse/ddl'
   exec {"/usr/bin/wombat-clickhouse-update ${schema}":
