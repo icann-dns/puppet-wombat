@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.2.1
+* manage gearman-job-server service
+
 ## Release 0.2.0
 * Add clickhouse username and password to datastore
 * Add managment of gearman-job-server to cluster
