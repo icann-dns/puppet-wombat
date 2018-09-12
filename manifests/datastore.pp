@@ -29,6 +29,8 @@ class wombat::datastore (
   String[1]                       $db_pass,
   Stdlib::Host                    $db_host,
   Array[Stdlib::Host]             $clickhouse_servers,
+  String[1]                       $clickhouse_user,
+  String[1]                       $clickhouse_pass,
   Stdlib::Unixpath                $archive_dir,
   Hash[String[1], Wombat::Logger] $loggers,
   Boolean                         $standby,

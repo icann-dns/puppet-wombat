@@ -7,6 +7,9 @@
 # @param db_password database password
 # @param db_port database port
 # @param odbc_file location of odbc file
+# @param odbcinst_file location of odbcinst file
+# @param odbc_logdir location of odbc logdirectory
+# @param owner file system user
 #
 class wombat::cluster (
   Array[String[1]]   $packages,
@@ -42,5 +45,13 @@ class wombat::cluster (
   $schema = '/usr/share/wombat-server/sql/clickhouse/ddl'
   exec {"/usr/bin/wombat-clickhouse-update ${schema}":
     unless => "/usr/bin/wombat-clickhouse-update -r ${schema}",
+  }
+  file {'/etc/systemd/system/gearman-job-server.d':
+    ensure => directory,
+  }
+  file {'/etc/systemd/system/gearman-job-server.d/wombat.conf':
+    ensure  => file,
+    content => "[Service]\nExecStartPost=/usr/bin/wombat-import -s pending",
+    require => Package[$packages],
   }
 }

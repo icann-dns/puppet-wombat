@@ -12,6 +12,8 @@ password=<%= @db_pass %>
 
 [clickhouse]
 servers=<%= @clickhouse_servers.join(',') %>
+user=<%= @clickhouse_user %>
+password=<%= @clickhouse_pass %>
 
 [loggers]
 keys=<%= @loggers.keys.join(',') %>

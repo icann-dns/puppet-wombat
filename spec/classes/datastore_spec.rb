@@ -52,7 +52,11 @@ describe 'wombat::datastore' do
           ).with_content(
             %r{host=localhost},
           ).with_content(
-            %r{servers=localhost},
+            %r{\[clickhouse\]\n
+            servers=localhost\n
+            user=wombat\n
+            password=wombat\n
+            }x,
           ).with_content(
             %r{keys=root,gear},
           ).with_content(
@@ -164,7 +168,37 @@ describe 'wombat::datastore' do
           it { is_expected.to compile }
           it do
             is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
-              %r{servers=foo,bar},
+              %r{\[clickhouse\]\n
+              servers=foo,bar\n
+              user=wombat\n
+              password=wombat\n
+              }x,
+            )
+          end
+        end
+        context 'clickhouse_user' do
+          before(:each) { params.merge!(clickhouse_user: 'foobar') }
+          it { is_expected.to compile }
+          it do
+            is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
+              %r{\[clickhouse\]\n
+              servers=localhost\n
+              user=foobar\n
+              password=wombat\n
+              }x,
+            )
+          end
+        end
+        context 'clickhouse_pass' do
+          before(:each) { params.merge!(clickhouse_pass: 'foobar') }
+          it { is_expected.to compile }
+          it do
+            is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
+              %r{\[clickhouse\]\n
+              servers=localhost\n
+              user=wombat\n
+              password=foobar\n
+              }x,
             )
           end
         end

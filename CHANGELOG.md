@@ -1,5 +1,9 @@
 # Changelog
 
+## Release 0.2.0
+* Add clickhouse username and password to datastore
+* Add managment of gearman-job-server to cluster
+
 ## Release 0.1.8
 * manage LogDir in odbcinst
 

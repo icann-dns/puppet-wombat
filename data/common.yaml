@@ -4,6 +4,7 @@ wombat::cluster::packages:
   - odbc-postgresql
   - clickhouse-client
   - wombat-server
+  - gearman-job-server
 wombat::cluster::db_name: wombat
 wombat::cluster::db_host: localhost
 wombat::cluster::db_username: wombat
@@ -34,6 +35,8 @@ wombat::datastore::db_pass: wombat
 wombat::datastore::db_host: localhost
 wombat::datastore::clickhouse_servers:
   - localhost
+wombat::datastore::clickhouse_user: wombat
+wombat::datastore::clickhouse_pass: wombat
 wombat::datastore::archive_dir: /var/pg_wal
 wombat::datastore::loggers:
   root:
