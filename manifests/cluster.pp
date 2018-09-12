@@ -45,19 +45,5 @@ class wombat::cluster (
   $schema = '/usr/share/wombat-server/sql/clickhouse/ddl'
   exec {"/usr/bin/wombat-clickhouse-update ${schema}":
     unless => "/usr/bin/wombat-clickhouse-update -r ${schema}",
-    notify => Service['gearman-job-server'],
-  }
-  file {'/etc/systemd/system/gearman-job-server.d':
-    ensure => directory,
-  }
-  file {'/etc/systemd/system/gearman-job-server.d/wombat.conf':
-    ensure  => file,
-    content => "[Service]\nExecStartPost=/usr/bin/wombat-import -s pending",
-    require => Package[$packages],
-  }
-  service {'gearman-job-server':
-    ensure  => running,
-    enable  => true,
-    require => File['/etc/systemd/system/gearman-job-server.d/wombat.conf'],
   }
 }

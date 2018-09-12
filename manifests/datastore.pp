@@ -53,11 +53,25 @@ class wombat::datastore (
   file {"${conf_dir}/wombat.cfg":
     ensure  => file,
     content => template('wombat/etc/wombat/wombat.cfg.erb'),
+    notify  => Service['gearman-job-server'],
   }
   cron {'wombat queue manager':
     command => '/usr/bin/wombat-import -s incoming',
     user    => $queue_user,
     minute  => '*/5',
+  }
+  file {'/etc/systemd/system/gearman-job-server.d':
+    ensure => directory,
+  }
+  file {'/etc/systemd/system/gearman-job-server.d/wombat.conf':
+    ensure  => file,
+    content => "[Service]\nExecStartPost=/usr/bin/wombat-import -s pending",
+    require => Package[$packages],
+  }
+  service {'gearman-job-server':
+    ensure  => running,
+    enable  => true,
+    require => File['/etc/systemd/system/gearman-job-server.d/wombat.conf'],
   }
   if $standby {
     include wombat::datastore::standby
