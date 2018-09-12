@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.2.2
+* move gearman studd to the correct function
+
 ## Release 0.2.1
 * manage gearman-job-server service
 
