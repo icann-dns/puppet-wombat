@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.2.3
+* dont install german-server-job on cluster node
+
 ## Release 0.2.2
 * move gearman studd to the correct function
 

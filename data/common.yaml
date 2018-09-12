@@ -4,7 +4,6 @@ wombat::cluster::packages:
   - odbc-postgresql
   - clickhouse-client
   - wombat-server
-  - gearman-job-server
 wombat::cluster::db_name: wombat
 wombat::cluster::db_host: localhost
 wombat::cluster::db_username: wombat
