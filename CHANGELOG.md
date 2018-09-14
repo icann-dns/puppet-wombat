@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.3.1
+* correct package name
+
 ## Release 0.3.0
 * change package name
 
