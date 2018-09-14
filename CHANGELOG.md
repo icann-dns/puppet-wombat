@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.3.0
+* change package name
+
 ## Release 0.2.3
 * dont install german-server-job on cluster node
 
