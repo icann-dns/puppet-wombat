@@ -17,7 +17,7 @@ describe 'wombat::datastore' do
         it do
           [
             'clickhouse-client',
-            'wombat-server',
+            'wombat-import',
             'python3-psycopg2',
             'python3-gear',
             'dns-stats-inspector',

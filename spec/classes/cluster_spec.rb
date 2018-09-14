@@ -20,7 +20,7 @@ describe 'wombat::cluster' do
             'odbcinst',
             'odbc-postgresql',
             'clickhouse-client',
-            'wombat-server',
+            'wombat-clickhouse-server',
           ].each do |package|
             is_expected.to contain_package(package)
           end
