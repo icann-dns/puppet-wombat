@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.4.0
+* Add support for pseudo-anonymisation of pcap generation
+
 ## Release 0.3.1
 * correct package name
 
