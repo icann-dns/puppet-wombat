@@ -48,6 +48,7 @@ wombat::datastore::loggers:
     handlers: syslog
 wombat::datastore::standby: false
 wombat::datastore::queue_user: wombat
+wombat::datastore::anonymisation_passphrase: ~
 wombat::datastore::primary::ipv4_address: 192.0.2.0/24
 wombat::datastore::primary::ipv6_address: 2001:db8::0/48
 wombat::datastore::primary::roles: {}
