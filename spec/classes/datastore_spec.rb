@@ -52,6 +52,11 @@ describe 'wombat::datastore' do
           ).with_content(
             %r{host=localhost},
           ).with_content(
+            %r{\[pcap\]\n
+            pseudo-anonymise=N\n
+            pseudo-anonymisation-passphrase=\n
+            }x
+          ).with_content(
             %r{\[clickhouse\]\n
             servers=localhost\n
             user=wombat\n
@@ -224,6 +229,18 @@ describe 'wombat::datastore' do
               qualname=foobar\n
               handlers=foobar\n
               }x,
+            )
+          end
+        end
+        context 'anonymisation_passphrase' do
+          before(:each) { params.merge!(anonymisation_passphrase: 'foobar') }
+          it { is_expected.to compile }
+          it do
+            is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
+              %r{\[pcap\]\n
+              pseudo-anonymise=Y\n
+              pseudo-anonymisation-passphrase=foobar\n
+              }x
             )
           end
         end

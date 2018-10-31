@@ -15,6 +15,10 @@ servers=<%= @clickhouse_servers.join(',') %>
 user=<%= @clickhouse_user %>
 password=<%= @clickhouse_pass %>
 
+[pcap]
+pseudo-anonymise=<% if @anonymisation_passphrase %>Y<% else %>N<% end %>
+pseudo-anonymisation-passphrase=<%= @anonymisation_passphrase %>
+
 [loggers]
 keys=<%= @loggers.keys.join(',') %>
 

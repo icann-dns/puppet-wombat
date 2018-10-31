@@ -15,6 +15,7 @@
 # @param archive_dir location of archive directory
 # @param loggers Hash of logger configueration
 # @param indicate if this system is a standby or primary DB
+# @param anonymisation_passphrase if present use this password for anonimisation
 #
 class wombat::datastore (
   Array[String[1]]                $packages,
@@ -35,6 +36,7 @@ class wombat::datastore (
   Hash[String[1], Wombat::Logger] $loggers,
   Boolean                         $standby,
   String[1]                       $queue_user,
+  Optional[String[1]]             $anonymisation_passphrase,
 ) {
   ensure_packages($packages)
   include postgresql::server
