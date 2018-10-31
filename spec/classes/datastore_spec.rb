@@ -55,7 +55,7 @@ describe 'wombat::datastore' do
             %r{\[pcap\]\n
             pseudo-anonymise=N\n
             pseudo-anonymisation-passphrase=\n
-            }x
+            }x,
           ).with_content(
             %r{\[clickhouse\]\n
             servers=localhost\n
@@ -240,7 +240,7 @@ describe 'wombat::datastore' do
               %r{\[pcap\]\n
               pseudo-anonymise=Y\n
               pseudo-anonymisation-passphrase=foobar\n
-              }x
+              }x,
             )
           end
         end
