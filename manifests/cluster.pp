@@ -1,4 +1,4 @@
-# @summary module to manage and configure combat
+# @summary module to manage and configure wombat
 #
 # @param packages packages to install
 # @param db_host database host

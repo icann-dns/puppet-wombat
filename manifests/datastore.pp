@@ -7,6 +7,7 @@
 # @param incoming_dir_pattern bash expansion fo incoming files
 # @param reload_dir_patter bash expansion fo cbor files
 # @param pcap_dir_patter bash expansion fo pcap files
+# @param data_user system user
 # @param db_name database name
 # @param db_user database user
 # @param db_host database host
@@ -21,6 +22,7 @@ class wombat::datastore (
   String[1]                       $incoming_dir_pattern,
   String[1]                       $reload_dir_pattern,
   String[1]                       $pcap_dir_pattern,
+  String[1]                       $data_user,
   String[1]                       $db_name,
   String[1]                       $db_user,
   Stdlib::Host                    $db_host,
@@ -39,4 +41,11 @@ class wombat::datastore (
     ensure  => file,
     content => template('wombat/etc/wombat/wombat.cfg.erb'),
   }
+  cron {'wombat-purge':
+    ensure  => present,
+    command => '/usr/bin/wombat-purge --threshold 75 --force',
+    user    => $data_user,
+    weekday => '0',
+  }
+
 }
