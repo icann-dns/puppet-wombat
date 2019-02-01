@@ -1,0 +1,4 @@
+standby_mode = on
+primary_conninfo = 'host=<%= @db_host %> hostaddr=<%= @db_hostaddr.join(',') %> port=5432 user=<%= @db_username %> password=<%= @db_password %> application_name=lax'
+#restore_command = 'cp <%= @archive_dir %>/%f %p'
+#archive_cleanup_command = 'pg_archivecleanup <%= @archive_dir %>/ %r'

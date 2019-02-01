@@ -5,17 +5,20 @@
 
 **Classes**
 
-* [`wombat`](#wombat): module to manage and configure combat
+* [`wombat::cluster`](#wombatcluster): module to manage and configure combat
+* [`wombat::datastore`](#wombatdatastore): install wombat tools and configueration for wombat datastore processing
+* [`wombat::datastore::primary`](#wombatdatastoreprimary): class to ensure postgress is configuered as the primary database
+* [`wombat::datastore::standby`](#wombatdatastorestandby): class to ensure postgress is configuered as the standby database
 
 ## Classes
 
-### wombat
+### wombat::cluster
 
 module to manage and configure combat
 
 #### Parameters
 
-The following parameters are available in the `wombat` class.
+The following parameters are available in the `wombat::cluster` class.
 
 ##### `packages`
 
@@ -58,4 +61,152 @@ database port
 Data type: `Stdlib::Unixpath`
 
 location of odbc file
+
+### wombat::datastore
+
+install wombat tools and configueration for wombat datastore processing
+
+#### Parameters
+
+The following parameters are available in the `wombat::datastore` class.
+
+##### `packages`
+
+Data type: `Array[String[1]]`
+
+packages to install
+
+##### `conf_dir`
+
+Data type: `Stdlib::Unixpath`
+
+configuration file directory
+
+##### `clickhouse_template`
+
+Data type: `Stdlib::Filesource`
+
+clickhouse tsv template
+
+##### `data_path`
+
+Data type: `Stdlib::Filesource`
+
+path where data is stored
+
+##### `incoming_dir_pattern`
+
+Data type: `String[1]`
+
+bash expansion fo incoming files
+
+##### `reload_dir_pattern`
+
+Data type: `String[1]`
+
+bash expansion fo cbor files
+
+##### `pcap_dir_pattern`
+
+Data type: `String[1]`
+
+bash expansion fo pcap files
+
+##### `db_name`
+
+Data type: `String[1]`
+
+database name
+
+##### `db_user`
+
+Data type: `String[1]`
+
+database user
+
+##### `db_host`
+
+Data type: `Stdlib::Host`
+
+database host
+
+##### `clickhouse_servers`
+
+Data type: `Array[Stdlib::Host]`
+
+list of clickhouse servers
+
+##### `archive_dir`
+
+Data type: `Stdlib::Unixpath`
+
+location of archive directory
+
+##### `loggers`
+
+Data type: `Hash[String[1], Wombat::Logger]`
+
+Hash of logger configueration
+
+##### `indicate`
+
+if this system is a standby or primary DB
+
+##### `standby`
+
+Data type: `Boolean`
+
+
+
+### wombat::datastore::primary
+
+class to ensure postgress is configuered as the primary database
+
+#### Parameters
+
+The following parameters are available in the `wombat::datastore::primary` class.
+
+##### `ipv4_address`
+
+Data type: `Stdlib::IP::Address::V4`
+
+ipv4 address to allow for replication
+
+##### `ipv6_address`
+
+Data type: `Stdlib::IP::Address::V6`
+
+ipv4 address to allow for replication
+
+##### `roles`
+
+Data type: `Hash[String, Hash]`
+
+a hash of roles to be used with postgresql::server::role
+
+### wombat::datastore::standby
+
+class to ensure postgress is configuered as the standby database
+
+#### Parameters
+
+The following parameters are available in the `wombat::datastore::standby` class.
+
+##### `db_host`
+
+Data type: `Stdlib::Host`
+
+db server to replicate from
+
+##### `db_username`
+
+Data type: `String`
+
+db user with replicate permissions
+
+##### `db_password`
+
+Data type: `String`
+
+db password with replicate permissions
 

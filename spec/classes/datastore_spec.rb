@@ -17,7 +17,7 @@ describe 'wombat::datastore' do
         it do
           [
             'clickhouse-client',
-            'python3-wombat-server',
+            'wombat-import',
             'python3-psycopg2',
             'python3-gear',
             'dns-stats-inspector',
@@ -26,6 +26,8 @@ describe 'wombat::datastore' do
             is_expected.to contain_package(package)
           end
         end
+        it { is_expected.to contain_file('/etc/wombat').with_ensure('directory') }
+        it { is_expected.to contain_file('/var/pg_wal').with_ensure('directory') }
         it do
           is_expected.to contain_file('/etc/wombat/tsv-clickhouse.tpl').with(
             ensure: 'file',
@@ -34,31 +36,40 @@ describe 'wombat::datastore' do
         end
         it do
           is_expected.to contain_file(
-            '/etc/wombat/wombat.cfg'
+            '/etc/wombat/wombat.cfg',
           ).with_ensure('file').with_content(
-            %r{path=/srv/wombat}
+            %r{path=/srv/wombat},
           ).with_content(
-            %r{incoming_dir_pattern=\*/\*/incoming}
+            %r{incoming_dir_pattern=\*/\*/incoming},
           ).with_content(
-            %r{reload_dir_pattern=\*/\*/cbor}
+            %r{reload_dir_pattern=\*/\*/cbor},
           ).with_content(
-            %r{pcap_dir_pattern=\*/\*/pcap}
+            %r{pcap_dir_pattern=\*/\*/pcap},
           ).with_content(
-            %r{database=wombat}
+            %r{database=wombat},
           ).with_content(
-            %r{user=wombat}
+            %r{user=wombat},
           ).with_content(
-            %r{host=localhost}
+            %r{host=localhost},
           ).with_content(
-            %r{servers=localhost}
+            %r{\[pcap\]\n
+            pseudo-anonymise=N\n
+            pseudo-anonymisation-passphrase=\n
+            }x,
           ).with_content(
-            %r{keys=root,gear}
+            %r{\[clickhouse\]\n
+            servers=localhost\n
+            user=wombat\n
+            password=wombat\n
+            }x,
+          ).with_content(
+            %r{keys=root,gear},
           ).with_content(
             %r{
             \[logger_root\]\n
-            level=DEBUG\n
+            level=INFO\n
             handlers=syslog\n
-            }x
+            }x,
           ).with_content(
             %r{
             \[logger_gear\]\n
@@ -66,7 +77,7 @@ describe 'wombat::datastore' do
             qualname=gear\n
             propagate=0\n
             handlers=syslog\n
-            }x
+            }x,
           )
         end
       end
@@ -99,7 +110,7 @@ describe 'wombat::datastore' do
           it { is_expected.to compile }
           it do
             is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
-              %r{path=/foo/bar}
+              %r{path=/foo/bar},
             )
           end
         end
@@ -108,7 +119,7 @@ describe 'wombat::datastore' do
           it { is_expected.to compile }
           it do
             is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
-              %r{incoming_dir_pattern=foobar}
+              %r{incoming_dir_pattern=foobar},
             )
           end
         end
@@ -117,7 +128,7 @@ describe 'wombat::datastore' do
           it { is_expected.to compile }
           it do
             is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
-              %r{reload_dir_pattern=foobar}
+              %r{reload_dir_pattern=foobar},
             )
           end
         end
@@ -127,7 +138,7 @@ describe 'wombat::datastore' do
           # Add Check to validate change was successful
           it do
             is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
-              %r{pcap_dir_pattern=foobar}
+              %r{pcap_dir_pattern=foobar},
             )
           end
         end
@@ -136,7 +147,7 @@ describe 'wombat::datastore' do
           it { is_expected.to compile }
           it do
             is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
-              %r{database=foobar}
+              %r{database=foobar},
             )
           end
         end
@@ -145,7 +156,7 @@ describe 'wombat::datastore' do
           it { is_expected.to compile }
           it do
             is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
-              %r{user=foobar}
+              %r{user=foobar},
             )
           end
         end
@@ -153,7 +164,7 @@ describe 'wombat::datastore' do
           before(:each) { params.merge!(db_host: 'foo.bar') }
           it do
             is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
-              %r{host=foo.bar}
+              %r{host=foo.bar},
             )
           end
         end
@@ -162,7 +173,37 @@ describe 'wombat::datastore' do
           it { is_expected.to compile }
           it do
             is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
-              %r{servers=foo,bar}
+              %r{\[clickhouse\]\n
+              servers=foo,bar\n
+              user=wombat\n
+              password=wombat\n
+              }x,
+            )
+          end
+        end
+        context 'clickhouse_user' do
+          before(:each) { params.merge!(clickhouse_user: 'foobar') }
+          it { is_expected.to compile }
+          it do
+            is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
+              %r{\[clickhouse\]\n
+              servers=localhost\n
+              user=foobar\n
+              password=wombat\n
+              }x,
+            )
+          end
+        end
+        context 'clickhouse_pass' do
+          before(:each) { params.merge!(clickhouse_pass: 'foobar') }
+          it { is_expected.to compile }
+          it do
+            is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
+              %r{\[clickhouse\]\n
+              servers=localhost\n
+              user=wombat\n
+              password=foobar\n
+              }x,
             )
           end
         end
@@ -176,7 +217,7 @@ describe 'wombat::datastore' do
                   'qualname' => 'foobar',
                   'handlers' => 'foobar',
                 },
-              }
+              },
             )
           end
           it { is_expected.to compile }
@@ -187,7 +228,19 @@ describe 'wombat::datastore' do
               level=INFO\n
               qualname=foobar\n
               handlers=foobar\n
-              }x
+              }x,
+            )
+          end
+        end
+        context 'anonymisation_passphrase' do
+          before(:each) { params.merge!(anonymisation_passphrase: 'foobar') }
+          it { is_expected.to compile }
+          it do
+            is_expected.to contain_file('/etc/wombat/wombat.cfg').with_content(
+              %r{\[pcap\]\n
+              pseudo-anonymise=Y\n
+              pseudo-anonymisation-passphrase=foobar\n
+              }x,
             )
           end
         end

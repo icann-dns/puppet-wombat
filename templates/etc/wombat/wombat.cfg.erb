@@ -8,9 +8,16 @@ pcap_dir_pattern=<%= @pcap_dir_pattern %>
 database=<%= @db_name %>
 user=<%= @db_user %>
 host=<%= @db_host %>
+password=<%= @db_pass %>
 
 [clickhouse]
 servers=<%= @clickhouse_servers.join(',') %>
+user=<%= @clickhouse_user %>
+password=<%= @clickhouse_pass %>
+
+[pcap]
+pseudo-anonymise=<% if @anonymisation_passphrase %>Y<% else %>N<% end %>
+pseudo-anonymisation-passphrase=<%= @anonymisation_passphrase %>
 
 [loggers]
 keys=<%= @loggers.keys.join(',') %>

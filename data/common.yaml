@@ -3,41 +3,59 @@ wombat::cluster::packages:
   - odbcinst
   - odbc-postgresql
   - clickhouse-client
-  - python3-wombat-server
+  - wombat-clickhouse-server
 wombat::cluster::db_name: wombat
 wombat::cluster::db_host: localhost
 wombat::cluster::db_username: wombat
 wombat::cluster::db_password: wombat
 wombat::cluster::db_port: 5432
 wombat::cluster::odbc_file: /etc/odbc.ini
+wombat::cluster::odbcinst_file: /etc/odbcinst.ini
+wombat::cluster::odbc_logdir: /var/log/odbc
+wombat::cluster::owner: clickhouse
 wombat::datastore::packages:
   - clickhouse-client
-  - python3-wombat-server
+  - wombat-import
   - python3-psycopg2
   - python3-gear
   - dns-stats-inspector
   - dns-stats-cdnsdumper
   - gearman-tools
   - gearman-job-server
-  - supervisor
 wombat::datastore::conf_dir: /etc/wombat
 wombat::datastore::clickhouse_template: 'puppet:///modules/wombat/etc/wombat/tsv-clickhouse.tpl'
 wombat::datastore::data_path: /srv/wombat
 wombat::datastore::incoming_dir_pattern: '*/*/incoming'
 wombat::datastore::reload_dir_pattern: '*/*/cbor'
 wombat::datastore::pcap_dir_pattern: '*/*/pcap'
-wombat::datastore::data_user: pcapture
 wombat::datastore::db_name: wombat
 wombat::datastore::db_user: wombat
+wombat::datastore::db_pass: wombat
 wombat::datastore::db_host: localhost
 wombat::datastore::clickhouse_servers:
   - localhost
+wombat::datastore::clickhouse_user: wombat
+wombat::datastore::clickhouse_pass: wombat
+wombat::datastore::archive_dir: /var/pg_wal
 wombat::datastore::loggers:
   root:
-    level: DEBUG
+    level: INFO
     handlers: syslog
   gear:
     level: ERROR
     qualname: gear
     propagate: false
     handlers: syslog
+wombat::datastore::standby: false
+wombat::datastore::queue_user: wombat
+wombat::datastore::anonymisation_passphrase: ~
+wombat::datastore::primary::ipv4_address: 192.0.2.0/24
+wombat::datastore::primary::ipv6_address: 2001:db8::0/48
+wombat::datastore::primary::roles: {}
+wombat::datastore::primary::synchronous_commit: 'on'
+wombat::datastore::primary::data_user: pcapture
+wombat::datastore::standby::db_host: localhost
+wombat::datastore::standby::db_hostaddr:
+  - 127.0.0.1
+wombat::datastore::standby::db_username: wombat
+wombat::datastore::standby::db_password: wombat
