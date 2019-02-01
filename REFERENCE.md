@@ -5,7 +5,7 @@
 
 **Classes**
 
-* [`wombat::cluster`](#wombatcluster): module to manage and configure combat
+* [`wombat::cluster`](#wombatcluster): module to manage and configure wombat
 * [`wombat::datastore`](#wombatdatastore): install wombat tools and configueration for wombat datastore processing
 * [`wombat::datastore::primary`](#wombatdatastoreprimary): class to ensure postgress is configuered as the primary database
 * [`wombat::datastore::standby`](#wombatdatastorestandby): class to ensure postgress is configuered as the standby database
@@ -14,7 +14,7 @@
 
 ### wombat::cluster
 
-module to manage and configure combat
+module to manage and configure wombat
 
 #### Parameters
 
@@ -61,6 +61,24 @@ database port
 Data type: `Stdlib::Unixpath`
 
 location of odbc file
+
+##### `odbcinst_file`
+
+Data type: `Stdlib::Unixpath`
+
+location of odbcinst file
+
+##### `odbc_logdir`
+
+Data type: `Stdlib::Unixpath`
+
+location of odbc logdirectory
+
+##### `owner`
+
+Data type: `String[1]`
+
+file system user
 
 ### wombat::datastore
 
@@ -124,6 +142,12 @@ Data type: `String[1]`
 
 database user
 
+##### `db_pass`
+
+Data type: `String[1]`
+
+database password
+
 ##### `db_host`
 
 Data type: `Stdlib::Host`
@@ -148,13 +172,33 @@ Data type: `Hash[String[1], Wombat::Logger]`
 
 Hash of logger configueration
 
-##### `indicate`
-
-if this system is a standby or primary DB
-
 ##### `standby`
 
 Data type: `Boolean`
+
+if this system is a standby or primary DB
+
+##### `anonymisation_passphrase`
+
+Data type: `Optional[String[1]]`
+
+if present use this password for anonimisation
+
+##### `clickhouse_user`
+
+Data type: `String[1]`
+
+
+
+##### `clickhouse_pass`
+
+Data type: `String[1]`
+
+
+
+##### `queue_user`
+
+Data type: `String[1]`
 
 
 
@@ -184,6 +228,18 @@ Data type: `Hash[String, Hash]`
 
 a hash of roles to be used with postgresql::server::role
 
+##### `data_user`
+
+Data type: `String[1]`
+
+system user
+
+##### `synchronous_commit`
+
+Data type: `Wombat::Synchronous_commit`
+
+
+
 ### wombat::datastore::standby
 
 class to ensure postgress is configuered as the standby database
@@ -209,4 +265,10 @@ db user with replicate permissions
 Data type: `String`
 
 db password with replicate permissions
+
+##### `db_hostaddr`
+
+Data type: `Array[Stdlib::IP::Address]`
+
+
 
