@@ -79,9 +79,9 @@ class wombat::datastore::primary (
     unless  => "/usr/bin/wombat-postgres-update -r ${schema}",
     require => Postgresql::Server::Db['wombat'],
   }
-  cron {'wombat-purge':
+  cron {'wombat-prune':
     ensure  => present,
-    command => '/usr/bin/wombat-purge --threshold 75 --force',
+    command => '/usr/bin/wombat-prune --threshold 75 --force',
     user    => $data_user,
     weekday => '0',
   }
