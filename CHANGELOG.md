@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.4.1
+* Add wombat purge funtion to remove data over 75% of capacity
+
 ## Release 0.4.0
 * Add support for pseudo-anonymisation of pcap generation
 
