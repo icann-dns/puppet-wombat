@@ -83,6 +83,8 @@ class wombat::datastore::primary (
     ensure  => present,
     command => '/usr/bin/wombat-prune --threshold 75 --force',
     user    => $data_user,
+    minute  => '0',
+    hour    => '1',
     weekday => '0',
   }
 }
