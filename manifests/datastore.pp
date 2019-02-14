@@ -2,7 +2,6 @@
 #
 # @param packages packages to install
 # @param conf_dir configuration file directory
-# @param clickhouse_template clickhouse tsv template
 # @param data_path path where data is stored
 # @param incoming_dir_pattern bash expansion fo incoming files
 # @param reload_dir_pattern bash expansion fo cbor files
@@ -20,7 +19,6 @@
 class wombat::datastore (
   Array[String[1]]                $packages,
   Stdlib::Unixpath                $conf_dir,
-  Stdlib::Filesource              $clickhouse_template,
   Stdlib::Filesource              $data_path,
   String[1]                       $incoming_dir_pattern,
   String[1]                       $reload_dir_pattern,
@@ -40,10 +38,6 @@ class wombat::datastore (
 ) {
   ensure_packages($packages)
   include postgresql::server
-  file {"${conf_dir}/tsv-clickhouse.tpl":
-    ensure => file,
-    source => $clickhouse_template,
-  }
   file { $archive_dir:
     ensure => directory,
     owner  => $postgresql::server::user,

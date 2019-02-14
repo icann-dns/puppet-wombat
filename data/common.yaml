@@ -23,7 +23,6 @@ wombat::datastore::packages:
   - gearman-tools
   - gearman-job-server
 wombat::datastore::conf_dir: /etc/wombat
-wombat::datastore::clickhouse_template: 'puppet:///modules/wombat/etc/wombat/tsv-clickhouse.tpl'
 wombat::datastore::data_path: /srv/wombat
 wombat::datastore::incoming_dir_pattern: '*/*/incoming'
 wombat::datastore::reload_dir_pattern: '*/*/cbor'
