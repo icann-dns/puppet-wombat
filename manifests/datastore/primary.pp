@@ -79,6 +79,14 @@ class wombat::datastore::primary (
     unless  => "/usr/bin/wombat-postgres-update -r ${schema}",
     require => Postgresql::Server::Db['wombat'],
   }
+  exec { 'nodes-post-merge':
+    command     => '/usr/local/bin/nodes-post-merge',
+    subscribe   => [ 
+      File['/etc/wombat/nodes.csv'], 
+    ],
+    refreshonly => true,
+    user        => wombat,
+  }
   cron {'wombat-prune':
     ensure  => present,
     command => '/usr/bin/wombat-prune --threshold 75 --force',
