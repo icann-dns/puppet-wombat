@@ -80,7 +80,7 @@ class wombat::datastore::primary (
     require => Postgresql::Server::Db['wombat'],
   }
   file { '/etc/wombat/nodes.csv': 
-    audit => 'content',
+    audit  => content,
     notify => Exec['wombat-nodes-update'],
   }
   exec { 'wombat-nodes-update':
