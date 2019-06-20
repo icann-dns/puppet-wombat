@@ -79,11 +79,12 @@ class wombat::datastore::primary (
     unless  => "/usr/bin/wombat-postgres-update -r ${schema}",
     require => Postgresql::Server::Db['wombat'],
   }
+  file { '/etc/wombat/nodes.csv': 
+    audit => 'content',
+    notify => Exec['wombat-nodes-update'],
+  }
   exec { 'wombat-nodes-update':
     command     => '/usr/bin/wombat-nodes-update /etc/wombat/nodes.csv',
-    subscribe   => [ 
-      File['/etc/wombat/nodes.csv'], 
-    ],
     refreshonly => true,
     user        => wombat,
   }
