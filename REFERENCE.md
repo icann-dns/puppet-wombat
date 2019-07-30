@@ -26,6 +26,12 @@ Data type: `Array[String[1]]`
 
 packages to install
 
+##### `db_driver`
+
+Data type: `String[1]`
+
+database db driver
+
 ##### `db_host`
 
 Data type: `Stdlib::Host`
@@ -99,12 +105,6 @@ packages to install
 Data type: `Stdlib::Unixpath`
 
 configuration file directory
-
-##### `clickhouse_template`
-
-Data type: `Stdlib::Filesource`
-
-clickhouse tsv template
 
 ##### `data_path`
 
