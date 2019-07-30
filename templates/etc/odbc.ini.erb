@@ -3,7 +3,7 @@ Driver = wombat
 
 [wombat]
 Description         = Connection to Wombat PostgreSQL
-Driver              = PostgreSQL Unicode
+Driver              = <%= @db_driver %>
 Database            = <%= @db_name %>
 Servername          = <%= @db_host %>
 UserName            = <%= @db_username %>

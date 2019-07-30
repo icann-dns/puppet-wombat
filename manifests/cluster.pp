@@ -1,6 +1,7 @@
 # @summary module to manage and configure wombat
 #
 # @param packages packages to install
+# @param db_driver database db driver
 # @param db_host database host
 # @param db_name database name
 # @param db_username database username
@@ -13,6 +14,7 @@
 #
 class wombat::cluster (
   Array[String[1]]   $packages,
+  String[1]          $db_driver,
   Stdlib::Host       $db_host,
   String[1]          $db_name,
   String[1]          $db_username,
