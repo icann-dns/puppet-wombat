@@ -9,7 +9,7 @@
 # @param db_name database name
 # @param db_user database user
 # @param db_pass database password
-# @param db_host database host
+# @param db_host if present use the specified database host
 # @param clickhouse_servers list of clickhouse servers
 # @param archive_dir location of archive directory
 # @param loggers Hash of logger configueration
@@ -26,7 +26,7 @@ class wombat::datastore (
   String[1]                       $db_name,
   String[1]                       $db_user,
   String[1]                       $db_pass,
-  Stdlib::Host                    $db_host,
+  Optional[Stdlib::Host]          $db_host,
   Array[Stdlib::Host]             $clickhouse_servers,
   String[1]                       $clickhouse_user,
   String[1]                       $clickhouse_pass,

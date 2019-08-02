@@ -7,7 +7,9 @@ pcap_dir_pattern=<%= @pcap_dir_pattern %>
 [postgres]
 database=<%= @db_name %>
 user=<%= @db_user %>
+<% if @db_host %>
 host=<%= @db_host %>
+<% end %>
 password=<%= @db_pass %>
 
 [clickhouse]
