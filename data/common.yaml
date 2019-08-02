@@ -31,7 +31,7 @@ wombat::datastore::pcap_dir_pattern: '*/*/pcap'
 wombat::datastore::db_name: wombat
 wombat::datastore::db_user: wombat
 wombat::datastore::db_pass: wombat
-wombat::datastore::db_host: localhost
+wombat::datastore::db_host: ~
 wombat::datastore::clickhouse_servers:
   - localhost
 wombat::datastore::clickhouse_user: wombat

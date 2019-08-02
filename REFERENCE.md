@@ -150,9 +150,9 @@ database password
 
 ##### `db_host`
 
-Data type: `Stdlib::Host`
+Data type: `Optional[Stdlib::Host]`
 
-database host
+if present use the specified database host
 
 ##### `clickhouse_servers`
 
