@@ -59,7 +59,9 @@ wombat::datastore::standby::db_hostaddr:
   - 127.0.0.1
 wombat::datastore::standby::db_username: wombat
 wombat::datastore::standby::db_password: wombat
-wombat::rssac_report::package: 
+wombat::rssacd::packages:
+  - wombat-rssac-notify
+wombat::rssac_report::packages: 
   - wombat-rssac-reports
 wombat::rssac_report::web_root: /srv/www
 wombat::rssac_report::output_dir: rssac
