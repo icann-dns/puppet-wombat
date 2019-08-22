@@ -59,10 +59,10 @@ wombat::datastore::standby::db_hostaddr:
   - 127.0.0.1
 wombat::datastore::standby::db_username: wombat
 wombat::datastore::standby::db_password: wombat
-wombat::rssac::package: 
+wombat::rssac_report::package: 
   - wombat-rssac-reports
-wombat::rssac::web_root: /srv/www
-wombat::rssac::output_dir: rssac
-wombat::rssac::report: all
-wombat::rssac::server: L-Root
-wombat::rssac::report_server_name: 'l.root-servers.net'
+wombat::rssac_report::web_root: /srv/www
+wombat::rssac_report::output_dir: rssac
+wombat::rssac_report::report: all
+wombat::rssac_report::server: L-Root
+wombat::rssac_report::report_server_name: 'l.root-servers.net'
