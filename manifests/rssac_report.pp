@@ -26,4 +26,4 @@ class wombat::rssac_report (
     minute  => '0',
     hour    => '1',
   }
-}q
+}
