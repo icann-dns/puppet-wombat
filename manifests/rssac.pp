@@ -7,9 +7,9 @@
 # @param server server name
 # @param report_server_name service FQDN
 #
-class wombat::datastore (
+class wombat::rssac (
   Array[String[1]]                $packages,
-  Stdlib::Unixpath                $web_root,  
+  Stdlib::Unixpath                $web_root,
   Stdlib::Unixpath                $output_dir,
   String[1]                       $report,
   String[1]                       $server,
