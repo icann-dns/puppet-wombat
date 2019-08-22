@@ -103,4 +103,5 @@ class wombat::datastore::primary (
     minute  => '0',
     hour    => '2',
   }
+  include rssacd
 }
