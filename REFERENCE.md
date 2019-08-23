@@ -230,17 +230,17 @@ Data type: `Hash[String, Hash]`
 
 a hash of roles to be used with postgresql::server::role
 
-##### `data_user`
-
-Data type: `String[1]`
-
-system user
-
 ##### `synchronous_commit`
 
 Data type: `Wombat::Synchronous_commit`
 
+a boolean to enable synchronous_commit on postgresql
 
+##### `data_user`
+
+Data type: `String[1]`
+
+system user to run as
 
 ### wombat::datastore::standby
 
