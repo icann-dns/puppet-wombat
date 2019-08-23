@@ -3,7 +3,9 @@
 # @param ipv4_address ipv4 address to allow for replication
 # @param ipv6_address ipv4 address to allow for replication
 # @param roles a hash of roles to be used with postgresql::server::role
-# @param data_user system user
+# @param synchronous_commit a boolean to enable synchronous_commit on postgresql
+# @param data_user system user to run as
+#
 class wombat::datastore::primary (
   Stdlib::IP::Address::V4    $ipv4_address,
   Stdlib::IP::Address::V6    $ipv6_address,
