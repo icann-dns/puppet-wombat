@@ -9,7 +9,8 @@
 * [`wombat::datastore`](#wombatdatastore): install wombat tools and configueration for wombat datastore processing
 * [`wombat::datastore::primary`](#wombatdatastoreprimary): class to ensure postgress is configuered as the primary database
 * [`wombat::datastore::standby`](#wombatdatastorestandby): class to ensure postgress is configuered as the standby database
-* [`wombat::rssac`](#wombatrssac): installs the required files for the rssac publishing
+* [`wombat::rssac_report`](#wombatrssac_report): installs the required files for the rssac publishing
+* [`wombat::rssacd`](#wombatrssacd): installs the required files for the rssac publishing
 
 ## Classes
 
@@ -273,13 +274,13 @@ Data type: `Array[Stdlib::IP::Address]`
 
 
 
-### wombat::rssac
+### wombat::rssac_report
 
 installs the required files for the rssac publishing
 
 #### Parameters
 
-The following parameters are available in the `wombat::rssac` class.
+The following parameters are available in the `wombat::rssac_report` class.
 
 ##### `packages`
 
@@ -316,4 +317,18 @@ server name
 Data type: `Stdlib::Host`
 
 service FQDN
+
+### wombat::rssacd
+
+installs the required files for the rssac publishing
+
+#### Parameters
+
+The following parameters are available in the `wombat::rssacd` class.
+
+##### `packages`
+
+Data type: `Array[String[1]]`
+
+packages to install
 
