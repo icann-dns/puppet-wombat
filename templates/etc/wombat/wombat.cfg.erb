@@ -7,17 +7,24 @@ pcap_dir_pattern=<%= @pcap_dir_pattern %>
 [postgres]
 database=<%= @db_name %>
 user=<%= @db_user %>
-<% if @db_host %>
-host=<%= @db_host %>
-<% end %>
 password=<%= @db_pass %>
+<% if @db_host -%>
+host=<%= @db_host %>
+<%- end -%>
 
 [clickhouse]
 servers=<%= @clickhouse_servers.join(',') %>
+dbdir=<%= @clickhouse_dbdir %>
+import-server=<%= @clickhouse_import_server %>
+node-shard-default=<%= @clickhouse_node_shard_default %>
 user=<%= @clickhouse_user %>
 password=<%= @clickhouse_pass %>
 
 [pcap]
+<%- if @pcap_compress -%>
+compress=y
+compression-level=<%= @compression_level %>
+<%- end -%>
 pseudo-anonymise=<% if @anonymisation_passphrase %>Y<% else %>N<% end %>
 pseudo-anonymisation-passphrase=<%= @anonymisation_passphrase %>
 
@@ -37,3 +44,9 @@ propagate=0
 handlers=<%= config['handlers'] %>
 
 <%- end -%>
+
+[rssac]
+grafana-url=<%= @rssac_url %>
+outdir=<%= @rssac_outdir %>
+server=<%= @rssac_server %>
+zone=<%= @rssac_zone %>

@@ -1,4 +1,4 @@
-# @summary class to ensure postgress is configuered as the standby database
+# @summary class to ensure postgress is configured as the standby database
 #
 # @param db_host db server to replicate from
 # @param db_username db user with replicate permissions

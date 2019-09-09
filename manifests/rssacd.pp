@@ -7,7 +7,8 @@ class wombat::rssacd (
 ) {
   ensure_packages($packages)
   service { 'wombat-rssac':
-    ensure => running,
-    enable => true,
+    ensure  => running,
+    enable  => true,
+    require => Package[$packages],
   }
 }
