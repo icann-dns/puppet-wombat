@@ -1,4 +1,4 @@
-# @summary class to ensure postgress is configuered as the primary database
+# @summary class to ensure postgress is configured as the primary database
 #
 # @param ipv4_address ipv4 address to allow for replication
 # @param ipv6_address ipv4 address to allow for replication

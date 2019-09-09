@@ -14,6 +14,38 @@ wombat::cluster::odbc_file: /etc/odbc.ini
 wombat::cluster::odbcinst_file: /etc/odbcinst.ini
 wombat::cluster::odbc_logdir: /var/log/odbc
 wombat::cluster::owner: clickhouse
+wombat::config::conf_dir: /etc/wombat
+wombat::config::data_path: /srv/wombat
+wombat::config::incoming_dir_pattern: '*/*/incoming'
+wombat::config::reload_dir_pattern: '*/*/cbor'
+wombat::config::pcap_dir_pattern: '*/*/pcap'
+wombat::config::db_name: wombat
+wombat::config::db_user: wombat
+wombat::config::db_pass: wombat
+wombat::config::db_host: ~
+wombat::config::clickhouse_servers:
+  - localhost
+wombat::config::clickhouse_dbdir: /var/lib/clickhouse/
+wombat::config::clickhouse_import_server: localhost
+wombat::config::clickhouse_node_shard_default: auto
+wombat::config::clickhouse_user: wombat
+wombat::config::clickhouse_pass: wombat
+wombat::config::loggers:
+  root:
+    level: INFO
+    handlers: syslog
+  gear:
+    level: ERROR
+    qualname: gear
+    propagate: false
+    handlers: syslog
+wombat::config::pcap_compress: true
+wombat::config::compression_level: 2
+wombat::config::anonymisation_passphrase: ~
+wombat::config::rssac_url: http://example.com
+wombat::config::rssac_outdir: /srv/www
+wombat::config::rssac_server: L-Root
+wombat::config::rssac_zone: "."
 wombat::datastore::packages:
   - clickhouse-client
   - wombat-import
@@ -23,32 +55,9 @@ wombat::datastore::packages:
   - dns-stats-cdnsdumper
   - gearman-tools
   - gearman-job-server
-wombat::datastore::conf_dir: /etc/wombat
-wombat::datastore::data_path: /srv/wombat
-wombat::datastore::incoming_dir_pattern: '*/*/incoming'
-wombat::datastore::reload_dir_pattern: '*/*/cbor'
-wombat::datastore::pcap_dir_pattern: '*/*/pcap'
-wombat::datastore::db_name: wombat
-wombat::datastore::db_user: wombat
-wombat::datastore::db_pass: wombat
-wombat::datastore::db_host: ~
-wombat::datastore::clickhouse_servers:
-  - localhost
-wombat::datastore::clickhouse_user: wombat
-wombat::datastore::clickhouse_pass: wombat
 wombat::datastore::archive_dir: /var/pg_wal
-wombat::datastore::loggers:
-  root:
-    level: INFO
-    handlers: syslog
-  gear:
-    level: ERROR
-    qualname: gear
-    propagate: false
-    handlers: syslog
 wombat::datastore::standby: false
 wombat::datastore::queue_user: wombat
-wombat::datastore::anonymisation_passphrase: ~
 wombat::datastore::primary::ipv4_address: 192.0.2.0/24
 wombat::datastore::primary::ipv6_address: 2001:db8::0/48
 wombat::datastore::primary::roles: {}

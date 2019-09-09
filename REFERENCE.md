@@ -6,9 +6,10 @@
 **Classes**
 
 * [`wombat::cluster`](#wombatcluster): module to manage and configure wombat
-* [`wombat::datastore`](#wombatdatastore): install wombat tools and configueration for wombat datastore processing
-* [`wombat::datastore::primary`](#wombatdatastoreprimary): class to ensure postgress is configuered as the primary database
-* [`wombat::datastore::standby`](#wombatdatastorestandby): class to ensure postgress is configuered as the standby database
+* [`wombat::config`](#wombatconfig): creates configuration for wombat environment
+* [`wombat::datastore`](#wombatdatastore): install wombat tools and configuration for wombat datastore processing
+* [`wombat::datastore::primary`](#wombatdatastoreprimary): class to ensure postgress is configured as the primary database
+* [`wombat::datastore::standby`](#wombatdatastorestandby): class to ensure postgress is configured as the standby database
 * [`wombat::rssac_report`](#wombatrssac_report): installs the required files for the rssac publishing
 * [`wombat::rssacd`](#wombatrssacd): installs the required files for the rssac publishing
 
@@ -88,19 +89,13 @@ Data type: `String[1]`
 
 file system user
 
-### wombat::datastore
+### wombat::config
 
-install wombat tools and configueration for wombat datastore processing
+creates configuration for wombat environment
 
 #### Parameters
 
-The following parameters are available in the `wombat::datastore` class.
-
-##### `packages`
-
-Data type: `Array[String[1]]`
-
-packages to install
+The following parameters are available in the `wombat::config` class.
 
 ##### `conf_dir`
 
@@ -162,11 +157,35 @@ Data type: `Array[Stdlib::Host]`
 
 list of clickhouse servers
 
-##### `archive_dir`
+##### `clickhouse_dbdir`
 
 Data type: `Stdlib::Unixpath`
 
-location of archive directory
+directory to store the clickhouse DB
+
+##### `clickhouse_import_server`
+
+Data type: `Stdlib::Host`
+
+server to use for clickhouse imports
+
+##### `clickhouse_node_shard_default`
+
+Data type: `String[1]`
+
+mode to use for node shard selection
+
+##### `clickhouse_user`
+
+Data type: `String[1]`
+
+clickhouse user
+
+##### `clickhouse_pass`
+
+Data type: `String[1]`
+
+clickhouse password
 
 ##### `loggers`
 
@@ -174,11 +193,17 @@ Data type: `Hash[String[1], Wombat::Logger]`
 
 Hash of logger configueration
 
-##### `standby`
+##### `pcap_compress`
 
 Data type: `Boolean`
 
-if this system is a standby or primary DB
+boolean enable compression (default=true)
+
+##### `compression_level`
+
+Data type: `Integer[1,9]`
+
+compression level to use (default=2)
 
 ##### `anonymisation_passphrase`
 
@@ -186,27 +211,65 @@ Data type: `Optional[String[1]]`
 
 if present use this password for anonimisation
 
-##### `clickhouse_user`
+##### `rssac_url`
+
+Data type: `Stdlib::HTTPUrl`
+
+Grafana URL to use when generating the RSSAC report charts
+
+##### `rssac_outdir`
+
+Data type: `Stdlib::Unixpath`
+
+output base directoy for the RSSAC reports hierarchy
+
+##### `rssac_server`
 
 Data type: `String[1]`
 
+server to query for node addresses
 
-
-##### `clickhouse_pass`
+##### `rssac_zone`
 
 Data type: `String[1]`
 
+zone to listen for NOTIFY messages from
 
+### wombat::datastore
+
+install wombat tools and configuration for wombat datastore processing
+
+#### Parameters
+
+The following parameters are available in the `wombat::datastore` class.
+
+##### `packages`
+
+Data type: `Array[String[1]]`
+
+packages to install
+
+##### `archive_dir`
+
+Data type: `Stdlib::Unixpath`
+
+location of archive directory
+
+##### `standby`
+
+Data type: `Boolean`
+
+if this system is a standby or primary DB
 
 ##### `queue_user`
 
 Data type: `String[1]`
 
-
+gearman queue service user
 
 ### wombat::datastore::primary
 
-class to ensure postgress is configuered as the primary database
+class to ensure postgress is configured as the primary database
 
 #### Parameters
 
@@ -244,7 +307,7 @@ system user to run as
 
 ### wombat::datastore::standby
 
-class to ensure postgress is configuered as the standby database
+class to ensure postgress is configured as the standby database
 
 #### Parameters
 
@@ -296,7 +359,7 @@ location for the web_root
 
 ##### `output_dir`
 
-Data type: `Stdlib::Unixpath`
+Data type: `String[1]`
 
 output dir for the rssac reports
 

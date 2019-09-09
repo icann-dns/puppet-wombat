@@ -10,13 +10,14 @@
 class wombat::rssac_report (
   Array[String[1]]                $packages,
   Stdlib::Unixpath                $web_root,
-  Stdlib::Unixpath                $output_dir,
+  String[1]                       $output_dir,
   String[1]                       $report,
   String[1]                       $server,
   Stdlib::Host                    $report_server_name,
 ) {
   ensure_packages($packages)
-  $_directories = [ $web_root , $web_root/$output_dir ]
+  include wombat::config
+  $_directories = [ $web_root , "${web_root}/${output_dir}" ]
   ensure_resource(
     'file', $_directories, { 'ensure' => 'directory', mode => '0755' }
   )
@@ -25,5 +26,6 @@ class wombat::rssac_report (
     user    => 'root',
     minute  => '0',
     hour    => '1',
+    require => Package[$packages],
   }
 }

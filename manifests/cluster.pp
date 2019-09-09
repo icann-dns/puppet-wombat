@@ -26,6 +26,7 @@ class wombat::cluster (
   String[1]          $owner,
 ) {
   ensure_packages($packages)
+  include wombat::config
   file {$odbc_file:
     ensure  => file,
     owner   => $owner,
