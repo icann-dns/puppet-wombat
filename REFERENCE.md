@@ -6,6 +6,8 @@
 **Classes**
 
 * [`wombat::cluster`](#wombatcluster): module to manage and configure wombat
+* [`wombat::compactor`](#wombatcompactor): module to install wombat compactor
+* [`wombat::compactor::uploads`](#wombatcompactoruploads): wrapper for the upload of compactor files using puppet-file_upload module
 * [`wombat::config`](#wombatconfig): creates configuration for wombat environment
 * [`wombat::datastore`](#wombatdatastore): install wombat tools and configuration for wombat datastore processing
 * [`wombat::datastore::primary`](#wombatdatastoreprimary): class to ensure postgress is configured as the primary database
@@ -88,6 +90,166 @@ location of odbc logdirectory
 Data type: `String[1]`
 
 file system user
+
+### wombat::compactor
+
+module to install wombat compactor
+
+#### Parameters
+
+The following parameters are available in the `wombat::compactor` class.
+
+##### `data`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### `promiscuous_mode`
+
+Data type: `Boolean`
+
+
+
+##### `rotation_period`
+
+Data type: `Integer[60,3600]`
+
+
+
+##### `raw_pcap`
+
+Data type: `Boolean`
+
+
+
+##### `ignored_pcap`
+
+Data type: `Boolean`
+
+
+
+##### `capture_data`
+
+Data type: `Array[Wombat::Capture_data]`
+
+
+
+##### `ip_addresses`
+
+Data type: `Array[Stdlib::IP::Address]`
+
+
+
+##### `listen_interfaces`
+
+Data type: `Optional[Wombat::Listen_interfaces]`
+
+
+
+##### `compression`
+
+Data type: `ENUM['gzip','xz']`
+
+
+
+##### `compression_level`
+
+Data type: `Integer[0,9]`
+
+
+
+##### `pcap_compression`
+
+Data type: `ENUM['gzip','xz']`
+
+
+
+##### `pcap_compression_level`
+
+Data type: `Integer[0,9]`
+
+
+
+##### `vlan_id`
+
+Data type: `Array[Integer[0,4096]]`
+
+
+
+##### `package`
+
+Data type: `String`
+
+
+
+##### `conf_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### `conf_file`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### `tools`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### `service`
+
+Data type: `String`
+
+
+
+##### `enable`
+
+Data type: `Boolean`
+
+
+
+##### `enable_zabbix`
+
+Data type: `Boolean`
+
+
+
+### wombat::compactor::uploads
+
+== Class:wombat::compactor::upload
+
+#### Parameters
+
+The following parameters are available in the `wombat::compactor::uploads` class.
+
+##### `destination_base_path`
+
+Data type: `String`
+
+Path to copy files to on destination host
+
+##### `service`
+
+Data type: `String`
+
+Service name been used
+
+##### `bwlimit`
+
+Data type: `Integer[0,10000]`
+
+Set the limit speed for the upload
+
+##### `uploads`
+
+Data type: `Hash[String[1], Wombat::Compactor::Upload]`
+
+Data structure for upload information
 
 ### wombat::config
 
