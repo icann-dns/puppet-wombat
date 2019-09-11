@@ -27,6 +27,7 @@ class wombat::compactor::uploads (
       ssh_key_source      => $config['ssh_key_source'],
       ssh_user            => $config['ssh_user'],
       create_parent       => $config['create_parent'],
+      minute_frequency    => $config['minute_frequency'],
     }
   }
 }
