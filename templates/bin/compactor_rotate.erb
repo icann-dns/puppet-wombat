@@ -1,0 +1,20 @@
+# Rotate file for hedgehog::compactor module
+#!/bin/sh
+
+DIR=<%= @data %>
+
+# Delete any file that is past 90 days. 
+
+find ${DIR} -mtime +90 -type f -exec rm '{}' \; 2>/dev/null
+
+# Delete/Rotate files if disk is past 70% used, one file at a time. 
+
+while [ $( df ${DIR} | tail -1 | awk '{print $5}' | tr -d '%' ) -gt 70 ]; do
+    oldest=$( find ${DIR} -type f 2>/dev/null | sort | head -1 )
+    if [ ! ${oldest} ]; then
+      logger -t hedgehog::compactor: no cbor/pcaps to rotate, exiting
+      exit
+    fi
+    logger -t hedgehog::compactor: removing ${oldest}
+    rm -f ${oldest} 2>/dev/null
+done

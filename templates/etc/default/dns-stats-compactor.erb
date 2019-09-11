@@ -1,0 +1,17 @@
+# Default settings for compactor.
+# This is sourced from /etc/init.d/dns-stats-compactor.
+
+# Allocate process to this CPU set.
+# CPUSET="0"
+<%- if @processorcount.to_i > 4 then -%>
+CPUSET="0,1"
+<%- end -%>
+
+# NUMA node to use for memory for CPU set.
+# MEMORYNODE="0"
+
+# Maximum memory to allow process.
+# MAXMEMORY=1G
+<%- if @memorysize_mb.to_i > 16000 then -%>
+MAXMEMORY=4G
+<%- end -%>

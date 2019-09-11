@@ -14,6 +14,29 @@ wombat::cluster::odbc_file: /etc/odbc.ini
 wombat::cluster::odbcinst_file: /etc/odbcinst.ini
 wombat::cluster::odbc_logdir: /var/log/odbc
 wombat::cluster::owner: clickhouse
+wombat::compactor::data: /opt/pcap
+wombat::compactor::promiscuous_mode: false
+wombat::compactor::rotation_period: 300
+wombat::compactor::raw_pcap: false
+wombat::compactor::ignored_pcap: true
+wombat::compactor::capture_data:
+  - all
+wombat::compactor::ip_addresses:
+  - "%{facts.networking.ip}"
+wombat::compactor::listen_interfaces: ~
+wombat::compactor::compression: xz
+wombat::compactor::compression_level: 2
+wombat::compactor::pcap_compression: xz
+wombat::compactor::pcap_compression_level: 2
+wombat::compactor::vlan_id:
+  - 0
+wombat::compactor::package: dns-stats-compactor
+wombat::compactor::conf_dir: /etc/dns-stats-compactor
+wombat::compactor::conf_file: "%{lookup('wombat::compactor::conf_dir')}/compactor.conf"
+wombat::compactor::tools: /usr/local/bin
+wombat::compactor::service: dns-stats-compactor
+wombat::compactor::enable: true
+wombat::compactor::enable_zabbix: true
 wombat::config::conf_dir: /etc/wombat
 wombat::config::data_path: /srv/wombat
 wombat::config::incoming_dir_pattern: '*/*/incoming'
