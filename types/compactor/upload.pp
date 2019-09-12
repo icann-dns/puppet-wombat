@@ -5,5 +5,5 @@ type Wombat::Compactor::Upload = Struct[{
   ssh_key_source      => Stdlib::Filesource,
   ssh_user            => String[1],
   create_parent       => Boolean,
-  minute_frequency    => Array[String],
+  minute_frequency    => Array[minute],
 }]
