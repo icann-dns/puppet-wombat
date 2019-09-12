@@ -11,7 +11,7 @@ class wombat::compactor::uploads (
   String                                     $destination_base_path,
   String                                     $service,
   Integer[0,10000]                           $bwlimit,
-  Array[Integer]                             $minute_frequency,
+  Optional[Array[Integer]]                   $minute_frequency,
   Hash[String[1], Wombat::Compactor::Upload] $uploads,
 ) {
   include file_upload
@@ -19,11 +19,15 @@ class wombat::compactor::uploads (
     true    => "${destination_base_path}/${service}/${::node_short_name}/incoming",
     default => "${destination_base_path}/${service}/${::hostname}/incoming",
   }
+  if $minute_frequency {
+    $_minute_frequency = $minute_frequency
+  } else {
+    $_minute_frequency = [ fqdn_rand(30), fqdn_rand(30) + 30 }
   $uploads.each |String $name, Hash $config| {
     file_upload::upload {$name:
       bwlimit             => $bwlimit,
       destination_path    => $destination_path,
-      minute_frequency    => $minute_frequency,
+      minute_frequency    => $_minute_frequency,
       destination_host    => $config['destination_host'],
       patterns            => $config['patterns'],
       remove_source_files => $config['remove_source_files'],

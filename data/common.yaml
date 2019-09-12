@@ -37,6 +37,10 @@ wombat::compactor::tools: /usr/local/bin
 wombat::compactor::service: dns-stats-compactor
 wombat::compactor::enable: true
 wombat::compactor::enable_zabbix: true
+wombat::compactor::uploads::bwlimit: 10000
+wombat::compactor::uploads::destination_base_path: /opt/cbor
+wombat::compactor::uploads::service: L-Root
+wombat::compactor::uploads::minute_frequency: ~
 wombat::config::conf_dir: /etc/wombat
 wombat::config::data_path: /srv/wombat
 wombat::config::incoming_dir_pattern: '*/*/incoming'
@@ -65,7 +69,7 @@ wombat::config::loggers:
 wombat::config::pcap_compress: true
 wombat::config::compression_level: 2
 wombat::config::anonymisation_passphrase: ~
-wombat::config::rssac_url: http://example.com
+wombat::config::rssac_url: http://localhost
 wombat::config::rssac_outdir: /srv/www
 wombat::config::rssac_server: L-Root
 wombat::config::rssac_zone: "."
