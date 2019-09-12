@@ -245,6 +245,12 @@ Data type: `Integer[0,10000]`
 
 Set the limit speed for the upload
 
+##### `minute_frequency`
+
+Data type: `Array[Integer]`
+
+frequency pattern for the uploads to work
+
 ##### `uploads`
 
 Data type: `Hash[String[1], Wombat::Compactor::Upload]`
