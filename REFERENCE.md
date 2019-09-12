@@ -247,7 +247,7 @@ Set the limit speed for the upload
 
 ##### `minute_frequency`
 
-Data type: `Array[Integer]`
+Data type: `Optional[Array[Integer]]`
 
 frequency pattern for the uploads to work
 
