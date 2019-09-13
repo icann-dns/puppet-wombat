@@ -99,8 +99,6 @@ wombat::rssacd::packages:
   - wombat-rssac-notify
 wombat::rssac_report::packages: 
   - wombat-rssac-reports
-wombat::rssac_report::web_root: /srv/www
-wombat::rssac_report::output_dir: rssac
 wombat::rssac_report::report: all
 wombat::rssac_report::server: L-Root
 wombat::rssac_report::report_server_name: 'l.root-servers.net'
