@@ -22,7 +22,8 @@ class wombat::compactor::uploads (
   if $minute_frequency {
     $_minute_frequency = $minute_frequency
   } else {
-    $_minute_frequency = [ fqdn_rand(30), fqdn_rand(30) + 30 }
+    $_minute_frequency = [ fqdn_rand(30), fqdn_rand(30) + 30 ]
+  }
   $uploads.each |String $name, Hash $config| {
     file_upload::upload {$name:
       bwlimit             => $bwlimit,
