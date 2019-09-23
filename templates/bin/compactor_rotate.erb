@@ -1,4 +1,4 @@
-# Rotate file for hedgehog::compactor module
+# Rotate file for wombat::compactor module
 #!/bin/sh
 
 DIR=<%= @data %>
@@ -12,9 +12,9 @@ find ${DIR} -mtime +90 -type f -exec rm '{}' \; 2>/dev/null
 while [ $( df ${DIR} | tail -1 | awk '{print $5}' | tr -d '%' ) -gt 70 ]; do
     oldest=$( find ${DIR} -type f 2>/dev/null | sort | head -1 )
     if [ ! ${oldest} ]; then
-      logger -t hedgehog::compactor: no cbor/pcaps to rotate, exiting
+      logger -t wombat::compactor: no cbor/pcaps to rotate, exiting
       exit
     fi
-    logger -t hedgehog::compactor: removing ${oldest}
+    logger -t wombat::compactor: removing ${oldest}
     rm -f ${oldest} 2>/dev/null
 done
