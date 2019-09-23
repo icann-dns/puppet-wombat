@@ -519,18 +519,6 @@ Data type: `Array[String[1]]`
 
 packages to install
 
-##### `web_root`
-
-Data type: `Stdlib::Unixpath`
-
-location for the web_root
-
-##### `output_dir`
-
-Data type: `String[1]`
-
-output dir for the rssac reports
-
 ##### `report`
 
 Data type: `String[1]`
