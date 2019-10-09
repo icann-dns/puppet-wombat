@@ -1,16 +1,28 @@
-[DEFAULT]
-Driver = wombat
+apiVersion: 1
 
-[wombat]
-Description         = Connection to Wombat PostgreSQL
-Driver              = <%= @db_driver %>
-Database            = <%= @db_name %>
-Servername          = <%= @db_host %>
-UserName            = <%= @db_username %>
-Password            = <%= @db_password %>
-Port                = <%= @db_port %>
-Protocol            = 9.3
-ReadOnly            = Yes
-RowVersioning       = No
-ShowSystemTables    = No
-ConnSettings        =
+datasources:
+ - name: Wombat
+   type: vertamedia-clickhouse-datasource
+   access: proxy
+   url: http://<%= @wombat_cluster_host %>:http://<%= @wombat_cluster_port %>
+
+   orgId: 1
+
+   # <bool> enable/disable basic auth
+   basicAuth: false
+   # <string> basic auth username
+   basicAuthUser:
+   # <string> basic auth password
+   basicAuthPassword:
+   # <bool> enable/disable with credentials headers
+   withCredentials: false
+   # <bool> mark as default datasource. Max one per org
+   isDefault: true
+   # <map> fields that will be converted to json and stored in json_data
+   jsonData:
+      # <bool> enable/disable sending 'add_http_cors_header=1' parameter
+      addCorsHeader: false
+      # <bool> enable/disable using POST method for sending queries
+      usePOST: true
+      # <string> default database name
+      defaultDatabase: "wombat"
