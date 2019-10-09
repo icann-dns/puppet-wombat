@@ -9,6 +9,10 @@ class wombat::grafana_config (
   Stdlib::Host                    $wombat_cluster_host,
   Integer[1]                      $wombat_cluster_port
 ) {
+  file {'/etc/grafana/provisioning/datasources':
+    ensure  => directory,
+    require => Package['grafana'],
+  }
   file {'/etc/grafana/provisioning/datasources/wombat.yml':
     ensure  => present,
     owner   => root,
@@ -16,6 +20,6 @@ class wombat::grafana_config (
     mode    => '0640',
     content => template('wombat/etc/grafana/provisioning/datasources/wombat.yml.erb'),
     notify  => Service['grafana-server'],
-    require => Package['grafana'],
+    require => File['/etc/grafana/provisioning/datasources'],
   }
 }
