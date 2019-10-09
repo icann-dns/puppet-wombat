@@ -15,5 +15,7 @@ class wombat::grafana_config (
     group   => grafana,
     mode    => '0640',
     content => template('wombat/etc/grafana/provisioning/datasources/wombat.yml.erb'),
+    notify  => Service['grafana-server'],
+    require => Package['grafana'],
   }
 }
