@@ -12,6 +12,7 @@
 * [`wombat::datastore`](#wombatdatastore): install wombat tools and configuration for wombat datastore processing
 * [`wombat::datastore::primary`](#wombatdatastoreprimary): class to ensure postgress is configured as the primary database
 * [`wombat::datastore::standby`](#wombatdatastorestandby): class to ensure postgress is configured as the standby database
+* [`wombat::grafana_config`](#wombatgrafana_config): installs the required configuration files for grafana
 * [`wombat::rssac_report`](#wombatrssac_report): installs the required files for the rssac publishing
 * [`wombat::rssacd`](#wombatrssacd): installs the required files for the rssac publishing
 
@@ -504,6 +505,26 @@ db password with replicate permissions
 Data type: `Array[Stdlib::IP::Address]`
 
 
+
+### wombat::grafana_config
+
+installs the required configuration files for grafana
+
+#### Parameters
+
+The following parameters are available in the `wombat::grafana_config` class.
+
+##### `wombat_cluser_host`
+
+Data type: `Stdlib::Host`
+
+setup the host of the clickhouse cluster to query
+
+##### `wombat_cluser_port`
+
+Data type: `Integer[1]`
+
+setup the TCP port for the clickhouse cluster to query
 
 ### wombat::rssac_report
 
