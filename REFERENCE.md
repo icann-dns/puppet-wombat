@@ -514,13 +514,19 @@ installs the required configuration files for grafana
 
 The following parameters are available in the `wombat::grafana_config` class.
 
-##### `wombat_cluser_host`
+##### `wombat_cluster_protocol`
+
+Data type: `String[1]`
+
+setup the clickhouse cluster to connection http or https
+
+##### `wombat_cluster_host`
 
 Data type: `Stdlib::Host`
 
 setup the host of the clickhouse cluster to query
 
-##### `wombat_cluser_port`
+##### `wombat_cluster_port`
 
 Data type: `Integer[1]`
 
