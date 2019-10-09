@@ -1,11 +1,13 @@
 # @summary installs the required configuration files for grafana
 #
-# @param wombat_cluser_host setup the host of the clickhouse cluster to query 
-# @param wombat_cluser_port setup the TCP port for the clickhouse cluster to query
+# @param wombat_cluster_protocol setup the clickhouse cluster to connection http or https 
+# @param wombat_cluster_host setup the host of the clickhouse cluster to query 
+# @param wombat_cluster_port setup the TCP port for the clickhouse cluster to query
 #
 class wombat::grafana_config (
-  Stdlib::Host                    $wombat_cluser_host,
-  Integer[1]                      $wombat_cluser_port
+  String[1]                       $wombat_cluster_protocol,
+  Stdlib::Host                    $wombat_cluster_host,
+  Integer[1]                      $wombat_cluster_port
 ) {
   file {'/etc/grafana/provisioning/datasources/wombat.yml':
     ensure  => present,

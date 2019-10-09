@@ -4,7 +4,7 @@ datasources:
  - name: Wombat
    type: vertamedia-clickhouse-datasource
    access: proxy
-   url: http://<%= @wombat_cluster_host %>:http://<%= @wombat_cluster_port %>
+   url: <%= @wombat_cluster_protocol %>://<%= @wombat_cluster_host %>:<%= @wombat_cluster_port %>
 
    orgId: 1
 
