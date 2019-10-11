@@ -17,7 +17,7 @@ class wombat::datastore (
   Boolean                         $enable_rotate,
   Array[String[1]]                $services,
 ) {
-  $data = wombat::config::data_path
+  $data = $wombat::config::data_path
   $_service_directories = $services.map |String $service| {
     ["${data}/${service}",]
   }.flatten
