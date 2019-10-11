@@ -85,11 +85,14 @@ wombat::datastore::packages:
 wombat::datastore::archive_dir: /var/pg_wal
 wombat::datastore::standby: false
 wombat::datastore::queue_user: wombat
+wombat::datastore::data_user: pcapture
+wombat::datastore::enable_rotate: true 
+wombat::datastore::services:
+  - L-Root 
 wombat::datastore::primary::ipv4_address: 192.0.2.0/24
 wombat::datastore::primary::ipv6_address: 2001:db8::0/48
 wombat::datastore::primary::roles: {}
 wombat::datastore::primary::synchronous_commit: 'on'
-wombat::datastore::primary::data_user: pcapture
 wombat::datastore::standby::db_host: localhost
 wombat::datastore::standby::db_hostaddr:
   - 127.0.0.1

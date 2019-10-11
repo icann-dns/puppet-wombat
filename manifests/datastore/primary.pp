@@ -4,20 +4,19 @@
 # @param ipv6_address ipv4 address to allow for replication
 # @param roles a hash of roles to be used with postgresql::server::role
 # @param synchronous_commit a boolean to enable synchronous_commit on postgresql
-# @param data_user system user to run as
 #
 class wombat::datastore::primary (
   Stdlib::IP::Address::V4    $ipv4_address,
   Stdlib::IP::Address::V6    $ipv6_address,
   Hash[String, Hash]         $roles,
   Wombat::Synchronous_commit $synchronous_commit,
-  String[1]                  $data_user,
 ) {
   assert_private()
   include wombat::datastore
   include wombat::rssacd
 
   $archive_dir = $wombat::datastore::archive_dir
+  $data_user = $wombat::datastore::data_user
 
   postgresql::server::db { 'wombat':
     user     => 'wombat',

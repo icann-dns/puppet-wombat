@@ -1,0 +1,10 @@
+# Rotate file for wombat::datastore module
+#!/bin/sh
+
+DIR=<%= @wombat::config::data_path %>
+
+# Delete any pcap file (compress or not and pcap.info file) that is past 7 days.
+find ${DIR} -mtime +6 -type f -name *.pcap* -exec rm '{}' \; 2>/dev/null
+
+# Delete any cbor file (compress or not) that is past 1 year. (365 days)
+find ${DIR} -mtime +365 -type f -name *.cbor* -exec rm '{}' \; 2>/dev/null
