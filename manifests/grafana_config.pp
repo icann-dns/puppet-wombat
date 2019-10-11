@@ -7,7 +7,7 @@
 class wombat::grafana_config (
   String[1]                       $wombat_cluster_protocol,
   Stdlib::Host                    $wombat_cluster_host,
-  Integer[1]                      $wombat_cluster_port
+  Integer[1]                      $wombat_cluster_port,
 ) {
   file {'/etc/grafana/provisioning/datasources':
     ensure  => directory,
