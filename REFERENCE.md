@@ -436,6 +436,24 @@ Data type: `String[1]`
 
 gearman queue service user
 
+##### `data_user`
+
+Data type: `String`
+
+system user to run as
+
+##### `enable_rotate`
+
+Data type: `Boolean`
+
+enables the file rotation and expiration of files
+
+##### `services`
+
+Data type: `Array[String[1]]`
+
+array of services to process
+
 ### wombat::datastore::primary
 
 class to ensure postgress is configured as the primary database
@@ -467,12 +485,6 @@ a hash of roles to be used with postgresql::server::role
 Data type: `Wombat::Synchronous_commit`
 
 a boolean to enable synchronous_commit on postgresql
-
-##### `data_user`
-
-Data type: `String[1]`
-
-system user to run as
 
 ### wombat::datastore::standby
 
