@@ -98,9 +98,9 @@ wombat::datastore::standby::db_hostaddr:
   - 127.0.0.1
 wombat::datastore::standby::db_username: wombat
 wombat::datastore::standby::db_password: wombat
-wombat::grafana_config::wombat_cluster_protocol: http
-wombat::grafana_config::wombat_cluster_host: localhost
-wombat::grafana_config::wombat_cluster_port: 8123
+wombat::grafana::wombat_cluster_protocol: http
+wombat::grafana::wombat_cluster_host: localhost
+wombat::grafana::wombat_cluster_port: 8123
 wombat::rssacd::packages:
   - wombat-rssac-notify
 wombat::rssac_report::packages: 

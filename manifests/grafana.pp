@@ -4,11 +4,13 @@
 # @param wombat_cluster_host setup the host of the clickhouse cluster to query 
 # @param wombat_cluster_port setup the TCP port for the clickhouse cluster to query
 #
-class wombat::grafana_config (
+class wombat::grafana (
   String[1]                       $wombat_cluster_protocol,
   Stdlib::Host                    $wombat_cluster_host,
   Integer[1]                      $wombat_cluster_port,
 ) {
+  include grafana
+
   file {'/etc/grafana/provisioning/datasources':
     ensure  => directory,
     require => Package['grafana'],
