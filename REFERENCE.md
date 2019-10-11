@@ -12,7 +12,7 @@
 * [`wombat::datastore`](#wombatdatastore): install wombat tools and configuration for wombat datastore processing
 * [`wombat::datastore::primary`](#wombatdatastoreprimary): class to ensure postgress is configured as the primary database
 * [`wombat::datastore::standby`](#wombatdatastorestandby): class to ensure postgress is configured as the standby database
-* [`wombat::grafana_config`](#wombatgrafana_config): installs the required configuration files for grafana
+* [`wombat::grafana`](#wombatgrafana): installs the required configuration files for grafana
 * [`wombat::rssac_report`](#wombatrssac_report): installs the required files for the rssac publishing
 * [`wombat::rssacd`](#wombatrssacd): installs the required files for the rssac publishing
 
@@ -518,13 +518,13 @@ Data type: `Array[Stdlib::IP::Address]`
 
 
 
-### wombat::grafana_config
+### wombat::grafana
 
 installs the required configuration files for grafana
 
 #### Parameters
 
-The following parameters are available in the `wombat::grafana_config` class.
+The following parameters are available in the `wombat::grafana` class.
 
 ##### `wombat_cluster_protocol`
 
