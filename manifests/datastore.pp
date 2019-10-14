@@ -17,6 +17,9 @@ class wombat::datastore (
   Boolean                         $enable_rotate,
   Array[String[1]]                $services,
 ) {
+  include wombat::config
+  include postgresql::server
+
   $data = $wombat::config::data_path
   $_service_directories = $services.map |String $service| {
     ["${data}/${service}",]
@@ -32,8 +35,6 @@ class wombat::datastore (
       group    => $data_user
     }
   )
-  include wombat::config
-  include postgresql::server
 
   $ensure = $enable_rotate ? {
     true    => 'present',
