@@ -11,10 +11,6 @@ class wombat::grafana (
 ) {
   include grafana
 
-  file {'/etc/grafana/provisioning/datasources':
-    ensure  => directory,
-    require => Package['grafana'],
-  }
   file {'/etc/grafana/provisioning/datasources/wombat.yml':
     ensure  => present,
     owner   => root,
@@ -22,6 +18,6 @@ class wombat::grafana (
     mode    => '0640',
     content => template('wombat/etc/grafana/provisioning/datasources/wombat.yml.erb'),
     notify  => Service['grafana-server'],
-    require => File['/etc/grafana/provisioning/datasources'],
+    require => Package['grafana'],
   }
 }
