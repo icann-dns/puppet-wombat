@@ -37,6 +37,11 @@ class wombat::cluster (
     ensure => directory,
     owner  => $owner,
   }
+  file { '/usr/local/bin/zbx_clickhouse_monitor.sh':
+    ensure => file,
+    source => 'puppet:///modules/wombat/usr/local/bin/zbx_clickhouse_monitor.sh',
+    mode   => '0755';
+  }
   ini_setting {'set log file':
     ensure            => present,
     path              => $odbcinst_file,
