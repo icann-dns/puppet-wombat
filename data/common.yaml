@@ -4,6 +4,7 @@ wombat::cluster::packages:
   - odbc-postgresql
   - clickhouse-client
   - wombat-clickhouse-server
+  - libxml2-utils
 wombat::cluster::db_driver: /usr/lib/x86_64-linux-gnu/odbc/psqlodbcw.so
 wombat::cluster::db_name: wombat
 wombat::cluster::db_host: localhost
