@@ -486,6 +486,12 @@ Data type: `Wombat::Synchronous_commit`
 
 a boolean to enable synchronous_commit on postgresql
 
+##### `replicate`
+
+Data type: `Boolean`
+
+
+
 ### wombat::datastore::standby
 
 class to ensure postgress is configured as the standby database
