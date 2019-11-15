@@ -10,6 +10,7 @@ class wombat::datastore::primary (
   Stdlib::IP::Address::V6    $ipv6_address,
   Hash[String, Hash]         $roles,
   Wombat::Synchronous_commit $synchronous_commit,
+  Boolean                    $replicate,
 ) {
   assert_private()
   include wombat::datastore
@@ -17,6 +18,11 @@ class wombat::datastore::primary (
 
   $archive_dir = $wombat::datastore::archive_dir
   $data_user = $wombat::datastore::data_user
+
+  $ensure_replicate = $replicate ? {
+    true    => 'present',
+    default => 'absent',
+  }
 
   postgresql::server::db { 'wombat':
     user     => 'wombat',
@@ -40,11 +46,11 @@ class wombat::datastore::primary (
     user        => 'wombat_replication',
   }
   postgresql::server::config_entry { 'archive_command':
-    ensure => present,
+    ensure => $ensure_replicate,
     value  => "test ! -f ${archive_dir}/%f && cp %p ${archive_dir}/%f",
   }
   postgresql::server::config_entry { 'archive_mode':
-    ensure => present,
+    ensure => $ensure_replicate,
     value  => 'on',
   }
   postgresql::server::config_entry { 'wal_keep_segments':
@@ -60,7 +66,7 @@ class wombat::datastore::primary (
     value  => '3',
   }
   postgresql::server::config_entry { 'synchronous_standby_names':
-    ensure => present,
+    ensure => $ensure_replicate,
     value  => 'FIRST 1 (lax)',
   }
   postgresql::server::config_entry { 'wal_level':

@@ -94,6 +94,7 @@ wombat::datastore::primary::ipv4_address: 192.0.2.0/24
 wombat::datastore::primary::ipv6_address: 2001:db8::0/48
 wombat::datastore::primary::roles: {}
 wombat::datastore::primary::synchronous_commit: 'on'
+wombat::datastore::primary::replicate: true
 wombat::datastore::standby::db_host: localhost
 wombat::datastore::standby::db_hostaddr:
   - 127.0.0.1
