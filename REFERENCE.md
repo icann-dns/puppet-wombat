@@ -448,6 +448,14 @@ Data type: `Boolean`
 
 enables the file rotation and expiration of files
 
+##### `cbor_expiration`
+
+specifies a data aging in days for files keep
+
+##### `pcap_expiration`
+
+specifies a data aging in days for files keep
+
 ##### `services`
 
 Data type: `Array[String[1]]`
