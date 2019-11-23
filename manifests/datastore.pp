@@ -6,6 +6,8 @@
 # @param queue_user gearman queue service user
 # @param data_user system user to run as
 # @param enable_rotate enables the file rotation and expiration of files
+# @param cbor_expiration specifies a data aging in days for files keep
+# @param pcap_expiration specifies a data aging in days for files keep
 # @param services array of services to process
 #
 class wombat::datastore (

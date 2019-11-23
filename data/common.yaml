@@ -88,6 +88,8 @@ wombat::datastore::standby: false
 wombat::datastore::queue_user: wombat
 wombat::datastore::data_user: pcapture
 wombat::datastore::enable_rotate: true 
+wombat::datastore::cbor_expiration: 365
+wombat::datastore::pcap_expiration: 7
 wombat::datastore::services:
   - L-Root 
 wombat::datastore::primary::ipv4_address: 192.0.2.0/24
