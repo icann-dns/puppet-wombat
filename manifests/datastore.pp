@@ -32,7 +32,7 @@ class wombat::datastore (
     'file', $_directories,
     {
       'ensure' => 'directory',
-      mode     => '0755',
+      mode     => '0775',
       owner    => $data_user,
       group    => $data_user
     }
