@@ -4,6 +4,9 @@
 # @param ipv6_address ipv4 address to allow for replication
 # @param roles a hash of roles to be used with postgresql::server::role
 # @param synchronous_commit a boolean to enable synchronous_commit on postgresql
+# @param min_partitions integer ensure a minimum number of raw data partitions
+# @param max_age integer maximum aggregated data partition age in days
+# @param threshold integer set disc usage percentage threshold
 #
 class wombat::datastore::primary (
   Stdlib::IP::Address::V4    $ipv4_address,
@@ -11,6 +14,9 @@ class wombat::datastore::primary (
   Hash[String, Hash]         $roles,
   Wombat::Synchronous_commit $synchronous_commit,
   Boolean                    $replicate,
+  Integer                    $min_partitions,
+  Integer                    $max_age,
+  Integer                    $threshold,
 ) {
   assert_private()
   include wombat::datastore
@@ -98,7 +104,7 @@ class wombat::datastore::primary (
   }
   cron {'wombat-prune':
     ensure  => present,
-    command => '/usr/bin/wombat-prune --threshold 75 --force',
+    command => "/usr/bin/wombat-prune -t ${threshold} -m ${min_partitions} -a ${max_age} --force",
     user    => $data_user,
     minute  => '0',
     hour    => '1',
