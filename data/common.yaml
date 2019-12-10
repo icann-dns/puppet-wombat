@@ -80,7 +80,6 @@ wombat::datastore::packages:
   - python3-psycopg2
   - python3-gear
   - dns-stats-inspector
-  - dns-stats-cdnsdumper
   - gearman-tools
   - gearman-job-server
 wombat::datastore::archive_dir: /var/pg_wal
