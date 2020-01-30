@@ -51,7 +51,6 @@ class wombat::config (
   String[1]                       $user,
   String[1]                       $group,
 ) {
-  ensure_resource('user', $user, {'ensure' => 'present'})
   file {$conf_dir:
     ensure => directory,
   }
