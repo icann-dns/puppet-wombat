@@ -48,20 +48,42 @@ class wombat::config (
   Stdlib::Unixpath                $rssac_outdir,
   String[1]                       $rssac_server,
   String[1]                       $rssac_zone,
+  String[1]                       $user,
+  String[1]                       $group,
 ) {
+  ensure_resource('user', $user, {'ensure' => 'present'})
   file {$conf_dir:
     ensure => directory,
   }
   if $facts['domain'] == 'datastore.dns.icann.org' {
+    ensure_resource('user', $user, {'ensure' => 'present', 'group' => $group })
     file {"${conf_dir}/wombat.cfg":
       ensure  => file,
+      owner   => root,
+      group   => root,
+      mode    => '755',
       content => template('wombat/etc/wombat/wombat.cfg.erb'),
       notify  => Service['gearman-job-server'],
     }
+    file {"${conf_dir}/private.cfg":
+      ensure  => file,
+      owner   => wombat,
+      group   => root,
+      mode    => '750',
+      content => template('wombat/etc/wombat/private.cfg.erb'),
+      notify  => Service['gearman-job-server'],
+    }
   } else {
+    ensure_resource('user', $user, {'ensure' => 'present'})
     file {"${conf_dir}/wombat.cfg":
       ensure  => file,
       content => template('wombat/etc/wombat/wombat.cfg.erb'),
     }
+    file {"${conf_dir}/private.cfg":
+      ensure  => file,
+      owner   => wombat,
+      group   => root,
+      mode    => '750',
+      content => template('wombat/etc/wombat/private.cfg.erb'),
   }
 }

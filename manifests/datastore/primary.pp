@@ -22,8 +22,8 @@ class wombat::datastore::primary (
   include wombat::datastore
   include wombat::rssacd
 
+  $user = $wombat::config::user
   $archive_dir = $wombat::datastore::archive_dir
-  $data_user = $wombat::datastore::data_user
 
   $ensure_replicate = $replicate ? {
     true    => 'present',
@@ -100,12 +100,12 @@ class wombat::datastore::primary (
   exec { 'wombat-nodes-update':
     command     => '/usr/bin/wombat-nodes-update /etc/wombat/nodes.csv',
     refreshonly => true,
-    user        => wombat,
+    user        => $user,
   }
   cron {'wombat-prune':
     ensure  => present,
     command => "/usr/bin/wombat-prune -t ${threshold} -m ${min_partitions} -a ${max_age} --force",
-    user    => $data_user,
+    user    => $user,
     minute  => '0',
     hour    => '1',
     weekday => '0',
@@ -113,7 +113,7 @@ class wombat::datastore::primary (
   cron {'wombat-tld-update':
     ensure  => present,
     command => '/usr/bin/wombat-tld-update',
-    user    => $data_user,
+    user    => $user,
     minute  => '0',
     hour    => '2',
   }

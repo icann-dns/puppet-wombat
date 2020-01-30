@@ -74,6 +74,8 @@ wombat::config::rssac_url: http://localhost
 wombat::config::rssac_outdir: /srv/www
 wombat::config::rssac_server: L-Root
 wombat::config::rssac_zone: "."
+wombat::config::user: wombat
+wombat::config::group: pcapture
 wombat::datastore::packages:
   - clickhouse-client
   - wombat-import

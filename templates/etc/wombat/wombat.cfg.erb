@@ -7,7 +7,6 @@ pcap_dir_pattern=<%= @pcap_dir_pattern %>
 [postgres]
 database=<%= @db_name %>
 user=<%= @db_user %>
-password=<%= @db_pass %>
 <% if @db_host -%>
 host=<%= @db_host %>
 <%- end -%>
@@ -18,7 +17,6 @@ dbdir=<%= @clickhouse_dbdir %>
 import-server=<%= @clickhouse_import_server %>
 node-shard-default=<%= @clickhouse_node_shard_default %>
 user=<%= @clickhouse_user %>
-password=<%= @clickhouse_pass %>
 
 [pcap]
 <%- if @pcap_compress -%>
