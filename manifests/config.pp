@@ -67,7 +67,7 @@ class wombat::config (
     }
     file {"${conf_dir}/private.cfg":
       ensure  => file,
-      owner   => wombat,
+      owner   => $user,
       group   => root,
       mode    => '750',
       content => template('wombat/etc/wombat/private.cfg.erb'),
@@ -77,13 +77,17 @@ class wombat::config (
     ensure_resource('user', $user, {'ensure' => 'present'})
     file {"${conf_dir}/wombat.cfg":
       ensure  => file,
+      owner   => root,
+      group   => root,
+      mode    => '755',
       content => template('wombat/etc/wombat/wombat.cfg.erb'),
     }
     file {"${conf_dir}/private.cfg":
       ensure  => file,
-      owner   => wombat,
+      owner   => $user,
       group   => root,
       mode    => '750',
       content => template('wombat/etc/wombat/private.cfg.erb'),
+    }
   }
 }
