@@ -61,7 +61,7 @@ class wombat::config (
       ensure  => file,
       owner   => root,
       group   => root,
-      mode    => '755',
+      mode    => '0644',
       content => template('wombat/etc/wombat/wombat.cfg.erb'),
       notify  => Service['gearman-job-server'],
     }
@@ -69,7 +69,7 @@ class wombat::config (
       ensure  => file,
       owner   => $user,
       group   => root,
-      mode    => '750',
+      mode    => '0600',
       content => template('wombat/etc/wombat/private.cfg.erb'),
       notify  => Service['gearman-job-server'],
     }
@@ -79,14 +79,14 @@ class wombat::config (
       ensure  => file,
       owner   => root,
       group   => root,
-      mode    => '755',
+      mode    => '0644',
       content => template('wombat/etc/wombat/wombat.cfg.erb'),
     }
     file {"${conf_dir}/private.cfg":
       ensure  => file,
       owner   => $user,
       group   => root,
-      mode    => '750',
+      mode    => '0600',
       content => template('wombat/etc/wombat/private.cfg.erb'),
     }
   }
