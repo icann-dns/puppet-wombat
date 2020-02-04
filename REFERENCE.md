@@ -410,11 +410,11 @@ Data type: `String[1]`
 
 to be running the wombat services as
 
-##### `group`
+##### `data_user`
 
 Data type: `String[1]`
 
-to used for the reading of data
+owner of the data files
 
 ### wombat::datastore
 
@@ -441,12 +441,6 @@ location of archive directory
 Data type: `Boolean`
 
 if this system is a standby or primary DB
-
-##### `data_user`
-
-Data type: `String`
-
-system user to run as
 
 ##### `enable_rotate`
 
