@@ -15,11 +15,11 @@ class wombat::rssac_report (
   include wombat::config
   $_directories = [ $::wombat::config::rssac_outdir ]
   ensure_resource(
-    'file', $_directories, { 'ensure' => 'directory', mode => '0755' }
+    'file', $_directories, { 'ensure' => 'directory', owner => $wombat::config::user, mode => '0755' }
   )
   cron {'wombat-rssac-reports':
     command => "/usr/bin/wombat-rssac-reports --output-dir ${::wombat::config::rssac_outdir} --report ${report} --server ${server} --report-server-name ${report_server_name}",
-    user    => 'root',
+    user    => $wombat::config::user,
     minute  => '0',
     hour    => '1',
     require => Package[$packages],
