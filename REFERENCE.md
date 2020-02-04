@@ -408,13 +408,13 @@ zone to listen for NOTIFY messages from
 
 Data type: `String[1]`
 
-
+to be running the wombat services as
 
 ##### `group`
 
 Data type: `String[1]`
 
-
+to used for the reading of data
 
 ### wombat::datastore
 
