@@ -404,6 +404,18 @@ Data type: `String[1]`
 
 zone to listen for NOTIFY messages from
 
+##### `user`
+
+Data type: `String[1]`
+
+
+
+##### `group`
+
+Data type: `String[1]`
+
+
+
 ### wombat::datastore
 
 install wombat tools and configuration for wombat datastore processing
@@ -430,12 +442,6 @@ Data type: `Boolean`
 
 if this system is a standby or primary DB
 
-##### `queue_user`
-
-Data type: `String[1]`
-
-gearman queue service user
-
 ##### `data_user`
 
 Data type: `String`
@@ -450,9 +456,13 @@ enables the file rotation and expiration of files
 
 ##### `cbor_expiration`
 
+Data type: `Integer[1,365]`
+
 specifies a data aging in days for files keep
 
 ##### `pcap_expiration`
+
+Data type: `Integer[1,365]`
 
 specifies a data aging in days for files keep
 
@@ -493,6 +503,24 @@ a hash of roles to be used with postgresql::server::role
 Data type: `Wombat::Synchronous_commit`
 
 a boolean to enable synchronous_commit on postgresql
+
+##### `min_partitions`
+
+Data type: `Integer`
+
+integer ensure a minimum number of raw data partitions
+
+##### `max_age`
+
+Data type: `Integer`
+
+integer maximum aggregated data partition age in days
+
+##### `threshold`
+
+Data type: `Integer`
+
+integer set disc usage percentage threshold
 
 ##### `replicate`
 
