@@ -3,7 +3,6 @@
 # @param packages packages to install
 # @param archive_dir location of archive directory
 # @param standby if this system is a standby or primary DB
-# @param data_user system user to run as
 # @param enable_rotate enables the file rotation and expiration of files
 # @param cbor_expiration specifies a data aging in days for files keep
 # @param pcap_expiration specifies a data aging in days for files keep
@@ -13,7 +12,6 @@ class wombat::datastore (
   Array[String[1]]                $packages,
   Stdlib::Unixpath                $archive_dir,
   Boolean                         $standby,
-  String                          $data_user,
   Boolean                         $enable_rotate,
   Integer[1,365]                  $cbor_expiration,
   Integer[1,365]                  $pcap_expiration,
@@ -33,8 +31,8 @@ class wombat::datastore (
     {
       'ensure' => 'directory',
       mode     => '0775',
-      owner    => $data_user,
-      group    => $data_user
+      owner    => $wombat::config::data_user,
+      group    => $wombat::config::data_user,
     }
   )
 

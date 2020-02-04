@@ -24,7 +24,7 @@
 # @param rssac_server server to query for node addresses
 # @param rssac_zone zone to listen for NOTIFY messages from
 # @param user to be running the wombat services as
-# @param group to used for the reading of data
+# @param data_user owner of the data files
 #
 class wombat::config (
   Stdlib::Unixpath                $conf_dir,
@@ -51,13 +51,14 @@ class wombat::config (
   String[1]                       $rssac_server,
   String[1]                       $rssac_zone,
   String[1]                       $user,
-  String[1]                       $group,
+  String[1]                       $data_user,
 ) {
   file {$conf_dir:
     ensure => directory,
   }
   if $facts['domain'] == 'datastore.dns.icann.org' {
-    ensure_resource('user', $user, {'ensure' => 'present', 'groups' => $group })
+    $_users = $user
+    ensure_resource('user', $_users, {'ensure' => 'present', 'groups' => $data_user })
     file {"${conf_dir}/wombat.cfg":
       ensure  => file,
       owner   => root,
