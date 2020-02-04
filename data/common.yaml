@@ -86,7 +86,6 @@ wombat::datastore::packages:
   - gearman-job-server
 wombat::datastore::archive_dir: /var/pg_wal
 wombat::datastore::standby: false
-wombat::datastore::queue_user: wombat
 wombat::datastore::data_user: pcapture
 wombat::datastore::enable_rotate: true 
 wombat::datastore::cbor_expiration: 365

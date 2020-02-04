@@ -3,7 +3,6 @@
 # @param packages packages to install
 # @param archive_dir location of archive directory
 # @param standby if this system is a standby or primary DB
-# @param queue_user gearman queue service user
 # @param data_user system user to run as
 # @param enable_rotate enables the file rotation and expiration of files
 # @param cbor_expiration specifies a data aging in days for files keep
@@ -14,7 +13,6 @@ class wombat::datastore (
   Array[String[1]]                $packages,
   Stdlib::Unixpath                $archive_dir,
   Boolean                         $standby,
-  String[1]                       $queue_user,
   String                          $data_user,
   Boolean                         $enable_rotate,
   Integer[1,365]                  $cbor_expiration,
@@ -59,12 +57,12 @@ class wombat::datastore (
   cron {'datastore_rotate':
     ensure  => $ensure,
     command => '/usr/bin/flock -n /var/lock/rotate.lock /usr/local/bin/datastore_rotate',
-    user    => root,
+    user    => $wombat::config::user,
     require => File['/usr/local/bin/datastore_rotate'];
   }
   cron {'wombat queue manager':
     command => '/usr/bin/wombat-import -s incoming',
-    user    => $queue_user,
+    user    => $wombat::config::user,
     minute  => '*/5',
   }
   file {'/etc/systemd/system/gearman-job-server.d':

@@ -85,7 +85,8 @@ class wombat::config (
       ensure  => file,
       owner   => $user,
       group   => root,
-      mode    => '0600',
+#      mode    => '0600',
+      mode    => '0644',
       content => template('wombat/etc/wombat/private.cfg.erb'),
     }
   }
