@@ -23,6 +23,8 @@
 # @param rssac_outdir output base directoy for the RSSAC reports hierarchy
 # @param rssac_server server to query for node addresses
 # @param rssac_zone zone to listen for NOTIFY messages from
+# @param user to be running the wombat services as
+# @param group to used for the reading of data
 #
 class wombat::config (
   Stdlib::Unixpath                $conf_dir,
