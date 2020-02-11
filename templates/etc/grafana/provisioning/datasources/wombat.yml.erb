@@ -9,9 +9,13 @@ datasources:
    orgId: 1
 
    # <bool> enable/disable basic auth
-   basicAuth: false
+   basicAuth: <%= @basic_auth %>
    # <string> basic auth username
+<%- if @basic_auth_user -%>
+   basicAuthUser: <%= @basic_auth_user %>
+<%- else -%>
    basicAuthUser:
+<%- end -%>
    # <string> basic auth password
    basicAuthPassword:
    # <bool> enable/disable with credentials headers
@@ -25,4 +29,4 @@ datasources:
       # <bool> enable/disable using POST method for sending queries
       usePOST: true
       # <string> default database name
-      defaultDatabase: "wombat"
+      defaultDatabase: <%= @database %>
