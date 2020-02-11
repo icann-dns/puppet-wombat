@@ -562,6 +562,24 @@ installs the required configuration files for grafana
 
 The following parameters are available in the `wombat::grafana` class.
 
+##### `basic_auth`
+
+Data type: `Boolean`
+
+use grafana basicauth default to false
+
+##### `basic_auth_user`
+
+Data type: `Optional[String[1]]`
+
+username to use for basicauth
+
+##### `database`
+
+Data type: `String[1]`
+
+clickhouse database to use
+
 ##### `wombat_cluster_protocol`
 
 Data type: `String[1]`
