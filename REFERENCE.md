@@ -460,6 +460,12 @@ Data type: `Integer[1,400]`
 
 specifies a data aging in days for files keep
 
+##### `cbor_process_cron`
+
+Data type: `Integer[1,15]`
+
+specifies the frequency for the cfor file detection and file queuing
+
 ##### `services`
 
 Data type: `Array[String[1]]`
