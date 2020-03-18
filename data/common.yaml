@@ -91,6 +91,7 @@ wombat::datastore::cbor_expiration: 365
 wombat::datastore::pcap_expiration: 7
 wombat::datastore::services:
   - L-Root 
+wombat::datastore::cbor_process_cron: 5
 wombat::datastore::primary::ipv4_address: 192.0.2.0/24
 wombat::datastore::primary::ipv6_address: 2001:db8::0/48
 wombat::datastore::primary::roles: {}

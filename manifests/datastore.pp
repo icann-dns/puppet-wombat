@@ -6,6 +6,7 @@
 # @param enable_rotate enables the file rotation and expiration of files
 # @param cbor_expiration specifies a data aging in days for files keep
 # @param pcap_expiration specifies a data aging in days for files keep
+# @param cbor_process_cron specifies the frequency for the cfor file detection and file queuing
 # @param services array of services to process
 #
 class wombat::datastore (
@@ -15,6 +16,7 @@ class wombat::datastore (
   Boolean                         $enable_rotate,
   Integer[1,400]                  $cbor_expiration,
   Integer[1,400]                  $pcap_expiration,
+  Integer[1,15]                   $cbor_process_cron,
   Array[String[1]]                $services,
 ) {
   include wombat::config
@@ -62,7 +64,7 @@ class wombat::datastore (
   cron {'wombat queue manager':
     command => '/usr/bin/wombat-import -s incoming',
     user    => $wombat::config::user,
-    minute  => '*/5',
+    minute  => "*/${wombat::datastore::cbor_process_cron}",
   }
   file {'/etc/systemd/system/gearman-job-server.d':
     ensure => directory,
