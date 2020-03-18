@@ -450,13 +450,13 @@ enables the file rotation and expiration of files
 
 ##### `cbor_expiration`
 
-Data type: `Integer[1,365]`
+Data type: `Integer[1,400]`
 
 specifies a data aging in days for files keep
 
 ##### `pcap_expiration`
 
-Data type: `Integer[1,365]`
+Data type: `Integer[1,400]`
 
 specifies a data aging in days for files keep
 

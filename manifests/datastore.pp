@@ -13,8 +13,8 @@ class wombat::datastore (
   Stdlib::Unixpath                $archive_dir,
   Boolean                         $standby,
   Boolean                         $enable_rotate,
-  Integer[1,365]                  $cbor_expiration,
-  Integer[1,365]                  $pcap_expiration,
+  Integer[1,400]                  $cbor_expiration,
+  Integer[1,400]                  $pcap_expiration,
   Array[String[1]]                $services,
 ) {
   include wombat::config
