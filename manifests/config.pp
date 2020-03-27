@@ -57,8 +57,6 @@ class wombat::config (
     ensure => directory,
   }
   if $facts['domain'] == 'datastore.dns.icann.org' {
-    $_users = $user
-    ensure_resource('user', $_users, {'ensure' => 'present', 'groups' => $data_user })
     file {"${conf_dir}/wombat.cfg":
       ensure  => file,
       owner   => root,
@@ -76,7 +74,6 @@ class wombat::config (
       notify  => Service['gearman-job-server'],
     }
   } else {
-    ensure_resource('user', $user, {'ensure' => 'present'})
     file {"${conf_dir}/wombat.cfg":
       ensure  => file,
       owner   => root,

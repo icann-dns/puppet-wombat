@@ -3,16 +3,16 @@
 
 DIR=<%= @data %>
 
-# Delete any file that is past 90 days. 
+# Delete any file that is past <%= @disk_file_aging %> days.
 
-find ${DIR} -mtime +90 -type f -exec rm '{}' \; 2>/dev/null
+find ${DIR} -mtime +<%= @disk_file_aging %> -type f -exec rm '{}' \; 2>/dev/null
 
-# Delete/Rotate files if disk is past 70% used, one file at a time. 
+# Delete/Rotate files if disk is past <%= @disk_usage_watermark %>% used, one file at a time.
 
-while [ $( df ${DIR} | tail -1 | awk '{print $5}' | tr -d '%' ) -gt 70 ]; do
+while [ $( df ${DIR} | tail -1 | awk '{print $5}' | tr -d '%' ) -gt <%= @disk_usage_watermark %> ]; do
     oldest=$( find ${DIR} -type f 2>/dev/null | sort | head -1 )
     if [ ! ${oldest} ]; then
-      logger -t wombat::compactor: no cbor/pcaps to rotate, exiting
+      logger -t wombat::compactor: no files to rotate, exiting
       exit
     fi
     logger -t wombat::compactor: removing ${oldest}
