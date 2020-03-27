@@ -16,6 +16,8 @@ wombat::cluster::odbcinst_file: /etc/odbcinst.ini
 wombat::cluster::odbc_logdir: /var/log/odbc
 wombat::cluster::owner: clickhouse
 wombat::compactor::data: /opt/pcap
+wombat::compactor::disk_usage_watermark: 70
+wombat::compactor::disk_file_aging: 60
 wombat::compactor::promiscuous_mode: false
 wombat::compactor::rotation_period: 300
 wombat::compactor::raw_pcap: false

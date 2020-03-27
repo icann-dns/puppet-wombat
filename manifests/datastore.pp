@@ -57,7 +57,7 @@ class wombat::datastore (
   cron {'datastore_rotate':
     ensure  => $ensure,
     command => '/usr/bin/flock -n /var/lock/rotate.lock /usr/local/bin/datastore_rotate',
-    user    => $wombat::config::data_user,
+    user    => root,
     minute  => '*/5',
     require => File['/usr/local/bin/datastore_rotate'];
   }

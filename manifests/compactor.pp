@@ -2,6 +2,8 @@
 #
 class wombat::compactor (
   Stdlib::Absolutepath                $data,
+  Integer                             $disk_usage_watermark,
+  Integer                             $disk_file_aging,
   Boolean                             $promiscuous_mode,
   Integer[60,3600]                    $rotation_period,
   Boolean                             $raw_pcap,
