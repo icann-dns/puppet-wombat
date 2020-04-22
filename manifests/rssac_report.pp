@@ -17,8 +17,15 @@ class wombat::rssac_report (
   ensure_resource(
     'file', $_directories, { 'ensure' => 'directory', owner => $wombat::config::user, mode => '0755' }
   )
-  cron {'wombat-rssac-reports':
-    command => "/usr/bin/wombat-rssac-reports --output-dir ${::wombat::config::rssac_outdir} --report ${report} --server ${server} --report-server-name ${report_server_name}",
+  cron {'wombat-rssac-reports-yaml':
+    command => "/usr/bin/wombat-rssac-reports --no-plots --output-dir ${::wombat::config::rssac_outdir} --report ${report} --server ${server} --report-server-name ${report_server_name}",
+    user    => $wombat::config::user,
+    minute  => '0',
+    hour    => '1',
+    require => Package[$packages],
+  }
+  cron {'wombat-rssac-reports-plots':
+    command => "/usr/bin/wombat-rssac-reports --no-yaml --output-dir ${::wombat::config::rssac_outdir} --report ${report} --server ${server} --report-server-name ${report_server_name}",
     user    => $wombat::config::user,
     minute  => '0',
     hour    => '1',

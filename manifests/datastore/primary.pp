@@ -107,7 +107,6 @@ class wombat::datastore::primary (
     user    => $wombat::config::user,
     minute  => '0',
     hour    => '1',
-    weekday => '0',
   }
   cron {'wombat-tld-update':
     ensure  => present,
