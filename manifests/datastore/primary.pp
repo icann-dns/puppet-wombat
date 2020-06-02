@@ -5,7 +5,8 @@
 # @param roles a hash of roles to be used with postgresql::server::role
 # @param synchronous_commit a boolean to enable synchronous_commit on postgresql
 # @param min_partitions integer ensure a minimum number of raw data partitions
-# @param max_age integer maximum aggregated data partition age in days
+# @param s_max_age integer maximum 1s aggregated data partition age in days
+# @param m_max_age integer maximum 5m aggregated data partition age in days
 # @param threshold integer set disc usage percentage threshold
 #
 class wombat::datastore::primary (
@@ -15,7 +16,8 @@ class wombat::datastore::primary (
   Wombat::Synchronous_commit $synchronous_commit,
   Boolean                    $replicate,
   Integer                    $min_partitions,
-  Integer                    $max_age,
+  Integer                    $s_max_age,
+  Integer                    $m_max_age,
   Integer                    $threshold,
 ) {
   assert_private()
@@ -93,7 +95,7 @@ class wombat::datastore::primary (
     require => Postgresql::Server::Db['wombat'],
   }
   file { '/etc/wombat/nodes.csv':
-    audit  => content,
+    source => 'http://files.dns.icann.org/nodes.csv',
     notify => Exec['wombat-nodes-update'],
   }
   exec { 'wombat-nodes-update':
@@ -103,7 +105,7 @@ class wombat::datastore::primary (
   }
   cron {'wombat-prune':
     ensure  => present,
-    command => "/usr/bin/wombat-prune -t ${threshold} -m ${min_partitions} -a ${max_age} --force",
+    command => "/usr/bin/wombat-prune -t ${threshold} -m ${min_partitions} -1 ${s_max_age} -5 ${m_max_age} --force",
     user    => $wombat::config::user,
     minute  => '0',
     hour    => '1',

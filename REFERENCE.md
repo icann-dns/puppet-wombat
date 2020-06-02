@@ -106,6 +106,18 @@ Data type: `Stdlib::Absolutepath`
 
 
 
+##### `disk_usage_watermark`
+
+Data type: `Integer`
+
+
+
+##### `disk_file_aging`
+
+Data type: `Integer`
+
+
+
 ##### `promiscuous_mode`
 
 Data type: `Boolean`
@@ -510,11 +522,17 @@ Data type: `Integer`
 
 integer ensure a minimum number of raw data partitions
 
-##### `max_age`
+##### `s_max_age`
 
 Data type: `Integer`
 
-integer maximum aggregated data partition age in days
+integer maximum 1s aggregated data partition age in days
+
+##### `m_max_age`
+
+Data type: `Integer`
+
+integer maximum 5m aggregated data partition age in days
 
 ##### `threshold`
 
@@ -629,6 +647,12 @@ type of report to perform
 Data type: `String[1]`
 
 server name
+
+##### `report_file_prefix`
+
+Data type: `String[1]`
+
+prefix for the generated files
 
 ##### `report_server_name`
 
