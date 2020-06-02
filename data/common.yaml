@@ -100,8 +100,9 @@ wombat::datastore::primary::roles: {}
 wombat::datastore::primary::synchronous_commit: 'on'
 wombat::datastore::primary::replicate: true
 wombat::datastore::primary::min_partitions: 8
-wombat::datastore::primary::max_age: 364
-wombat::datastore::primary::threshold: 80
+wombat::datastore::primary::s_max_age: 60
+wombat::datastore::primary::m_max_age: 365
+wombat::datastore::primary::threshold: 85
 wombat::datastore::standby::db_host: localhost
 wombat::datastore::standby::db_hostaddr:
   - 127.0.0.1
@@ -119,4 +120,5 @@ wombat::rssac_report::packages:
   - wombat-rssac-reports
 wombat::rssac_report::report: all
 wombat::rssac_report::server: L-Root
+wombat::rssac_report::report_file_prefix: l-root
 wombat::rssac_report::report_server_name: 'l.root-servers.net'
