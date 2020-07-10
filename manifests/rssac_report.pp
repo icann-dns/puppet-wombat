@@ -29,7 +29,7 @@ class wombat::rssac_report (
   cron {'wombat-rssac-reports-plots':
     command => "/usr/bin/wombat-rssac-reports --no-yaml --output-dir ${::wombat::config::rssac_outdir} --report ${report} --server ${server} --report-file-prefix ${report_file_prefix} --report-server-name ${report_server_name}",
     user    => $wombat::config::user,
-    minute  => '0',
+    minute  => '30',
     hour    => '1',
     require => Package[$packages],
   }
