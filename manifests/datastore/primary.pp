@@ -117,4 +117,12 @@ class wombat::datastore::primary (
     minute  => '0',
     hour    => '2',
   }
+  cron {'wombat-geo-update':
+    ensure  => present,
+    command => '/usr/bin/wombat-geo-update',
+    user    => $wombat::config::user,
+    minute  => '0',
+    hour    => '2',
+    weekday => '7',
+  }
 }

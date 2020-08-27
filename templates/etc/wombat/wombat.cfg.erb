@@ -39,7 +39,6 @@ qualname=<%= config['qualname'] %>
 propagate=0
 <%- end -%>
 handlers=<%= config['handlers'] %>
-
 <%- end -%>
 
 [rssac]
@@ -47,3 +46,8 @@ grafana-url=<%= @rssac_url %>
 outdir=<%= @rssac_outdir %>
 server=<%= @rssac_server %>
 zone=<%= @rssac_zone %>
+
+<%- if @maxmind_license_key -%>
+[geo]
+licencekey=<%= @maxmind_license_key %>
+<%- end -%>
