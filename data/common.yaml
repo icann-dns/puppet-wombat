@@ -78,6 +78,7 @@ wombat::config::rssac_server: L-Root
 wombat::config::rssac_zone: "."
 wombat::config::user: wombat
 wombat::config::data_user: pcapture
+wombat::config::maxmind_license_key: ~
 wombat::datastore::packages:
   - clickhouse-client
   - wombat-import
