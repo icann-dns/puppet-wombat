@@ -1,10 +1,7 @@
 #
-# Configuration for for the DNS stats compactor.
+# Configuration for DNS-STATS compactor.
 #
 # Commented out items show the default values.
-#
-# Note that in Debian packaging, several values are set from the command
-# line via /etc/default/dns-stats-compactor.
 #
 
 # Network capture options.
@@ -48,6 +45,9 @@ vlan-id=<%= vlan %>
 # Snap length - limit of bytes in package to capture.
 # snaplen=65535
 
+# DNS port - only traffic to or from this port is captured.
+# dns-port=53
+
 # Filter expression.
 # filter=
 <%- if @ip_addresses.any? then -%>
@@ -69,7 +69,21 @@ promiscuous-mode=true
 # rotation-period=300
 rotation-period=<%= @rotation_period %>
 
-# CBOR output file pattern.
+# Maximum Query/Response records in a file block.
+# max-block-qr-items=5000
+
+# Maximum size of uncompressed output before rotation triggered. 0=no limit.
+# Multiplicative suffices:
+#     k (1024), K (1000)
+#     m (1024*k), M (1000*K)
+#     g (1024*m), G (1000*M)
+#     t (1024*g), T (1000*G)
+# max-output-size=0
+<%- if @max_output_size then -%>
+max-output-size=<%= @max_output_size %>
+<%- end -%>
+
+# C-DNS output file pattern.
 # output=
 output=<%= @data %>/%Y%m%d-%H%M%S_%{rotate-period}.cbor
 
@@ -85,12 +99,13 @@ raw-pcap=<%= @data %>/%Y%m%d-%H%M%S_%{rotate-period}.raw.pcap
 ignored-pcap=<%= @data %>/%Y%m%d-%H%M%S_%{rotate-period}.ignored.pcap
 <%- end -%>
 
-# Level of data to capture. Value may be one of:
+# The use of include lines is deprecated. See the user_guide for more information.
+# Specify which optional sections to capture. Value may be one of:
 # query-questions, query-answers, query-authority, query-additional,
 # response-questions, response-answers, response-authority, response-additional,
 # query-all, response-all, all.
 #
-# The line may be repeated to request additional sections, for example:
+# The line may be repeated to request multiple optional sections, for example:
 # include=query-questions
 # include=response-answers
 #
@@ -99,13 +114,16 @@ ignored-pcap=<%= @data %>/%Y%m%d-%H%M%S_%{rotate-period}.ignored.pcap
 include=<%= capture %>
 <%- end -%>
 
-# Compress using gzip?
+# maximum number of compression threads.
+# max-compression-threads=2
+
+# Compress C-DNS using gzip?
 # gzip-output=false
 
-# gzip compression level.
+# C-DNS gzip compression level.
 # gzip-level=6
 
-# Compress using xz?
+# C-DNS xz compression level.
 # xz-output=true
 
 # xz compression level.

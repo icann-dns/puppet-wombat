@@ -6,6 +6,7 @@ class wombat::compactor (
   Integer                             $disk_file_aging,
   Boolean                             $promiscuous_mode,
   Integer[60,3600]                    $rotation_period,
+  Optional[String]                    $max_output_size,
   Boolean                             $raw_pcap,
   Boolean                             $ignored_pcap,
   Array[Wombat::Capture_data]         $capture_data,
