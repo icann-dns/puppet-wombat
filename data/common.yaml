@@ -20,6 +20,7 @@ wombat::compactor::disk_usage_watermark: 70
 wombat::compactor::disk_file_aging: 60
 wombat::compactor::promiscuous_mode: false
 wombat::compactor::rotation_period: 300
+wombat::compactor::max_output_size: ~
 wombat::compactor::raw_pcap: false
 wombat::compactor::ignored_pcap: true
 wombat::compactor::capture_data:
