@@ -66,6 +66,11 @@ class wombat::datastore (
     user    => $wombat::config::user,
     minute  => "*/${wombat::datastore::cbor_process_cron}",
   }
+  cron {'wombat queue details':
+    command => '/usr/bin/wombat-queue-details --store',
+    user    => $wombat::config::user,
+    minute  => '*/5',
+  }
   file {'/etc/systemd/system/gearman-job-server.d':
     ensure => directory,
   }
