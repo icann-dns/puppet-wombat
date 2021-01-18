@@ -1,9 +1,12 @@
 # @summary class to ensure postgress is configured as the primary database
 #
 # @param ipv4_address ipv4 address to allow for replication
-# @param ipv6_address ipv4 address to allow for replication
+# @param ipv6_address ipv6 address to allow for replication
+# @param replicate a boolean setup postgresql replication
 # @param roles a hash of roles to be used with postgresql::server::role
-# @param synchronous_commit a boolean to enable synchronous_commit on postgresql
+# @param schema_dir path to the schema DDLs
+# @param schema_update a boolean allow puppet to perform a schema update, if available
+# @param synchronous_commit a boolean to enable synchronous commits
 # @param min_partitions integer ensure a minimum number of raw data partitions
 # @param s_max_age integer maximum 1s aggregated data partition age in days
 # @param m_max_age integer maximum 5m aggregated data partition age in days
@@ -12,9 +15,11 @@
 class wombat::datastore::primary (
   Stdlib::IP::Address::V4    $ipv4_address,
   Stdlib::IP::Address::V6    $ipv6_address,
-  Hash[String, Hash]         $roles,
-  Wombat::Synchronous_commit $synchronous_commit,
   Boolean                    $replicate,
+  Hash[String, Hash]         $roles,
+  Stdlib::Unixpath           $schema_dir,
+  Boolean                    $schema_update,
+  Wombat::Synchronous_commit $synchronous_commit,
   Integer                    $min_partitions,
   Integer                    $s_max_age,
   Integer                    $m_max_age,
@@ -89,10 +94,11 @@ class wombat::datastore::primary (
       * => $role,
     }
   }
-  $schema = '/usr/share/wombat-server/sql/postgres/ddl'
-  exec {"/usr/bin/wombat-postgres-update ${schema}":
-    unless  => "/usr/bin/wombat-postgres-update -r ${schema}",
-    require => Postgresql::Server::Db['wombat'],
+  if $schema_update {
+    exec {"/usr/bin/wombat-postgres-update ${schema_dir}":
+      unless  => "/usr/bin/wombat-postgres-update -r ${schema_dir}",
+      require => Postgresql::Server::Db['wombat'],
+    }
   }
   file { '/etc/wombat/nodes.csv':
     source => 'http://files.dns.icann.org/nodes.csv',

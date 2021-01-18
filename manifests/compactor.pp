@@ -23,7 +23,6 @@ class wombat::compactor (
   Stdlib::Absolutepath                $tools,
   String                              $service,
   Boolean                             $enable,
-  Boolean                             $enable_zabbix,
 ) {
 
   $_listen_interfaces = $listen_interfaces ? {

@@ -11,6 +11,8 @@
 # @param odbcinst_file location of odbcinst file
 # @param odbc_logdir location of odbc logdirectory
 # @param owner file system user
+# @param schema_dir path to the schema DDLs
+# @param schema_update a boolean allow puppet to perform a schema update, if available
 #
 class wombat::cluster (
   Array[String[1]]   $packages,
@@ -24,6 +26,8 @@ class wombat::cluster (
   Stdlib::Unixpath   $odbcinst_file,
   Stdlib::Unixpath   $odbc_logdir,
   String[1]          $owner,
+  Stdlib::Unixpath   $schema_dir,
+  Boolean            $schema_update,
 ) {
   ensure_packages($packages)
   include wombat::config
@@ -37,11 +41,6 @@ class wombat::cluster (
     ensure => directory,
     owner  => $owner,
   }
-  file { '/usr/local/bin/zbx_clickhouse_monitor.sh':
-    ensure => file,
-    source => 'puppet:///modules/wombat/usr/local/bin/zbx_clickhouse_monitor.sh',
-    mode   => '0755';
-  }
   ini_setting {'set log file':
     ensure            => present,
     path              => $odbcinst_file,
@@ -50,8 +49,9 @@ class wombat::cluster (
     key_val_separator => '=',
     value             => $odbc_logdir,
   }
-  $schema = '/usr/share/wombat-server/sql/clickhouse/ddl'
-  exec {"/usr/bin/wombat-clickhouse-update ${schema}":
-    unless => "/usr/bin/wombat-clickhouse-update -r ${schema}",
+  if $schema_update {
+    exec {"/usr/bin/wombat-clickhouse-update ${schema_dir}":
+      unless => "/usr/bin/wombat-clickhouse-update -r ${schema_dir}",
+    }
   }
 }
