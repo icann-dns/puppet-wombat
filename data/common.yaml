@@ -15,6 +15,8 @@ wombat::cluster::odbc_file: /etc/odbc.ini
 wombat::cluster::odbcinst_file: /etc/odbcinst.ini
 wombat::cluster::odbc_logdir: /var/log/odbc
 wombat::cluster::owner: clickhouse
+wombat::cluster::schema_dir: '/usr/share/wombat-server/sql/clickhouse/ddl'
+wombat::cluster::schema_update: true
 wombat::compactor::data: /opt/pcap
 wombat::compactor::disk_usage_watermark: 70
 wombat::compactor::disk_file_aging: 60
@@ -40,7 +42,6 @@ wombat::compactor::conf_file: "%{lookup('wombat::compactor::conf_dir')}/compacto
 wombat::compactor::tools: /usr/local/bin
 wombat::compactor::service: dns-stats-compactor
 wombat::compactor::enable: true
-wombat::compactor::enable_zabbix: true
 wombat::compactor::uploads::bwlimit: 10000
 wombat::compactor::uploads::destination_base_path: /opt/cbor
 wombat::compactor::uploads::service: L-Root
@@ -98,9 +99,11 @@ wombat::datastore::services:
 wombat::datastore::cbor_process_cron: 5
 wombat::datastore::primary::ipv4_address: 192.0.2.0/24
 wombat::datastore::primary::ipv6_address: 2001:db8::0/48
-wombat::datastore::primary::roles: {}
-wombat::datastore::primary::synchronous_commit: 'on'
 wombat::datastore::primary::replicate: true
+wombat::datastore::primary::roles: {}
+wombat::datastore::primary::schema_dir: '/usr/share/wombat-server/sql/postgres/ddl'
+wombat::datastore::primary::schema_update: true
+wombat::datastore::primary::synchronous_commit: 'on'
 wombat::datastore::primary::min_partitions: 8
 wombat::datastore::primary::s_max_age: 60
 wombat::datastore::primary::m_max_age: 365
