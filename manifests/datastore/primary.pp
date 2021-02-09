@@ -10,7 +10,8 @@
 # @param min_partitions integer ensure a minimum number of raw data partitions
 # @param s_max_age integer maximum 1s aggregated data partition age in days
 # @param m_max_age integer maximum 5m aggregated data partition age in days
-# @param threshold integer set disc usage percentage threshold
+# @param threshold integer set disk usage percentage threshold
+# @param nodes_update a boolean allow puppet to perform a nodes update, if available
 #
 class wombat::datastore::primary (
   Stdlib::IP::Address::V4    $ipv4_address,
@@ -24,6 +25,7 @@ class wombat::datastore::primary (
   Integer                    $s_max_age,
   Integer                    $m_max_age,
   Integer                    $threshold,
+  Boolean                    $nodes_update,
 ) {
   assert_private()
   include wombat::datastore
@@ -45,7 +47,7 @@ class wombat::datastore::primary (
     address     => $ipv4_address,
     auth_method => 'md5',
     database    => 'replication',
-    order       => 5,
+    order       => 301,
     type        => 'host',
     user        => 'wombat_replication',
   }
@@ -53,7 +55,7 @@ class wombat::datastore::primary (
     address     => $ipv6_address,
     auth_method => 'md5',
     database    => 'replication',
-    order       => 6,
+    order       => 302,
     type        => 'host',
     user        => 'wombat_replication',
   }
@@ -100,14 +102,16 @@ class wombat::datastore::primary (
       require => Postgresql::Server::Db['wombat'],
     }
   }
-  file { '/etc/wombat/nodes.csv':
-    source => 'http://files.dns.icann.org/nodes.csv',
-    notify => Exec['wombat-nodes-update'],
-  }
-  exec { 'wombat-nodes-update':
-    command     => '/usr/bin/wombat-nodes-update /etc/wombat/nodes.csv',
-    refreshonly => true,
-    user        => $wombat::config::user,
+  if $nodes_update {
+    file { '/etc/wombat/nodes.csv':
+      source => 'http://files.dns.icann.org/nodes.csv',
+      notify => Exec['wombat-nodes-update'],
+    }
+    exec { 'wombat-nodes-update':
+      command     => '/usr/bin/wombat-nodes-update /etc/wombat/nodes.csv',
+      refreshonly => true,
+      user        => $wombat::config::user,
+    }
   }
   cron {'wombat-prune':
     ensure  => present,
