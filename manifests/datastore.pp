@@ -8,6 +8,7 @@
 # @param pcap_expiration specifies a data aging in days for files keep
 # @param cbor_process_cron specifies the frequency for the cfor file detection and file queuing
 # @param services array of services to process
+# @param wombat_filter_file (optional) source file for wombat filter
 #
 class wombat::datastore (
   Array[String[1]]                $packages,
@@ -18,6 +19,7 @@ class wombat::datastore (
   Integer[1,400]                  $pcap_expiration,
   Integer[1,15]                   $cbor_process_cron,
   Array[String[1]]                $services,
+  Optional[String[1]]             $wombat_filter_file,
 ) {
   include wombat::config
   include postgresql::server
@@ -37,6 +39,15 @@ class wombat::datastore (
       group    => $wombat::config::data_user,
     }
   )
+  if $wombat_filter_file {
+    file { "${wombat::config::data_path}/wombat.filter":
+      ensure  => present,
+      owner   => $wombat::config::data_user,
+      group   => $wombat::config::data_user,
+      source  => $wombat_filter_file,
+      require => File[$wombat::config::data_path],
+    }
+  }
 
   $ensure = $enable_rotate ? {
     true    => 'present',
@@ -64,7 +75,7 @@ class wombat::datastore (
   cron {'wombat queue manager':
     command => '/usr/bin/wombat-import -s incoming',
     user    => $wombat::config::user,
-    minute  => "*/${wombat::datastore::cbor_process_cron}",
+    minute  => "*/${cbor_process_cron}",
   }
   cron {'wombat queue details':
     command => '/usr/bin/wombat-queue-details --store',

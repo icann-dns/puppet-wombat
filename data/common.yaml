@@ -44,7 +44,7 @@ wombat::compactor::service: dns-stats-compactor
 wombat::compactor::enable: true
 wombat::compactor::uploads::bwlimit: 10000
 wombat::compactor::uploads::destination_base_path: /opt/cbor
-wombat::compactor::uploads::service: L-Root
+wombat::compactor::uploads::service: IMRS
 wombat::compactor::uploads::minute_frequency: ~
 wombat::config::conf_dir: /etc/wombat
 wombat::config::data_path: /srv/wombat
@@ -76,7 +76,7 @@ wombat::config::compression_level: 2
 wombat::config::anonymisation_passphrase: ~
 wombat::config::rssac_url: http://localhost
 wombat::config::rssac_outdir: /srv/www
-wombat::config::rssac_server: L-Root
+wombat::config::rssac_server: IMRS
 wombat::config::rssac_zone: "."
 wombat::config::user: wombat
 wombat::config::data_user: pcapture
@@ -90,13 +90,14 @@ wombat::datastore::packages:
   - gearman-tools
   - gearman-job-server
 wombat::datastore::archive_dir: /var/pg_wal
-wombat::datastore::standby: false
-wombat::datastore::enable_rotate: true 
 wombat::datastore::cbor_expiration: 365
+wombat::datastore::cbor_process_cron: 5
+wombat::datastore::enable_rotate: true
 wombat::datastore::pcap_expiration: 7
 wombat::datastore::services:
-  - L-Root 
-wombat::datastore::cbor_process_cron: 5
+  - IMRS 
+wombat::datastore::standby: false
+wombat::datastore::wombat_filter_file: ~
 wombat::datastore::primary::ipv4_address: 192.0.2.0/24
 wombat::datastore::primary::ipv6_address: 2001:db8::0/48
 wombat::datastore::primary::replicate: true
@@ -125,6 +126,6 @@ wombat::rssacd::packages:
 wombat::rssac_report::packages: 
   - wombat-rssac-reports
 wombat::rssac_report::report: all
-wombat::rssac_report::server: L-Root
+wombat::rssac_report::server: IMRS
 wombat::rssac_report::report_file_prefix: l-root
 wombat::rssac_report::report_server_name: 'l.root-servers.net'
