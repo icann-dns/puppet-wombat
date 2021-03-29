@@ -8,16 +8,35 @@
 
 # Interface on which to capture traffic.
 # interface=
-<%- if @_listen_interfaces == 'any' -%>
+
+# Unix socket to create for trafficdnstap_socket_owner capture.
+# dnstap-socket=
+
+<%- if @dnstap_socket then -%>
+dnstap-socket=<%= @dnstap_socket %>
+<%- elsif @_listen_interfaces == 'any' -%>
 interface=any
-<%- else 
-@_listen_interfaces.each do |eth| 
+<%- else
+@_listen_interfaces.each do |eth|
   if @networking['interfaces'].fetch(eth, {}).include?('ip') \
       or @networking['interfaces'].fetch(eth, {}).include?('ip6') \
       and ! eth.start_with?('dummy', 'lo') -%>
 interface=<%= eth.gsub('_','.') %>
-<% end end -%>
+  <% end end -%>
 <%- end -%>
+
+# Attempt to set owner of Unix socket to this user.
+# dnstap-socket-owner=
+dnstap-socket-owner=<%= @dnstap_socket_owner %>
+
+# Attempt to set group of Unix socket to this group.
+# dnstap-socket-group=
+dnstap-socket-group=<%= @dnstap_socket_group %>
+
+# Attempt to set write permission of Unix socket to user only ('user'),
+# user+group ('group') or all users ('all').
+# dnstap-socket-write=
+dnstap-socket-write=<%= @dnstap_socket_write %>
 
 # Optional hints about the server addresses. These do not affect collection,
 # but are stored in the C-DNS output and may be useful for downstream
@@ -42,11 +61,11 @@ vlan-id=<%= vlan %>
 # RR type to accept. Type name in UPPER CASE e.g. AAAA, RRSIG.
 # accept-rr-type=
 
-# Snap length - limit of bytes in package to capture.
-# snaplen=65535
-
 # DNS port - only traffic to or from this port is captured.
 # dns-port=53
+
+# Snap length - limit of bytes in package to capture.
+# snaplen=65535
 
 # Filter expression.
 # filter=
@@ -109,7 +128,7 @@ ignored-pcap=<%= @data %>/%Y%m%d-%H%M%S_%{rotate-period}.ignored.pcap
 # include=query-questions
 # include=response-answers
 #
-# Default is no additional sections.
+# If no include is specified then no optional sections are captured.
 <% @capture_data.each do |capture| -%>
 include=<%= capture %>
 <%- end -%>
@@ -128,6 +147,7 @@ include=<%= capture %>
 
 # xz compression level.
 # xz-preset=6
+
 <%- if @compression == 'xz' then -%>
 xz-output=true
 xz-preset=<%= @compression_level -%>
@@ -147,6 +167,7 @@ gzip-level=<%= @compression_level -%>
 
 # PCAP xz compression level.
 # xz-preset-pcap=6
+
 <%- if @pcap_compression == 'xz' then -%>
 xz-pcap=true
 xz-preset-pcap=<%= @pcap_compression_level -%>
