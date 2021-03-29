@@ -36,9 +36,12 @@ wombat::compactor::pcap_compression: xz
 wombat::compactor::pcap_compression_level: 2
 wombat::compactor::vlan_id:
   - 0
+wombat::compactor::dnstap_socket: ~
+wombat::compactor::dnstap_socket_owner: root
+wombat::compactor::dnstap_socket_group: root
+wombat::compactor::dnstap_socket_write: group
 wombat::compactor::package: dns-stats-compactor
 wombat::compactor::conf_dir: /etc/dns-stats-compactor
-wombat::compactor::conf_file: "%{lookup('wombat::compactor::conf_dir')}/compactor.conf"
 wombat::compactor::tools: /usr/local/bin
 wombat::compactor::service: dns-stats-compactor
 wombat::compactor::enable: true

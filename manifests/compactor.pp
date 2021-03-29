@@ -17,9 +17,12 @@ class wombat::compactor (
   ENUM['gzip','xz']                   $pcap_compression,
   Integer[0,9]                        $pcap_compression_level,
   Array[Integer[0,4096]]              $vlan_id,
+  Optional[Stdlib::Absolutepath]      $dnstap_socket,
+  String                              $dnstap_socket_owner,
+  String                              $dnstap_socket_group,
+  ENUM['all','user','group']          $dnstap_socket_write,
   String                              $package,
   Stdlib::Absolutepath                $conf_dir,
-  Stdlib::Absolutepath                $conf_file,
   Stdlib::Absolutepath                $tools,
   String                              $service,
   Boolean                             $enable,
@@ -34,16 +37,42 @@ class wombat::compactor (
     default => 'absent',
   }
 
+  # Calculate resources for compactor
+  if $facts['processorcount'] < 9 {
+     $cpuset = [0]
+  } elsif $facts['processorcount'] < 17 {
+     $cpuset = [0,1]
+  } else {
+     $cpuset = [0,1,2,3]
+  }
+  $memory_gbytes = round(($facts['memorysize_mb'] / 1024))
+  if $memory_gbytes < 17 {
+     $memory_max = 2
+  } else {
+     $memory_max = round($memory_gbytes / 8 )
+  }
+  $memory_high = $memory_max -1
+
   $_directories = [ $data , $conf_dir ]
   ensure_packages($package, {'ensure' => 'latest'})
   ensure_resource(
     'file', $_directories, { 'ensure' => 'directory', mode => '0755' }
   )
 
-  file {$conf_file:
+  file { "${conf_dir}/compactor.conf":
     ensure  => present,
     require => Package[$package],
     content => template('wombat/etc/dns-stats-compactor/compactor.conf.erb'),
+  }
+#  file { "${conf_dir}/excluded_fields.conf":
+#    ensure  => present,
+#    require => Package[$package],
+#    content => template('wombat/etc/dns-stats-compactor/excluded_fields.conf.erb'),
+#  }
+  file { "${conf_dir}/default_values.conf":
+    ensure  => present,
+    require => Package[$package],
+    source  => 'puppet:///modules/wombat/etc/dns-stats-compactor/default_values.conf',
   }
   file{"/etc/default/${service}":
     ensure  => present,
@@ -70,8 +99,8 @@ class wombat::compactor (
   service {$service:
     ensure    => $enable,
     enable    => $enable,
-    require   => File[$conf_file,"/etc/default/${service}"],
-    subscribe => File[$conf_file,"/etc/default/${service}"],
+    require   => File[ "${conf_dir}/compactor.conf","/etc/default/${service}"],
+    subscribe => File[ "${conf_dir}/compactor.conf","/etc/default/${service}"],
   }
   cron {'compactor_rotate':
     ensure  => $ensure,

@@ -202,12 +202,6 @@ Data type: `Stdlib::Absolutepath`
 
 
 
-##### `conf_file`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
 ##### `tools`
 
 Data type: `Stdlib::Absolutepath`

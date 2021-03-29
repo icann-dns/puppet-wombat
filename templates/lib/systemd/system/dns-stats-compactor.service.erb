@@ -4,8 +4,14 @@ Documentation=man:compactor(1)
 
 [Service]
 Type=simple
-CPUAffinity=0
-MemoryLimit=1G
+CPUAffinity=<%= @cpuset.join(',') %>
+<%- if @lsbdistcodename == 'xenial' -%>
+MemoryLimit=<%= @memory_max %>G 
+<%- else -%>
+MemoryAccounting=true
+MemoryHigh=<%= @memory_high %>G
+MemoryMax=<%= @memory_max %>G 
+<%- end -%>
 ExecStart=/usr/bin/compactor
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
