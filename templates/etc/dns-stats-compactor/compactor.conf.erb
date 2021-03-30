@@ -12,8 +12,21 @@
 # Unix socket to create for trafficdnstap_socket_owner capture.
 # dnstap-socket=
 
+# Attempt to set owner of Unix socket to this user.
+# dnstap-socket-owner=
+
+# Attempt to set group of Unix socket to this group.
+# dnstap-socket-group=
+
+# Attempt to set write permission of Unix socket to user only ('user'),
+# user+group ('group') or all users ('all').
+# dnstap-socket-write=
+
 <%- if @dnstap_socket then -%>
 dnstap-socket=<%= @dnstap_socket %>
+dnstap-socket-owner=<%= @dnstap_socket_owner %>
+dnstap-socket-group=<%= @dnstap_socket_group %>
+dnstap-socket-write=<%= @dnstap_socket_write %>
 <%- elsif @_listen_interfaces == 'any' -%>
 interface=any
 <%- else
@@ -24,19 +37,6 @@ interface=any
 interface=<%= eth.gsub('_','.') %>
   <% end end -%>
 <%- end -%>
-
-# Attempt to set owner of Unix socket to this user.
-# dnstap-socket-owner=
-dnstap-socket-owner=<%= @dnstap_socket_owner %>
-
-# Attempt to set group of Unix socket to this group.
-# dnstap-socket-group=
-dnstap-socket-group=<%= @dnstap_socket_group %>
-
-# Attempt to set write permission of Unix socket to user only ('user'),
-# user+group ('group') or all users ('all').
-# dnstap-socket-write=
-dnstap-socket-write=<%= @dnstap_socket_write %>
 
 # Optional hints about the server addresses. These do not affect collection,
 # but are stored in the C-DNS output and may be useful for downstream
