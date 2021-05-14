@@ -30,6 +30,7 @@ wombat::compactor::capture_data:
 wombat::compactor::ip_addresses:
   - "%{facts.networking.ip}"
 wombat::compactor::listen_interfaces: ~
+wombat::compactor::filter: ~
 wombat::compactor::compression: xz
 wombat::compactor::compression_level: 2
 wombat::compactor::pcap_compression: xz
@@ -86,12 +87,13 @@ wombat::config::data_user: pcapture
 wombat::config::maxmind_license_key: ~
 wombat::datastore::packages:
   - clickhouse-client
-  - wombat-import
-  - python3-psycopg2
-  - python3-gear
   - dns-stats-inspector
   - gearman-tools
   - gearman-job-server
+  - python3-gear
+  - python3-psycopg2
+  - python3-yaml
+  - wombat-import
 wombat::datastore::archive_dir: /var/pg_wal
 wombat::datastore::cbor_expiration: 365
 wombat::datastore::cbor_process_cron: 5
@@ -109,8 +111,8 @@ wombat::datastore::primary::schema_dir: '/usr/share/wombat-server/sql/postgres/d
 wombat::datastore::primary::schema_update: true
 wombat::datastore::primary::synchronous_commit: 'on'
 wombat::datastore::primary::min_partitions: 8
-wombat::datastore::primary::s_max_age: 60
-wombat::datastore::primary::m_max_age: 365
+wombat::datastore::primary::s_min_data_age: 60
+wombat::datastore::primary::m_min_data_age: 365
 wombat::datastore::primary::threshold: 85
 wombat::datastore::primary::nodes_update: true
 wombat::datastore::standby::db_host: localhost

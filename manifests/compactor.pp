@@ -12,6 +12,7 @@ class wombat::compactor (
   Array[Wombat::Capture_data]         $capture_data,
   Array[Stdlib::IP::Address]          $ip_addresses,
   Optional[Wombat::Listen_interfaces] $listen_interfaces,
+  Optional[String]                    $filter,
   ENUM['gzip','xz']                   $compression,
   Integer[0,9]                        $compression_level,
   ENUM['gzip','xz']                   $pcap_compression,

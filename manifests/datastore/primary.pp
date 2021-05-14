@@ -8,8 +8,8 @@
 # @param schema_update a boolean allow puppet to perform a schema update, if available
 # @param synchronous_commit a boolean to enable synchronous commits
 # @param min_partitions integer ensure a minimum number of raw data partitions
-# @param s_max_age integer maximum 1s aggregated data partition age in days
-# @param m_max_age integer maximum 5m aggregated data partition age in days
+# @param s_min_data_age integer specified the number of days of aggregation data to be retained for 1s aggregation
+# @param m_min_data_age integer specified the number of days of aggregation data to be retained for 5m aggregation
 # @param threshold integer set disk usage percentage threshold
 # @param nodes_update a boolean allow puppet to perform a nodes update, if available
 #
@@ -22,8 +22,8 @@ class wombat::datastore::primary (
   Boolean                    $schema_update,
   Wombat::Synchronous_commit $synchronous_commit,
   Integer                    $min_partitions,
-  Integer                    $s_max_age,
-  Integer                    $m_max_age,
+  Integer                    $s_min_data_age,
+  Integer                    $m_min_data_age,
   Integer                    $threshold,
   Boolean                    $nodes_update,
 ) {
@@ -113,9 +113,27 @@ class wombat::datastore::primary (
       user        => $wombat::config::user,
     }
   }
+  file { '/etc/wombat/regions.csv':
+    source => 'puppet:///modules/artifacts/etc/wombat/regions.csv',
+  }
+
+  cron {'wombat-prune-agg-5m':
+    ensure  => present,
+    command => "/usr/bin/wombat-prune -t ${threshold} -d 5min -a ${m_min_data_age} -s --force",
+    user    => $wombat::config::user,
+    minute  => '10',
+    hour    => '1',
+  }
+  cron {'wombat-prune-agg-1s':
+    ensure  => present,
+    command => "/usr/bin/wombat-prune -t ${threshold} -d 1s -a ${s_min_data_age} -s --force",
+    user    => $wombat::config::user,
+    minute  => '5',
+    hour    => '1',
+  }
   cron {'wombat-prune':
     ensure  => present,
-    command => "/usr/bin/wombat-prune -t ${threshold} -m ${min_partitions} -1 ${s_max_age} -5 ${m_max_age} --force",
+    command => "/usr/bin/wombat-prune -t ${threshold} -d raw -a ${min_partitions} -i -s --force",
     user    => $wombat::config::user,
     minute  => '0',
     hour    => '1',
@@ -134,5 +152,12 @@ class wombat::datastore::primary (
     minute  => '0',
     hour    => '2',
     weekday => '7',
+  }
+  cron {'wombat-rssac-instance-update':
+    ensure  => present,
+    command => '/usr/bin/wombat-rssac-instance-update',
+    user    => $wombat::config::user,
+    minute  => '0',
+    hour    => '*/12',
   }
 }
