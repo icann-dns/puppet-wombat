@@ -516,17 +516,17 @@ Data type: `Integer`
 
 integer ensure a minimum number of raw data partitions
 
-##### `s_max_age`
+##### `s_min_data_age`
 
 Data type: `Integer`
 
-integer maximum 1s aggregated data partition age in days
+integer specified the number of days of aggregation data to be retained for 1s aggregation
 
-##### `m_max_age`
+##### `m_min_data_age`
 
 Data type: `Integer`
 
-integer maximum 5m aggregated data partition age in days
+integer specified the number of days of aggregation data to be retained for 5m aggregation
 
 ##### `threshold`
 

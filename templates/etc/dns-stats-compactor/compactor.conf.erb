@@ -69,7 +69,9 @@ vlan-id=<%= vlan %>
 
 # Filter expression.
 # filter=
-<%- if @ip_addresses.any? then -%>
+<%- if @filter then -%>
+filter=<%= @filter %>
+<%- elsif @ip_addresses.any? then -%>
 filter=host <%= @ip_addresses.join(' or host ') %>
 <%- end -%>
   
