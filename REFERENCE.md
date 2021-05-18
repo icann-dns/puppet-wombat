@@ -510,23 +510,23 @@ Data type: `Wombat::Synchronous_commit`
 
 a boolean to enable synchronous_commit on postgresql
 
-##### `min_partitions`
+##### `r_min_data_age`
 
 Data type: `Integer`
 
-integer ensure a minimum number of raw data partitions
+integer number of days of raw data to be retained
 
 ##### `s_min_data_age`
 
 Data type: `Integer`
 
-integer specified the number of days of aggregation data to be retained for 1s aggregation
+integer number of days of aggregation data to be retained for 1s aggregation
 
 ##### `m_min_data_age`
 
 Data type: `Integer`
 
-integer specified the number of days of aggregation data to be retained for 5m aggregation
+integer number of days of aggregation data to be retained for 5m aggregation
 
 ##### `threshold`
 

@@ -110,7 +110,7 @@ wombat::datastore::primary::roles: {}
 wombat::datastore::primary::schema_dir: '/usr/share/wombat-server/sql/postgres/ddl'
 wombat::datastore::primary::schema_update: true
 wombat::datastore::primary::synchronous_commit: 'on'
-wombat::datastore::primary::min_partitions: 8
+wombat::datastore::primary::r_min_data_age: 30
 wombat::datastore::primary::s_min_data_age: 60
 wombat::datastore::primary::m_min_data_age: 365
 wombat::datastore::primary::threshold: 85
