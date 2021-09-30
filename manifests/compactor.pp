@@ -30,7 +30,7 @@ class wombat::compactor (
   Integer[0,3600]                     $log_network_stats_period,
   Boolean                             $sampling_enable,
   Integer[1,100]                      $sampling_threshold,
-  Integer[1,1000]                     $sampling_rate,
+  Integer[2,1000]                     $sampling_rate,
   Integer[10,3600]                    $sampling_time,
   Integer[1,5]                        $query_timeout,
   Integer[0]                          $skew_timeout,
@@ -61,10 +61,6 @@ class wombat::compactor (
      $memory_max = round($memory_gbytes / 8 )
   }
   $memory_high = $memory_max -1
-
-  if $sampling_rate == 1  {
-    fail('sampling_rate need to be any positive integer except 1')
-  }
 
   $_directories = [ $data , $conf_dir ]
   ensure_packages($package, {'ensure' => 'latest'})
