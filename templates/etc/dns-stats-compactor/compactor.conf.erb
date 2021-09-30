@@ -83,6 +83,21 @@ promiscuous-mode=true
 
 # Log basic collection stats to syslog every n seconds. 0 (default) == never.
 # log-network-stats-period=0
+log-network-stats-period=<%= @log_network_stats_period %>
+
+# Sampling threshold is percentage of traffic dropped above which sampling will be enabled. Default is 10.
+# sampling-threshold=10
+
+# Sampling rate (1 in n) to be applied if packets dropped internally. 0 (default) == none.
+# sampling-rate=0
+
+# Apply sampling for n seconds for before re-checking for dropped packets. Default is 100.
+# sampling-time=100
+<%- if @sampling_enable then -%>
+sampling-rate=<%= @sampling_rate %>
+sampling-threshold=<%= @sampling_threshold %>
+sampling-time=<%= @sampling_time %>
+<%- end -%>
 
 # Output options.
 
@@ -137,6 +152,7 @@ include=<%= capture %>
 
 # maximum number of compression threads.
 # max-compression-threads=2
+max-compression-threads=<%= @max_compression_threads %>
 
 # Compress C-DNS using gzip?
 # gzip-output=false
@@ -182,6 +198,8 @@ gzip-level-pcap=<%= @pcap_compression_level -%>
 
 # Seconds to wait for response before timing out query.
 # query-timeout=5
+query-timeout=<%= @query_timeout %>
 
 # Microseconds to wait for query arrive after response received.
 # skew-timeout=10
+skew-timeout=<%= @skew_timeout %>
