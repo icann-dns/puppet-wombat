@@ -160,4 +160,11 @@ class wombat::datastore::primary (
     minute  => '0',
     hour    => '*/12',
   }
+  cron {'wombat-nodes-update_audit':
+    ensure  => present,
+    command => '/usr/bin/wombat-nodes-update -a --auditfile=/tmp/wombat_audit /etc/wombat/nodes.csv',
+    user    => $wombat::config::user,
+    minute  => '30',
+    hour    => '0',
+  }
 }
