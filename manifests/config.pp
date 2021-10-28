@@ -23,6 +23,7 @@
 # @param rssac_outdir output base directoy for the RSSAC reports hierarchy
 # @param rssac_server server to query for node addresses
 # @param rssac_zone zone to listen for NOTIFY messages from
+# @param rssac_load_time_threshold percentage of quorum needed to generate the rssac report (default=95)
 # @param maxmind_license_key MaxMind Database key for GEO info in Wombat
 # @param user to be running the wombat services as
 # @param data_user owner of the data files
@@ -51,6 +52,7 @@ class wombat::config (
   Stdlib::Unixpath                $rssac_outdir,
   String[1]                       $rssac_server,
   String[1]                       $rssac_zone,
+  Integer[1,100]                  $rssac_load_time_threshold,
   Optional[String[1]]             $maxmind_license_key,
   String[1]                       $user,
   String[1]                       $data_user,

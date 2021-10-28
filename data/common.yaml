@@ -91,6 +91,7 @@ wombat::config::rssac_url: http://localhost
 wombat::config::rssac_outdir: /srv/www
 wombat::config::rssac_server: IMRS
 wombat::config::rssac_zone: "."
+wombat::config::rssac_load_time_threshold: 95
 wombat::config::user: wombat
 wombat::config::data_user: pcapture
 wombat::config::maxmind_license_key: ~
