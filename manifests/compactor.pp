@@ -28,6 +28,7 @@ class wombat::compactor (
   String                              $service,
   Boolean                             $enable,
   Integer[0,3600]                     $log_network_stats_period,
+  Boolean                             $log_file_handling,
   Boolean                             $sampling_enable,
   Integer[1,100]                      $sampling_threshold,
   Integer[2,1000]                     $sampling_rate,

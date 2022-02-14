@@ -36,6 +36,7 @@ wombat::compactor::ignored_pcap: true
 wombat::compactor::ip_addresses:
 - '%{facts.networking.ip}'
 wombat::compactor::listen_interfaces: null
+wombat::compactor::log_file_handling: false
 wombat::compactor::log_network_stats_period: 0
 wombat::compactor::max_compression_threads: 2
 wombat::compactor::max_output_size: null
