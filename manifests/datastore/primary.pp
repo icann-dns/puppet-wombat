@@ -124,13 +124,13 @@ class wombat::datastore::primary (
     minute  => '10',
     hour    => '1',
   }
-  cron {'wombat-prune-agg-1s':
-    ensure  => present,
-    command => "/usr/bin/wombat-prune -t ${threshold} -d 1s -a ${s_min_data_age} -s --force",
-    user    => $wombat::config::user,
-    minute  => '5',
-    hour    => '1',
-  }
+#  cron {'wombat-prune-agg-1s':
+#    ensure  => present,
+#    command => "/usr/bin/wombat-prune -t ${threshold} -d 1s -a ${s_min_data_age} -s --force",
+#    user    => $wombat::config::user,
+#    minute  => '5',
+#    hour    => '1',
+#  }
   cron {'wombat-prune':
     ensure  => present,
     command => "/usr/bin/wombat-prune -t ${threshold} -d raw -a ${r_min_data_age} -i -s --force",
