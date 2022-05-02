@@ -1,10 +1,16 @@
+<%-
+  @_pcap_expiration = @pcap_expiration + 1
+-%>
 # Rotate file for wombat::datastore module
 #!/bin/sh
 
 DIR=<%= @data %>
 
-# Delete any pcap file (compress or not and pcap.info file) that is past <%= @pcap_expiration%> days.
-find ${DIR} -mtime +<%= @pcap_expiration%> -type f -name *.pcap* -exec rm '{}' \; 2>/dev/null
+# Delete any pcap.xz file that is past <%= @pcap_expiration %> days.
+find ${DIR} -mtime +<%= @pcap_expiration %> -type f -name *.pcap.xz -exec rm '{}' \; 2>/dev/null
 
-# Delete any cbor file (compress or not) that is past <%= @cbor_expiration%> days.
-find ${DIR} -mtime +<%= @cbor_expiration%> -type f -name *.cbor* -exec rm '{}' \; 2>/dev/null
+# Delete any pcap related file (eg: not compressed, .fail, .done and .info file) that is past <%= @_pcap_expiration %> days.
+find ${DIR} -mtime +<%= @_pcap_expiration %> -type f -name *.pcap* -exec rm '{}' \; 2>/dev/null
+
+# Delete any cbor file (compress or not) that is past <%= @cbor_expiration %> days.
+find ${DIR} -mtime +<%= @cbor_expiration %> -type f -name *.cbor* -exec rm '{}' \; 2>/dev/null

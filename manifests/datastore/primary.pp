@@ -8,7 +8,6 @@
 # @param schema_update a boolean allow puppet to perform a schema update, if available
 # @param synchronous_commit a boolean to enable synchronous commits
 # @param r_min_data_age integer number of days of raw data to be retained
-# @param s_min_data_age integer number of days of aggregation data to be retained for 1s aggregation
 # @param m_min_data_age integer number of days of aggregation data to be retained for 5m aggregation
 # @param threshold integer set disk usage percentage threshold
 # @param nodes_update a boolean allow puppet to perform a nodes update, if available
@@ -22,7 +21,6 @@ class wombat::datastore::primary (
   Boolean                    $schema_update,
   Wombat::Synchronous_commit $synchronous_commit,
   Integer                    $r_min_data_age,
-  Integer                    $s_min_data_age,
   Integer                    $m_min_data_age,
   Integer                    $threshold,
   Boolean                    $nodes_update,
@@ -124,13 +122,6 @@ class wombat::datastore::primary (
     minute  => '10',
     hour    => '1',
   }
-#  cron {'wombat-prune-agg-1s':
-#    ensure  => present,
-#    command => "/usr/bin/wombat-prune -t ${threshold} -d 1s -a ${s_min_data_age} -s --force",
-#    user    => $wombat::config::user,
-#    minute  => '5',
-#    hour    => '1',
-#  }
   cron {'wombat-prune':
     ensure  => present,
     command => "/usr/bin/wombat-prune -t ${threshold} -d raw -a ${r_min_data_age} -i -s --force",
