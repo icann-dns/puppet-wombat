@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 0.4.2
+* Add -q flag to wombat-import cronjob and remove wombat queue manager job 
+
 ## Release 0.4.1
 * Add wombat purge funtion to remove data over 75% of capacity
 
