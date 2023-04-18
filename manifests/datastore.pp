@@ -73,7 +73,7 @@ class wombat::datastore (
     require => File['/usr/local/bin/datastore_rotate'];
   }
   cron {'wombat queue manager':
-    command     => '/usr/bin/wombat-import -s incoming -q',
+    command     => '/usr/bin/wombat-import -s incoming -q -l 4',
     user        => $wombat::config::user,
     minute      => "*/${cbor_process_cron}",
     environment => 'MAILTO=""',
