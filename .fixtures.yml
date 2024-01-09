@@ -7,3 +7,4 @@ fixtures:
      inifile: "puppetlabs/inifile"
      postgresql: "puppetlabs/postgresql"
      concat: "puppetlabs/concat"
+     cron_core: "puppetlabs/cron_core"

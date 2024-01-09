@@ -6,6 +6,7 @@
   "license": "Apache-2.0",
   "source": "git@git.dns.icann.org:dns-eng/puppet-wombat.git",
   "dependencies": [
+    {"name":"puppetlabs-cron_core","version_requirement":">= 1.2.1 <2.0.0"},
     {"name":"puppetlabs-stdlib","version_requirement":">= 4.25.1 <5.0.0"},
     {"name":"puppetlabs-inifile","version_requirement":">= 2.3.0 <3.0.0"},
     {"name":"puppetlabs-postgresql","version_requirement":">= 5.8.0 <6.0.0"},
@@ -16,7 +17,7 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "16.04"
+        "18.04"
       ]
     }
   ],
