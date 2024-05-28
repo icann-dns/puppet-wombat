@@ -1,5 +1,9 @@
 # Changelog
 
+## Release 0.5.0
+* Add support for postgres12
+* fix lint and spec issues
+
 ## Release 0.4.2
 * Add -q flag to wombat-import cronjob and remove wombat queue manager job 
 
