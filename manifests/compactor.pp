@@ -38,7 +38,6 @@ class wombat::compactor (
   Integer[1,10]                       $max_compression_threads,
   Optional[String]                    $compactor_options,
 ) {
-
   $_listen_interfaces = $listen_interfaces ? {
     undef   => $facts['networking']['interfaces'].keys(),
     default => $listen_interfaces,
@@ -49,17 +48,17 @@ class wombat::compactor (
   }
   # Calculate resources for compactor
   if $facts['processorcount'] < 9 {
-     $cpuset = [0]
+    $cpuset = [0]
   } elsif $facts['processorcount'] < 17 {
-     $cpuset = [0,1]
+    $cpuset = [0,1]
   } else {
-     $cpuset = [0,1,2,3]
+    $cpuset = [0,1,2,3]
   }
   $memory_gbytes = round(($facts['memorysize_mb'] / 1024))
   if $memory_gbytes < 17 {
-     $memory_max = 2
+    $memory_max = 2
   } else {
-     $memory_max = round($memory_gbytes / 8 )
+    $memory_max = round($memory_gbytes / 8 )
   }
   $memory_high = $memory_max -1
 
@@ -74,11 +73,11 @@ class wombat::compactor (
     require => Package[$package],
     content => template('wombat/etc/dns-stats-compactor/compactor.conf.erb'),
   }
-#  file { "${conf_dir}/excluded_fields.conf":
-#    ensure  => present,
-#    require => Package[$package],
-#    content => template('wombat/etc/dns-stats-compactor/excluded_fields.conf.erb'),
-#  }
+  #  file { "${conf_dir}/excluded_fields.conf":
+  #    ensure  => present,
+  #    require => Package[$package],
+  #    content => template('wombat/etc/dns-stats-compactor/excluded_fields.conf.erb'),
+  #  }
   file { "${conf_dir}/default_values.conf":
     ensure  => present,
     require => Package[$package],
@@ -100,22 +99,22 @@ class wombat::compactor (
     group   => root,
     require => Package[$package],
     content => template('wombat/lib/systemd/system/dns-stats-compactor.service.erb'),
-  }~> exec { 'compactor-systemd-reload':
+    }~> exec { 'compactor-systemd-reload':
       command     => 'systemctl daemon-reload',
       path        => [ '/bin', ],
       refreshonly => true,
-      }
+    }
 
-  service {$service:
-    ensure    => $enable,
-    enable    => $enable,
-    require   => File[ "${conf_dir}/compactor.conf","/etc/default/${service}"],
-    subscribe => File[ "${conf_dir}/compactor.conf","/etc/default/${service}"],
-  }
-  cron {'compactor_rotate':
-    ensure  => $ensure,
-    command => "/usr/bin/flock -n /var/lock/rotate.lock ${tools}/rotate",
-    user    => 'root',
-    require => File["${tools}/rotate"];
-  }
+    service {$service:
+      ensure    => $enable,
+      enable    => $enable,
+      require   => File[ "${conf_dir}/compactor.conf","/etc/default/${service}"],
+      subscribe => File[ "${conf_dir}/compactor.conf","/etc/default/${service}"],
+    }
+    cron {'compactor_rotate':
+      ensure  => $ensure,
+      command => "/usr/bin/flock -n /var/lock/rotate.lock ${tools}/rotate",
+      user    => 'root',
+      require => File["${tools}/rotate"];
+    }
 }
