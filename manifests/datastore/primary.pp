@@ -13,8 +13,14 @@
 # @param nodes_update a boolean allow puppet to perform a nodes update, if available
 #
 class wombat::datastore::primary (
-  Stdlib::IP::Address::V4    $ipv4_address,
-  Stdlib::IP::Address::V6    $ipv6_address,
+  Variant[
+    Stdlib::IP::Address::V4,
+    Array[Stdlib::IP::Address::V4]
+  ]                          $ipv4_address,
+  Variant[
+    Stdlib::IP::Address::V6,
+    Array[Stdlib::IP::Address::V6]
+  ]                          $ipv6_address,
   Boolean                    $replicate,
   Hash[String, Hash]         $roles,
   Stdlib::Unixpath           $schema_dir,
@@ -41,21 +47,15 @@ class wombat::datastore::primary (
     password => 'NOT USED AS USER CREATED WITH ROLES',
     before   => Postgresql::Server::Config_entry['synchronous_standby_names'],
   }
-  postgresql::server::pg_hba_rule { 'replication_v4':
-    address     => $ipv4_address,
-    auth_method => 'md5',
-    database    => 'replication',
-    order       => 301,
-    type        => 'host',
-    user        => 'wombat_replication',
-  }
-  postgresql::server::pg_hba_rule { 'replication_v6':
-    address     => $ipv6_address,
-    auth_method => 'md5',
-    database    => 'replication',
-    order       => 302,
-    type        => 'host',
-    user        => 'wombat_replication',
+  (Array($ipv4_address, true) + Array($ipv6_address,  true)).each |$addr| {
+    postgresql::server::pg_hba_rule { "replication_${addr}":
+      address     => $addr,
+      auth_method => 'md5',
+      database    => 'replication',
+      order       => 301,
+      type        => 'host',
+      user        => 'wombat_replication',
+    }
   }
   postgresql::server::config_entry { 'archive_command':
     ensure => $ensure_replicate,
@@ -86,8 +86,12 @@ class wombat::datastore::primary (
     value  => 'replica',
   }
   postgresql::server::config_entry { 'hot_standby': ensure => absent }
-  file {'/etc/postgresql/10/main/recovery.conf':
-    ensure => absent,
+  postgresql::server::config_entry { 'primary_conninfo': ensure => absent }
+  file { [
+      '/etc/postgresql/10/main/recovery.conf',
+      '/var/lib/postgresql/12/main/standby.signal',
+    ]:
+      ensure => absent,
   }
   $roles.each |$rolename, $role| {
     postgresql::server::role { $rolename:
@@ -95,7 +99,7 @@ class wombat::datastore::primary (
     }
   }
   if $schema_update {
-    exec {"/usr/bin/wombat-postgres-update ${schema_dir}":
+    exec { "/usr/bin/wombat-postgres-update ${schema_dir}":
       unless  => "/usr/bin/wombat-postgres-update -r ${schema_dir}",
       require => Postgresql::Server::Db['wombat'],
     }
@@ -115,28 +119,28 @@ class wombat::datastore::primary (
     source => 'puppet:///modules/artifacts/etc/wombat/regions.csv',
   }
 
-  cron {'wombat-prune-agg-5m':
+  cron { 'wombat-prune-agg-5m':
     ensure  => present,
     command => "/usr/bin/wombat-prune -t ${threshold} -d 5min -a ${m_min_data_age} -s --force",
     user    => $wombat::config::user,
     minute  => '10',
     hour    => '1',
   }
-  cron {'wombat-prune':
+  cron { 'wombat-prune':
     ensure  => present,
     command => "/usr/bin/wombat-prune -t ${threshold} -d raw -a ${r_min_data_age} -i -s --force",
     user    => $wombat::config::user,
     minute  => '0',
     hour    => '1',
   }
-  cron {'wombat-tld-update':
+  cron { 'wombat-tld-update':
     ensure  => present,
     command => '/usr/bin/wombat-tld-update',
     user    => $wombat::config::user,
     minute  => '0',
     hour    => '2',
   }
-  cron {'wombat-geo-update':
+  cron { 'wombat-geo-update':
     ensure  => present,
     command => '/usr/bin/wombat-geo-update',
     user    => $wombat::config::user,
@@ -144,14 +148,14 @@ class wombat::datastore::primary (
     hour    => '2',
     weekday => '7',
   }
-  cron {'wombat-rssac-instance-update':
+  cron { 'wombat-rssac-instance-update':
     ensure  => present,
     command => '/usr/bin/wombat-rssac-instance-update',
     user    => $wombat::config::user,
     minute  => '0',
     hour    => '*/12',
   }
-  cron {'wombat-nodes-update_audit':
+  cron { 'wombat-nodes-update_audit':
     ensure  => present,
     command => '/usr/bin/wombat-nodes-update -a --auditfile=/tmp/wombat_audit /etc/wombat/nodes.csv',
     user    => $wombat::config::user,

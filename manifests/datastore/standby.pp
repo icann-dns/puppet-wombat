@@ -1,6 +1,7 @@
 # @summary class to ensure postgress is configured as the standby database
 #
 # @param db_host db server to replicate from
+# @param db_hostaddr db ip to replicate from
 # @param db_username db user with replicate permissions
 # @param db_password db password with replicate permissions
 class wombat::datastore::standby (
@@ -24,9 +25,27 @@ class wombat::datastore::standby (
     ensure => present,
     value  => 'on',
   }
-  file {'/var/lib/postgresql/10/main/recovery.conf':
-    ensure  => file,
-    content => template('wombat/var/lib/postgresql/10/main/recovery.conf.erb'),
-    notify  => Class['postgresql::server::service'],
+  if $facts['os']['distro']['codename'] == 'bionic' {
+    file { '/var/lib/postgresql/10/main/recovery.conf':
+      ensure  => file,
+      content => template('wombat/var/lib/postgresql/10/main/recovery.conf.erb'),
+      notify  => Class['postgresql::server::service'],
+    }
+  } else {
+    $conninfo = {
+      'host'             => $db_host,
+      'hostaddr'         => $db_hostaddr.join(','),
+      'port'             => 5432,
+      'user'             => $db_username,
+      'password'         => $db_password,
+      'application_name' => 'lax',
+    }.map |$key, $value| { "${key}=${value}" }.join(' ')
+    postgresql::server::config_entry { 'primary_conninfo':
+      ensure => 'present',
+      value  => $conninfo,
+    }
+    file { '/var/lib/postgresql/12/main/standby.signal':
+      ensure => file,
+    }
   }
 }
