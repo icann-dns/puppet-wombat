@@ -1,6 +1,6 @@
 # Changelog
 
-## Release 0.5.0
+## Release 1.9.0
 * Add support for postgres12
 * fix lint and spec issues
 
