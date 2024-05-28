@@ -38,7 +38,7 @@ class wombat::datastore::standby (
       'port'             => 5432,
       'user'             => $db_username,
       'password'         => $db_password,
-      'application_name' => 'lax',
+      'application_name' => $facts['networking']['hostname'],
     }.map |$key, $value| { "${key}=${value}" }.join(' ')
     postgresql::server::config_entry { 'primary_conninfo':
       ensure => 'present',

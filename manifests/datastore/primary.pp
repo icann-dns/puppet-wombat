@@ -30,6 +30,7 @@ class wombat::datastore::primary (
   Integer                    $m_min_data_age,
   Integer                    $threshold,
   Boolean                    $nodes_update,
+  Array[String]              $apps = ['lax']  # lax was a previous hardcoded default
 ) {
   assert_private()
   include wombat::datastore
@@ -79,7 +80,7 @@ class wombat::datastore::primary (
   }
   postgresql::server::config_entry { 'synchronous_standby_names':
     ensure => $ensure_replicate,
-    value  => 'FIRST 1 (lax)',
+    value  => "FIRST ${apps.size} (${apps.join(',')})",
   }
   postgresql::server::config_entry { 'wal_level':
     ensure => present,
