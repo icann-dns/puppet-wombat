@@ -106,7 +106,7 @@ class wombat::datastore (
     ensure => stdlib::ensure(!$standby, 'service'),
     enable => true,
   }
-  # TODO: This shuold be in the next release
+  # TODO: This should be in the next release
   $override_content = @("CONTENT")
     [Service]
     ExecStart=
