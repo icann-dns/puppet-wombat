@@ -109,6 +109,8 @@ wombat::datastore::packages:
 - python3-psycopg2
 - python3-yaml
 - wombat-import
+- wombat-import-mirror
+- wombat-rssac-notify
 wombat::datastore::pcap_expiration: 7
 wombat::datastore::primary::ipv4_address: 192.0.2.0/24
 wombat::datastore::primary::ipv6_address: 2001:db8::0/48
@@ -142,5 +144,3 @@ wombat::rssac_report::report: all
 wombat::rssac_report::report_file_prefix: l-root
 wombat::rssac_report::report_server_name: l.root-servers.net
 wombat::rssac_report::server: IMRS
-wombat::rssacd::packages:
-- wombat-rssac-notify

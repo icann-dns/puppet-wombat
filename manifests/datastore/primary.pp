@@ -34,7 +34,6 @@ class wombat::datastore::primary (
 ) {
   assert_private()
   include wombat::datastore
-  include wombat::rssacd
 
   $archive_dir = $wombat::datastore::archive_dir
 
