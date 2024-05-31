@@ -8,3 +8,5 @@ fixtures:
      postgresql: "puppetlabs/postgresql"
      concat: "puppetlabs/concat"
      cron_core: "puppetlabs/cron_core"
+  repositories:
+    systemd: 'https://github.com/icann-dns/puppet-systemd.git'

@@ -8,18 +8,20 @@
 # @param pcap_expiration specifies a data aging in days for files keep
 # @param cbor_process_cron specifies the frequency for the cfor file detection and file queuing
 # @param services array of services to process
+# @param mirror_filters A list of filters for the import mirror
 # @param wombat_filter_file (optional) source file for wombat filter
 #
 class wombat::datastore (
-  Array[String[1]]                $packages,
-  Stdlib::Unixpath                $archive_dir,
-  Boolean                         $standby,
-  Boolean                         $enable_rotate,
-  Integer[1,400]                  $cbor_expiration,
-  Integer[1,400]                  $pcap_expiration,
-  Integer[1,15]                   $cbor_process_cron,
-  Array[String[1]]                $services,
-  Optional[String[1]]             $wombat_filter_file,
+  Array[String[1]]    $packages,
+  Stdlib::Unixpath    $archive_dir,
+  Boolean             $standby,
+  Boolean             $enable_rotate,
+  Integer[1,400]      $cbor_expiration,
+  Integer[1,400]      $pcap_expiration,
+  Integer[1,15]       $cbor_process_cron,
+  Array[String[1]]    $services,
+  Array[String[1]]    $mirror_filters     = [],
+  Optional[String[1]] $wombat_filter_file = undef,
 ) {
   include wombat::config
   include postgresql::server
@@ -41,7 +43,7 @@ class wombat::datastore (
   )
   if $wombat_filter_file {
     file { "${wombat::config::data_path}/wombat.filter":
-      ensure  => present,
+      ensure  => file,
       owner   => $wombat::config::data_user,
       group   => $wombat::config::data_user,
       source  => $wombat_filter_file,
@@ -59,44 +61,68 @@ class wombat::datastore (
     owner  => $postgresql::server::user,
     group  => $postgresql::server::group,
   }
-  file {'/usr/local/bin/datastore_rotate':
-    ensure  => present,
+  file { '/usr/local/bin/datastore_rotate':
+    ensure  => file,
     owner   => root,
     mode    => '0755',
     content => template('wombat/bin/datastore_rotate.erb');
   }
-  cron {'datastore_rotate':
+  cron { 'datastore_rotate':
     ensure  => $ensure,
     command => '/usr/bin/flock -n /var/lock/rotate.lock /usr/local/bin/datastore_rotate',
     user    => root,
     minute  => '*/5',
     require => File['/usr/local/bin/datastore_rotate'];
   }
-  cron {'wombat queue manager':
+  cron { 'wombat queue manager':
     command     => '/usr/bin/wombat-import -s incoming -q -l 4',
     user        => $wombat::config::user,
     minute      => "*/${cbor_process_cron}",
     environment => 'MAILTO=""',
   }
-  file {'/etc/systemd/system/gearman-job-server.d':
+  file { '/etc/systemd/system/gearman-job-server.d':
     ensure => directory,
   }
-  file {'/etc/systemd/system/gearman-job-server.d/wombat.conf':
+  file { '/etc/systemd/system/gearman-job-server.d/wombat.conf':
     ensure  => file,
     content => "[Service]\nExecStartPost=/usr/bin/wombat-import -s pending",
     require => Package[$packages],
   }
-  service {'gearman-job-server':
+  service { 'gearman-job-server':
     ensure  => running,
     enable  => true,
     require => File[
-        '/etc/systemd/system/gearman-job-server.d/wombat.conf',
-        "${wombat::config::conf_dir}/wombat.cfg",
+      '/etc/systemd/system/gearman-job-server.d/wombat.conf',
+      "${wombat::config::conf_dir}/wombat.cfg",
     ],
   }
   if $standby {
     include wombat::datastore::standby
   } else {
     include wombat::datastore::primary
+  }
+  # only start on the primary
+  service { 'wombat-rssac':
+    ensure => stdlib::ensure(!$standby, 'service'),
+    enable => true,
+  }
+  # TODO: This shuold be in the next release
+  $override_content = @("CONTENT")
+    [Service]
+    ExecStart=
+    ExecStart=/usr/bin/wombat-import-mirror /opt/volume1/outgoing_staging ${mirror_filters.join(' ')}
+    User=
+    User=pcapture
+    [Unit]
+    Requires=opt-volume1.mount
+    After=opt-volume1.mount
+    | CONTENT
+  systemd::dropin_file { 'wombat.conf':
+    unit    => 'wombat-import-mirror.service',
+    content => $override_content,
+  }
+  service { 'wombat-import-mirror':
+    ensure  => 'running',
+    require => Systemd::Dropin_file['wombat.conf'],
   }
 }
