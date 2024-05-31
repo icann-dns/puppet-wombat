@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 2.0.0
+* Manage the wombat-import-mirror service
+
 ## Release 1.9.0
 * Add support for postgres12
 * fix lint and spec issues
