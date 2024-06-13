@@ -107,15 +107,20 @@ class wombat::datastore (
     enable => true,
   }
   # TODO: This should be in the next release
+  $unit = ($facts['networking']['hostname'] == 'dev').bool2str('',
+    @(UNITTXT)
+      [Unit]
+      Requires=opt-volume1.mount
+      After=opt-volume1.mount
+      | UNITTXT
+  )
   $override_content = @("CONTENT")
     [Service]
     ExecStart=
     ExecStart=/usr/bin/wombat-import-mirror /opt/volume1/outgoing_staging ${mirror_filters.join(' ')}
     User=
     User=pcapture
-    [Unit]
-    Requires=opt-volume1.mount
-    After=opt-volume1.mount
+    ${unit}
     | CONTENT
   systemd::dropin_file { 'wombat.conf':
     unit    => 'wombat-import-mirror.service',
