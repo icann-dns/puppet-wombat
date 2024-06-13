@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 2.0.1
+* only depend on opt-volume1 in production
+
 ## Release 2.0.0
 * Manage the wombat-import-mirror service
 
