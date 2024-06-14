@@ -45,7 +45,8 @@ class wombat::datastore::standby (
       value  => $conninfo,
     }
     file { '/var/lib/postgresql/12/main/standby.signal':
-      ensure => file,
+      ensure  => file,
+      require => Package['postgresql-server'],
     }
   }
 }
