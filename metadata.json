@@ -1,6 +1,6 @@
 {
   "name": "icann-wombat",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "john.bond@icann.org",
   "summary": "module to manage wombat system",
   "license": "Apache-2.0",

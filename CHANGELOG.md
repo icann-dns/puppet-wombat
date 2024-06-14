@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 2.0.2
+* Ensure postgress is installed before creating files
+
 ## Release 2.0.1
 * only depend on opt-volume1 in production
 
