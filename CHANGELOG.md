@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 2.1.0
+* use hostname for the app name in postgres10
+
 ## Release 2.0.2
 * Ensure postgress is installed before creating files
 
