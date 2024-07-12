@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 2.1.1
+* Fix clean up script to correctly quote name parameter
+
 ## Release 2.1.0
 * use hostname for the app name in postgres10
 
