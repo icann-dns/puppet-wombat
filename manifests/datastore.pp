@@ -4,6 +4,7 @@
 # @param archive_dir location of archive directory
 # @param standby if this system is a standby or primary DB
 # @param enable_rotate enables the file rotation and expiration of files
+# @param enable_mirror Enable to wombat-import-mirror
 # @param cbor_expiration specifies a data aging in days for files keep
 # @param pcap_expiration specifies a data aging in days for files keep
 # @param cbor_process_cron specifies the frequency for the cfor file detection and file queuing
@@ -16,6 +17,7 @@ class wombat::datastore (
   Stdlib::Unixpath    $archive_dir,
   Boolean             $standby,
   Boolean             $enable_rotate,
+  Boolean             $enable_mirror      = true,
   Integer[1,400]      $cbor_expiration,
   Integer[1,400]      $pcap_expiration,
   Integer[1,15]       $cbor_process_cron,
@@ -127,7 +129,8 @@ class wombat::datastore (
     content => $override_content,
   }
   service { 'wombat-import-mirror':
-    ensure  => 'running',
+    ensure  => stdlib::ensure($enable_mirror, 'service'),
+    enable  => $enable_mirror,
     require => Systemd::Dropin_file['wombat.conf'],
   }
 }
