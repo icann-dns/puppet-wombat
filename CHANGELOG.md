@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 2.2.0
+* Add enable\_mirror parameter
+
 ## Release 2.1.1
 * Fix clean up script to correctly quote name parameter
 
