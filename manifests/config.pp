@@ -57,40 +57,25 @@ class wombat::config (
   String[1]                       $user,
   String[1]                       $data_user,
 ) {
-  file {$conf_dir:
+  file { $conf_dir:
     ensure => directory,
   }
-  if $facts['domain'] == 'datastore.dns.icann.org' {
-    file {"${conf_dir}/wombat.cfg":
-      ensure  => file,
-      owner   => root,
-      group   => root,
-      mode    => '0644',
-      content => template('wombat/etc/wombat/wombat.cfg.erb'),
-      notify  => Service['gearman-job-server'],
-    }
-    file {"${conf_dir}/private.cfg":
-      ensure  => file,
+  $notify = $facts['networking']['domain'] == 'datastore.dns.icann.org' ? {
+    true    => Service['gearman-job-server'],
+    default => undef,
+  }
+  file {
+    default:
+      ensure => file,
+      owner  => root,
+      group  => root,
+      mode   => '0644',
+      notify => $notify;
+    "${conf_dir}/wombat.cfg":
+      content => template('wombat/etc/wombat/wombat.cfg.erb');
+    "${conf_dir}/private.cfg":
       owner   => $user,
-      group   => root,
       mode    => '0600',
-      content => template('wombat/etc/wombat/private.cfg.erb'),
-      notify  => Service['gearman-job-server'],
-    }
-  } else {
-    file {"${conf_dir}/wombat.cfg":
-      ensure  => file,
-      owner   => root,
-      group   => root,
-      mode    => '0644',
-      content => template('wombat/etc/wombat/wombat.cfg.erb'),
-    }
-    file {"${conf_dir}/private.cfg":
-      ensure  => file,
-      owner   => $user,
-      group   => root,
-      mode    => '0600',
-      content => template('wombat/etc/wombat/private.cfg.erb'),
-    }
+      content => template('wombat/etc/wombat/private.cfg.erb');
   }
 }

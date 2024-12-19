@@ -31,17 +31,17 @@ class wombat::cluster (
 ) {
   ensure_packages($packages)
   include wombat::config
-  file {$odbc_file:
+  file { $odbc_file:
     ensure  => file,
     owner   => $owner,
     mode    => '0600',
     content => template('wombat/etc/odbc.ini.erb'),
   }
-  file {$odbc_logdir:
+  file { $odbc_logdir:
     ensure => directory,
     owner  => $owner,
   }
-  ini_setting {'set log file':
+  ini_setting { 'set log file':
     ensure            => present,
     path              => $odbcinst_file,
     section           => 'PostgreSQL Unicode',
@@ -50,7 +50,7 @@ class wombat::cluster (
     value             => $odbc_logdir,
   }
   if $schema_update {
-    exec {"/usr/bin/wombat-clickhouse-update ${schema_dir}":
+    exec { "/usr/bin/wombat-clickhouse-update ${schema_dir}":
       unless => "/usr/bin/wombat-clickhouse-update -r ${schema_dir}",
     }
   }

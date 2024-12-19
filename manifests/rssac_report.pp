@@ -1,4 +1,4 @@
-# @summary installs the required files for the rssac publishing 
+# @summary installs the required files for the rssac publishing
 #
 # @param packages packages to install
 # @param report type of report to perform
@@ -15,19 +15,24 @@ class wombat::rssac_report (
 ) {
   ensure_packages($packages)
   include wombat::config
-  $_directories = [ $::wombat::config::rssac_outdir ]
+  $_directories = [$wombat::config::rssac_outdir]
   ensure_resource(
     'file', $_directories, { 'ensure' => 'directory', owner => $wombat::config::user, mode => '0755' }
   )
-  cron {'wombat-rssac-reports-yaml':
-    command => "/usr/bin/wombat-rssac-reports --no-plots --output-dir ${::wombat::config::rssac_outdir} --report ${report} --server ${server} --report-file-prefix ${report_file_prefix} --report-server-name ${report_server_name}",
+  $base_command = @("EOF"/L)
+    /usr/bin/wombat-rssac-reports --output-dir ${wombat::config::rssac_outdir} \
+      --report ${report} --server ${server} --report-file-prefix ${report_file_prefix} \
+      --report-server-name ${report_server_name}
+  EOF
+  cron { 'wombat-rssac-reports-yaml':
+    command => "${base_command} --no-plots",
     user    => $wombat::config::user,
     minute  => '0',
     hour    => '1',
     require => Package[$packages],
   }
-  cron {'wombat-rssac-reports-plots':
-    command => "/usr/bin/wombat-rssac-reports --no-yaml --output-dir ${::wombat::config::rssac_outdir} --report ${report} --server ${server} --report-file-prefix ${report_file_prefix} --report-server-name ${report_server_name}",
+  cron { 'wombat-rssac-reports-plots':
+    command => "${base_command} --no-yaml",
     user    => $wombat::config::user,
     minute  => '30',
     hour    => '1',

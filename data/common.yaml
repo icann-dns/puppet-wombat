@@ -97,8 +97,6 @@ wombat::config::rssac_url: http://localhost
 wombat::config::rssac_zone: .
 wombat::config::user: wombat
 wombat::datastore::archive_dir: /var/pg_wal
-wombat::datastore::cbor_expiration: 365
-wombat::datastore::cbor_process_cron: 5
 wombat::datastore::enable_rotate: true
 wombat::datastore::packages:
 - clickhouse-client
@@ -111,7 +109,6 @@ wombat::datastore::packages:
 - wombat-import
 - wombat-import-mirror
 - wombat-rssac-notify
-wombat::datastore::pcap_expiration: 7
 wombat::datastore::primary::ipv4_address: 192.0.2.0/24
 wombat::datastore::primary::ipv6_address: 2001:db8::0/48
 wombat::datastore::primary::m_min_data_age: 365
@@ -123,8 +120,6 @@ wombat::datastore::primary::schema_dir: /usr/share/wombat-server/sql/postgres/dd
 wombat::datastore::primary::schema_update: true
 wombat::datastore::primary::synchronous_commit: 'on'
 wombat::datastore::primary::threshold: 85
-wombat::datastore::services:
-- IMRS
 wombat::datastore::standby: false
 wombat::datastore::standby::db_host: localhost
 wombat::datastore::standby::db_hostaddr:
