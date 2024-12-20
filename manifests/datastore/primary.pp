@@ -11,6 +11,7 @@
 # @param m_min_data_age integer number of days of aggregation data to be retained for 5m aggregation
 # @param threshold integer set disk usage percentage threshold
 # @param nodes_update a boolean allow puppet to perform a nodes update, if available
+# @param apps an array of apps to be used for synchronous standby names
 #
 class wombat::datastore::primary (
   Variant[

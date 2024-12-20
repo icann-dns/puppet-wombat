@@ -16,13 +16,13 @@ class wombat::compactor::uploads (
 ) {
   include file_upload
   $destination_path = defined('$::node_short_name') ? {
-    true    => "${destination_base_path}/${service}/${::node_short_name}/incoming",
+    true    => "${destination_base_path}/${service}/${::node_short_name}/incoming",  # lint:ignore:top_scope_facts
     default => "${destination_base_path}/${service}/${facts['networking']['hostname']}/incoming",
   }
   if $minute_frequency {
     $_minute_frequency = $minute_frequency
   } else {
-    $_minute_frequency = [ fqdn_rand(30), fqdn_rand(30) + 30 ]
+    $_minute_frequency = [fqdn_rand(30), fqdn_rand(30) + 30]
   }
   $uploads.each |String $name, Hash $config| {
     file_upload::upload { $name:
