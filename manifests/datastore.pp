@@ -10,7 +10,7 @@
 # @param cbor_process_cron specifies the frequency for the cfor file detection and file queuing
 # @param services array of services to process
 # @param mirror_filters A list of filters for the import mirror
-# @param wombat_filter_file (optional) source file for wombat filter
+# @param wombat_filter_file source file for wombat filter
 #
 class wombat::datastore (
   Array[String[1]]    $packages,
