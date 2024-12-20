@@ -1022,4 +1022,3 @@ Synchronous commit mode
 
 Alias of `Enum['on', 'remote_apply', 'remote_write']`
 
-REFERENCE.
