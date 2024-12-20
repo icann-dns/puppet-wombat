@@ -834,7 +834,7 @@ a boolean allow puppet to perform a nodes update, if available
 
 Data type: `Array[String]`
 
-
+an array of apps to be used for synchronous standby names
 
 Default value: `['lax']`
 
