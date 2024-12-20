@@ -7,23 +7,23 @@
 # @param report_server_name service FQDN
 #
 class wombat::rssac_report (
-  Array[String[1]]                $packages,
-  String[1]                       $report,
-  String[1]                       $server,
-  String[1]                       $report_file_prefix,
-  Stdlib::Host                    $report_server_name,
+  Array[String[1]] $packages,
+  String[1]        $report,
+  String[1]        $server,
+  String[1]        $report_file_prefix,
+  Stdlib::Host     $report_server_name,
 ) {
   ensure_packages($packages)
   include wombat::config
   $_directories = [$wombat::config::rssac_outdir]
-  ensure_resource(
-    'file', $_directories, { 'ensure' => 'directory', owner => $wombat::config::user, mode => '0755' }
-  )
-  $base_command = @("EOF"/L)
+  $base_command = @("COMMAND"/L)
     /usr/bin/wombat-rssac-reports --output-dir ${wombat::config::rssac_outdir} \
       --report ${report} --server ${server} --report-file-prefix ${report_file_prefix} \
       --report-server-name ${report_server_name}
-  EOF
+    | COMMAND
+  ensure_resource(
+    'file', $_directories, { 'ensure' => 'directory', owner => $wombat::config::user, mode => '0755' }
+  )
   cron { 'wombat-rssac-reports-yaml':
     command => "${base_command} --no-plots",
     user    => $wombat::config::user,
