@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'wombat::cluster' do
@@ -14,127 +16,162 @@ describe 'wombat::cluster' do
 
       describe 'check default config' do
         it { is_expected.to compile.with_all_deps }
+
         it do
-          [
-            'unixodbc',
-            'odbcinst',
-            'odbc-postgresql',
-            'clickhouse-client',
-            'wombat-clickhouse-server',
+          %w[
+            unixodbc
+            odbcinst
+            odbc-postgresql
+            clickhouse-client
+            wombat-clickhouse-server
           ].each do |package|
             is_expected.to contain_package(package)
           end
         end
+
         it do
           is_expected.to contain_file(
-            '/etc/odbc.ini',
+            '/etc/odbc.ini'
           ).with_ensure('file').with_content(
-            %r{Database\s+=\s+wombat},
+            %r{Database\s+=\s+wombat}
           ).with_content(
-            %r{Servername\s+=\s+localhost},
+            %r{Servername\s+=\s+localhost}
           ).with_content(
-            %r{UserName\s+=\s+wombat},
+            %r{UserName\s+=\s+wombat}
           ).with_content(
-            %r{Password\s+=\s+wombat},
+            %r{Password\s+=\s+wombat}
           ).with_content(
-            %r{Port\s+=\s+5432},
+            %r{Port\s+=\s+5432}
           )
         end
       end
+
       describe 'Change Defaults' do
         context 'packages' do
-          before(:each) { params.merge!(packages: ['foobar', 'python3-pip']) }
+          before { params.merge!(packages: %w[foobar python3-pip]) }
+
           it { is_expected.to compile }
           it { is_expected.to contain_package('foobar') }
         end
+
         context 'db_host' do
-          before(:each) { params.merge!(db_host: 'foo.bar') }
+          before { params.merge!(db_host: 'foo.bar') }
+
           it { is_expected.to compile }
+
           it do
             is_expected.to contain_file(
-              '/etc/odbc.ini',
+              '/etc/odbc.ini'
             ).with_ensure('file').with_content(
-              %r{Servername\s+=\s+foo.bar},
+              %r{Servername\s+=\s+foo.bar}
             )
           end
         end
+
         context 'db_name' do
-          before(:each) { params.merge!(db_name: 'foobar') }
+          before { params.merge!(db_name: 'foobar') }
+
           it { is_expected.to compile }
+
           it do
             is_expected.to contain_file(
-              '/etc/odbc.ini',
+              '/etc/odbc.ini'
             ).with_ensure('file').with_content(
-              %r{Database\s+=\s+foobar},
+              %r{Database\s+=\s+foobar}
             )
           end
         end
+
         context 'db_username' do
-          before(:each) { params.merge!(db_username: 'foobar') }
+          before { params.merge!(db_username: 'foobar') }
+
           it { is_expected.to compile }
+
           it do
             is_expected.to contain_file(
-              '/etc/odbc.ini',
+              '/etc/odbc.ini'
             ).with_ensure('file').with_content(
-              %r{UserName\s+=\s+foobar},
+              %r{UserName\s+=\s+foobar}
             )
           end
         end
+
         context 'db_password' do
-          before(:each) { params.merge!(db_password: 'foobar') }
+          before { params.merge!(db_password: 'foobar') }
+
           it { is_expected.to compile }
+
           it do
             is_expected.to contain_file(
-              '/etc/odbc.ini',
+              '/etc/odbc.ini'
             ).with_ensure('file').with_content(
-              %r{Password\s+=\s+foobar},
+              %r{Password\s+=\s+foobar}
             )
           end
         end
+
         context 'db_port' do
-          before(:each) { params.merge!(db_port: 42) }
+          before { params.merge!(db_port: 42) }
+
           it { is_expected.to compile }
+
           it do
             is_expected.to contain_file(
-              '/etc/odbc.ini',
+              '/etc/odbc.ini'
             ).with_ensure('file').with_content(
-              %r{Port\s+=\s+42},
+              %r{Port\s+=\s+42}
             )
           end
         end
+
         context 'odbc_file' do
-          before(:each) { params.merge!(odbc_file: '/foo/bar') }
+          before { params.merge!(odbc_file: '/foo/bar') }
+
           it { is_expected.to compile }
           it { is_expected.to contain_file('/foo/bar').with_ensure('file') }
         end
       end
+
       describe 'check bad type' do
         context 'packages' do
-          before(:each) { params.merge!(packages: true) }
+          before { params.merge!(packages: true) }
+
           it { is_expected.to raise_error(Puppet::Error) }
         end
+
         context 'db_host' do
-          before(:each) { params.merge!(db_host: true) }
+          before { params.merge!(db_host: true) }
+
           it { is_expected.to raise_error(Puppet::Error) }
         end
+
         context 'db_name' do
-          before(:each) { params.merge!(db_name: true) }
+          before { params.merge!(db_name: true) }
+
           it { is_expected.to raise_error(Puppet::Error) }
         end
+
         context 'db_username' do
-          before(:each) { params.merge!(db_username: true) }
+          before { params.merge!(db_username: true) }
+
           it { is_expected.to raise_error(Puppet::Error) }
         end
+
         context 'db_password' do
-          before(:each) { params.merge!(db_password: true) }
+          before { params.merge!(db_password: true) }
+
           it { is_expected.to raise_error(Puppet::Error) }
         end
+
         context 'db_port' do
-          before(:each) { params.merge!(db_port: true) }
+          before { params.merge!(db_port: true) }
+
           it { is_expected.to raise_error(Puppet::Error) }
         end
+
         context 'odbc_file' do
-          before(:each) { params.merge!(odbc_file: true) }
+          before { params.merge!(odbc_file: true) }
+
           it { is_expected.to raise_error(Puppet::Error) }
         end
       end

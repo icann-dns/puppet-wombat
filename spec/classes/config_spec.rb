@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'wombat::datastore' do
@@ -14,34 +16,37 @@ describe 'wombat::datastore' do
 
       describe 'check default config' do
         it { is_expected.to compile.with_all_deps }
+
         it do
-          [
-            'clickhouse-client',
-            'wombat-import',
-            'python3-psycopg2',
-            'python3-gear',
-            'dns-stats-inspector',
+          %w[
+            clickhouse-client
+            wombat-import
+            python3-psycopg2
+            python3-gear
+            dns-stats-inspector
           ].each do |package|
             is_expected.to contain_package(package)
           end
         end
+
         it { is_expected.to contain_file('/etc/wombat').with_ensure('directory') }
         it { is_expected.to contain_file('/var/pg_wal').with_ensure('directory') }
+
         it do
           is_expected.to contain_file(
-            '/etc/wombat/wombat.cfg',
+            '/etc/wombat/wombat.cfg'
           ).with_ensure('file').with_content(
-            %r{path=/srv/wombat},
+            %r{path=/srv/wombat}
           ).with_content(
-            %r{incoming_dir_pattern=\*/\*/incoming},
+            %r{incoming_dir_pattern=\*/\*/incoming}
           ).with_content(
-            %r{reload_dir_pattern=\*/\*/cbor},
+            %r{reload_dir_pattern=\*/\*/cbor}
           ).with_content(
-            %r{pcap_dir_pattern=\*/\*/pcap},
+            %r{pcap_dir_pattern=\*/\*/pcap}
           ).with_content(
-            %r{database=wombat},
+            %r{database=wombat}
           ).with_content(
-            %r{user=wombat},
+            %r{user=wombat}
           ).with_content(
             %r{\[clickhouse\]\n
             servers=localhost\n
@@ -49,15 +54,15 @@ describe 'wombat::datastore' do
             import-server=localhost\n
             node-shard-default=auto\n
             user=wombat\n
-            }x,
+            }x
           ).with_content(
-            %r{keys=gear,root},
+            %r{keys=gear,root}
           ).with_content(
             %r{
             \[logger_root\]\n
             level=INFO\n
             handlers=syslog\n
-            }x,
+            }x
           ).with_content(
             %r{
             \[logger_gear\]\n
@@ -65,13 +70,15 @@ describe 'wombat::datastore' do
             qualname=gear\n
             propagate=0\n
             handlers=syslog\n
-            }x,
+            }x
           )
         end
       end
+
       describe 'Change Defaults' do
         context 'packages' do
-          before(:each) { params.merge!(packages: ['foobar']) }
+          before { params.merge!(packages: ['foobar']) }
+
           it { is_expected.to compile }
           it { is_expected.to contain_package('foobar') }
         end
