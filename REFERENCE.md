@@ -883,24 +883,14 @@ installs the required configuration files for grafana
 
 The following parameters are available in the `wombat::grafana` class:
 
-* [`basic_auth`](#-wombat--grafana--basic_auth)
-* [`basic_auth_user`](#-wombat--grafana--basic_auth_user)
 * [`database`](#-wombat--grafana--database)
+* [`uid`](#-wombat--grafana--uid)
 * [`wombat_cluster_protocol`](#-wombat--grafana--wombat_cluster_protocol)
 * [`wombat_cluster_host`](#-wombat--grafana--wombat_cluster_host)
 * [`wombat_cluster_port`](#-wombat--grafana--wombat_cluster_port)
-
-##### <a name="-wombat--grafana--basic_auth"></a>`basic_auth`
-
-Data type: `Boolean`
-
-use grafana basicauth default to false
-
-##### <a name="-wombat--grafana--basic_auth_user"></a>`basic_auth_user`
-
-Data type: `Optional[String[1]]`
-
-username to use for basicauth
+* [`basic_auth`](#-wombat--grafana--basic_auth)
+* [`basic_auth_user`](#-wombat--grafana--basic_auth_user)
+* [`basic_auth_pass`](#-wombat--grafana--basic_auth_pass)
 
 ##### <a name="-wombat--grafana--database"></a>`database`
 
@@ -908,11 +898,23 @@ Data type: `String[1]`
 
 clickhouse database to use
 
+Default value: `'wombat'`
+
+##### <a name="-wombat--grafana--uid"></a>`uid`
+
+Data type: `String[1]`
+
+the uid to use to connect to clickhouse
+
+Default value: `'wombat_clickhouse'`
+
 ##### <a name="-wombat--grafana--wombat_cluster_protocol"></a>`wombat_cluster_protocol`
 
 Data type: `String[1]`
 
 setup the clickhouse cluster to connection http or https
+
+Default value: `'http'`
 
 ##### <a name="-wombat--grafana--wombat_cluster_host"></a>`wombat_cluster_host`
 
@@ -920,11 +922,39 @@ Data type: `Stdlib::Host`
 
 setup the host of the clickhouse cluster to query
 
+Default value: `'localhost'`
+
 ##### <a name="-wombat--grafana--wombat_cluster_port"></a>`wombat_cluster_port`
 
-Data type: `Integer[1]`
+Data type: `Stdlib::Port`
 
 setup the TCP port for the clickhouse cluster to query
+
+Default value: `8123`
+
+##### <a name="-wombat--grafana--basic_auth"></a>`basic_auth`
+
+Data type: `Boolean`
+
+use grafana basicauth default to false
+
+Default value: `false`
+
+##### <a name="-wombat--grafana--basic_auth_user"></a>`basic_auth_user`
+
+Data type: `Optional[String[1]]`
+
+username to use for basicauth
+
+Default value: `undef`
+
+##### <a name="-wombat--grafana--basic_auth_pass"></a>`basic_auth_pass`
+
+Data type: `Optional[String[1]]`
+
+password to use for basicauth
+
+Default value: `undef`
 
 ### <a name="wombat--rssac_report"></a>`wombat::rssac_report`
 

@@ -6,7 +6,8 @@
 # @param wombat_cluster_host setup the host of the clickhouse cluster to query
 # @param wombat_cluster_port setup the TCP port for the clickhouse cluster to query
 # @param basic_auth use grafana basicauth default to false
-# @param basic_auth_pass username to use for basicauth
+# @param basic_auth_user username to use for basicauth
+# @param basic_auth_pass password to use for basicauth
 #
 class wombat::grafana (
   String[1]           $database                = 'wombat',
@@ -38,8 +39,8 @@ class wombat::grafana (
         'addCorsHeader'   => false,
         'usePOST'         => true,
         'defaultDatabase' => $database,
-      }
-    ]
+      },
+    ],
   }
 
   file { '/etc/grafana/provisioning/datasources/wombat.yml':
@@ -47,7 +48,7 @@ class wombat::grafana (
     owner   => root,
     group   => grafana,
     mode    => '0640',
-    content => $datasources.to_yaml(),
+    content => $datasource.to_yaml(),
     notify  => Service['grafana-server'],
     require => Package['grafana'],
   }
