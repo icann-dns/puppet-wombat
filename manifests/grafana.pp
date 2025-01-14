@@ -12,11 +12,11 @@ class wombat::grafana (
   String[1]           $database                = 'wombat',
   String[1]           $uid                     = 'wombat_clickhouse',
   String[1]           $wombat_cluster_protocol = 'http',
-  Stdlib::Host        $wombat_cluster_host     = 'localhost',,
-  Stdlib::Port        $wombat_cluster_port     = 8123,,
-  Boolean             $basic_auth              = false,,
-  Optional[String[1]] $basic_auth_user         = undef,,
-  Optional[String[1]] $basic_auth_pass         = undef,,
+  Stdlib::Host        $wombat_cluster_host     = 'localhost',
+  Stdlib::Port        $wombat_cluster_port     = 8123,
+  Boolean             $basic_auth              = false,
+  Optional[String[1]] $basic_auth_user         = undef,
+  Optional[String[1]] $basic_auth_pass         = undef,
 ) {
   include grafana
   $url = "${wombat_cluster_protocol}://${wombat_cluster_host}:${wombat_cluster_port}"
