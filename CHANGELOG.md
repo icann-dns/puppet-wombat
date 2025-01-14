@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 2.3.0
+* Add uid to grafana datasource
+
 ## Release 2.2.0
 * Add enable\_mirror parameter
 
