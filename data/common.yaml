@@ -127,12 +127,6 @@ wombat::datastore::standby::db_hostaddr:
 wombat::datastore::standby::db_password: wombat
 wombat::datastore::standby::db_username: wombat
 wombat::datastore::wombat_filter_file: null
-wombat::grafana::basic_auth: false
-wombat::grafana::basic_auth_user: null
-wombat::grafana::database: wombat
-wombat::grafana::wombat_cluster_host: localhost
-wombat::grafana::wombat_cluster_port: 8123
-wombat::grafana::wombat_cluster_protocol: http
 wombat::rssac_report::packages:
 - wombat-rssac-reports
 wombat::rssac_report::report: all
