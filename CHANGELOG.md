@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 2.3.1
+* fix minor issues
+
 ## Release 2.3.0
 * Add uid to grafana datasource
 
