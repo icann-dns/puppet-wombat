@@ -20,7 +20,7 @@ class wombat::rssac_report (
     /usr/bin/wombat-rssac-reports --output-dir ${wombat::config::rssac_outdir} \
       --report ${report} --server ${server} --report-file-prefix ${report_file_prefix} \
       --report-server-name ${report_server_name}
-    | COMMAND
+    |- COMMAND
   ensure_resource(
     'file', $_directories, { 'ensure' => 'directory', owner => $wombat::config::user, mode => '0755' }
   )
