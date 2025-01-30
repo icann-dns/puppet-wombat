@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 2.3.2
+* trim white space from cron command
+
 ## Release 2.3.1
 * fix minor issues
 
