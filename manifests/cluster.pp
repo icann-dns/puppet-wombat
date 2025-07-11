@@ -29,7 +29,7 @@ class wombat::cluster (
   Stdlib::Unixpath   $schema_dir,
   Boolean            $schema_update,
 ) {
-  ensure_packages($packages)
+  stdlib::ensure_packages($packages)
   include wombat::config
   file { $odbc_file:
     ensure  => file,

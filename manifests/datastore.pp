@@ -33,7 +33,7 @@ class wombat::datastore (
     ["${data}/${service}",]
   }.flatten
   $_directories = [$data,] + $_service_directories
-  ensure_packages($packages)
+  stdlib::ensure_packages($packages)
   ensure_resource(
     'file', $_directories,
     {
