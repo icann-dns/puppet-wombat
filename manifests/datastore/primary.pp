@@ -10,7 +10,6 @@
 # @param r_min_data_age integer number of days of raw data to be retained
 # @param m_min_data_age integer number of days of aggregation data to be retained for 5m aggregation
 # @param threshold integer set disk usage percentage threshold
-# @param nodes_update a boolean allow puppet to perform a nodes update, if available
 # @param apps an array of apps to be used for synchronous standby names
 #
 class wombat::datastore::primary (
@@ -30,7 +29,6 @@ class wombat::datastore::primary (
   Integer                    $r_min_data_age,
   Integer                    $m_min_data_age,
   Integer                    $threshold,
-  Boolean                    $nodes_update,
   Array[String]              $apps = ['lax']  # lax was a previous hardcoded default
 ) {
   assert_private()
@@ -105,21 +103,6 @@ class wombat::datastore::primary (
       require => Postgresql::Server::Db['wombat'],
     }
   }
-  if $nodes_update {
-    file { '/etc/wombat/nodes.csv':
-      source => 'http://files.dns.icann.org/nodes.csv',
-      notify => Exec['wombat-nodes-update'],
-    }
-    exec { 'wombat-nodes-update':
-      command     => '/usr/bin/wombat-nodes-update /etc/wombat/nodes.csv',
-      refreshonly => true,
-      user        => $wombat::config::user,
-    }
-  }
-  file { '/etc/wombat/regions.csv':
-    source => 'puppet:///modules/artifacts/etc/wombat/regions.csv',
-  }
-
   cron { 'wombat-prune-agg-5m':
     ensure  => present,
     command => "/usr/bin/wombat-prune -t ${threshold} -d 5min -a ${m_min_data_age} -s --force",
@@ -155,12 +138,5 @@ class wombat::datastore::primary (
     user    => $wombat::config::user,
     minute  => '0',
     hour    => '*/12',
-  }
-  cron { 'wombat-nodes-update_audit':
-    ensure  => present,
-    command => '/usr/bin/wombat-nodes-update -a --auditfile=/tmp/wombat_audit /etc/wombat/nodes.csv',
-    user    => $wombat::config::user,
-    minute  => '30',
-    hour    => '0',
   }
 }

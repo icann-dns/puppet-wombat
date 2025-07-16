@@ -91,7 +91,7 @@ class wombat::compactor (
   $memory_high = $memory_max -1
 
   $_directories = [$data , $conf_dir]
-  ensure_packages($package, { 'ensure' => 'latest' })
+  stdlib::ensure_packages($package, { 'ensure' => 'latest' })
   ensure_resource(
     'file', $_directories, { 'ensure' => 'directory', mode => '0755' }
   )

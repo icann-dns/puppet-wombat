@@ -13,7 +13,7 @@ class wombat::rssac_report (
   String[1]        $report_file_prefix,
   Stdlib::Host     $report_server_name,
 ) {
-  ensure_packages($packages)
+  stdlib::ensure_packages($packages)
   include wombat::config
   $_directories = [$wombat::config::rssac_outdir]
   $base_command = @("COMMAND"/L)

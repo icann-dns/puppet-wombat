@@ -1,5 +1,9 @@
 # Changelog
 
+## Release 3.0.0
+* move to stdlib 9
+* drop nodes.csv
+
 ## Release 2.3.2
 * trim white space from cron command
 
