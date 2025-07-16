@@ -747,7 +747,6 @@ The following parameters are available in the `wombat::datastore::primary` class
 * [`r_min_data_age`](#-wombat--datastore--primary--r_min_data_age)
 * [`m_min_data_age`](#-wombat--datastore--primary--m_min_data_age)
 * [`threshold`](#-wombat--datastore--primary--threshold)
-* [`nodes_update`](#-wombat--datastore--primary--nodes_update)
 * [`apps`](#-wombat--datastore--primary--apps)
 
 ##### <a name="-wombat--datastore--primary--ipv4_address"></a>`ipv4_address`
@@ -823,12 +822,6 @@ integer number of days of aggregation data to be retained for 5m aggregation
 Data type: `Integer`
 
 integer set disk usage percentage threshold
-
-##### <a name="-wombat--datastore--primary--nodes_update"></a>`nodes_update`
-
-Data type: `Boolean`
-
-a boolean allow puppet to perform a nodes update, if available
 
 ##### <a name="-wombat--datastore--primary--apps"></a>`apps`
 
