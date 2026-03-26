@@ -36,7 +36,7 @@
 * fix lint and spec issues
 
 ## Release 0.4.2
-* Add -q flag to wombat-import cronjob and remove wombat queue manager job 
+* Add -q flag to wombat-import cronjob and remove wombat queue manager job
 
 ## Release 0.4.1
 * Add wombat purge funtion to remove data over 75% of capacity
@@ -90,4 +90,3 @@
 
 ## Release 0.1.0
 * initial release
-
