@@ -1015,7 +1015,7 @@ Struct[{
     ssh_key_source      => Stdlib::Filesource,
     ssh_user            => String[1],
     create_parent       => Boolean,
-}]
+  }]
 ```
 
 ### <a name="Wombat--Listen_interfaces"></a>`Wombat::Listen_interfaces`
@@ -1036,7 +1036,7 @@ Struct[{
     handlers  => String[1],
     qualname  => Optional[String[1]],
     propagate => Optional[Boolean],
-}]
+  }]
 ```
 
 ### <a name="Wombat--Synchronous_commit"></a>`Wombat::Synchronous_commit`
