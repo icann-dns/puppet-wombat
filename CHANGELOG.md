@@ -1,5 +1,8 @@
 # Changelog
 
+## Release 4.0.0
+* Add support for postgress 14
+
 ## Release 3.0.0
 * move to stdlib 9
 * drop nodes.csv
