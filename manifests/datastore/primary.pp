@@ -33,6 +33,7 @@ class wombat::datastore::primary (
 ) {
   assert_private()
   include wombat::datastore
+  $_postgres_version = $wombat::datastore::postgress_version
 
   $archive_dir = $wombat::datastore::archive_dir
 
@@ -64,10 +65,18 @@ class wombat::datastore::primary (
     ensure => $ensure_replicate,
     value  => 'on',
   }
-  postgresql::server::config_entry { 'wal_keep_size':
-    ensure => present,
-    value  => '160MB',
+  if Integer($_postgres_version) > 12 {
+    postgresql::server::config_entry { 'wal_keep_size':
+      ensure => present,
+      value  => '160MB',
+    }
+  } else {
+    postgresql::server::config_entry { 'wal_keep_segments':
+      ensure => present,
+      value  => '10',
+    }
   }
+
   postgresql::server::config_entry { 'synchronous_commit':
     ensure => present,
     value  => $synchronous_commit,
@@ -88,7 +97,7 @@ class wombat::datastore::primary (
   postgresql::server::config_entry { 'primary_conninfo': ensure => absent }
   file { [
       '/etc/postgresql/10/main/recovery.conf',
-      '/var/lib/postgresql/12/main/standby.signal',
+      "/var/lib/postgresql/${_postgres_version}/main/standby.signal",
     ]:
       ensure => absent,
   }

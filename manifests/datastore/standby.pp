@@ -14,6 +14,8 @@ class wombat::datastore::standby (
   include wombat::datastore
 
   $archive_dir = $wombat::datastore::archive_dir
+  $_postgres_version = $wombat::datastore::postgress_version
+
   postgresql::server::config_entry { 'archive_command': ensure => absent }
   postgresql::server::config_entry { 'archive_mode': ensure => absent }
   postgresql::server::config_entry { 'max_wal_senders': ensure => absent }
@@ -44,8 +46,7 @@ class wombat::datastore::standby (
       ensure => 'present',
       value  => $conninfo,
     }
-    # TODO: make version dynamic
-    file { '/var/lib/postgresql/14/main/standby.signal':
+    file { "/var/lib/postgresql/${_postgres_version}/main/standby.signal":
       ensure  => file,
       require => Package['postgresql-server'],
     }
