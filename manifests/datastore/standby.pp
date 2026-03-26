@@ -44,7 +44,8 @@ class wombat::datastore::standby (
       ensure => 'present',
       value  => $conninfo,
     }
-    file { '/var/lib/postgresql/12/main/standby.signal':
+    # TODO: make version dynamic
+    file { '/var/lib/postgresql/14/main/standby.signal':
       ensure  => file,
       require => Package['postgresql-server'],
     }

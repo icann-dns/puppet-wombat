@@ -58,15 +58,15 @@ class wombat::datastore::primary (
   }
   postgresql::server::config_entry { 'archive_command':
     ensure => $ensure_replicate,
-    value  => "test ! -f ${archive_dir}/%f && cp %p ${archive_dir}/%f",
+    value  => "cp -n \"%p\"  ${archive_dir}/%f",
   }
   postgresql::server::config_entry { 'archive_mode':
     ensure => $ensure_replicate,
     value  => 'on',
   }
-  postgresql::server::config_entry { 'wal_keep_segments':
+  postgresql::server::config_entry { 'wal_keep_size':
     ensure => present,
-    value  => '10',
+    value  => '160MB',
   }
   postgresql::server::config_entry { 'synchronous_commit':
     ensure => present,
