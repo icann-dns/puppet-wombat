@@ -27,6 +27,8 @@ class wombat::datastore (
 ) {
   include wombat::config
   include postgresql::server
+  include postgresql::globals
+  $postgress_version = $postgresql::globals::globals_version
 
   $data = $wombat::config::data_path
   $_service_directories = $services.map |String $service| {
