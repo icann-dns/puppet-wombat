@@ -5,9 +5,11 @@
 # @param standby if this system is a standby or primary DB
 # @param enable_rotate enables the file rotation and expiration of files
 # @param enable_mirror Enable to wombat-import-mirror
+# @param enable_prometheus Enable the wombat status exporter for prometheus
 # @param cbor_expiration specifies a data aging in days for files keep
 # @param pcap_expiration specifies a data aging in days for files keep
 # @param cbor_process_cron specifies the frequency for the cfor file detection and file queuing
+# @param textfile_dir specifies the directory for the prometheus textfile exporter
 # @param services array of services to process
 # @param mirror_filters A list of filters for the import mirror
 # @param wombat_filter_file source file for wombat filter
@@ -18,9 +20,11 @@ class wombat::datastore (
   Boolean             $standby,
   Boolean             $enable_rotate,
   Boolean             $enable_mirror      = true,
+  Boolean             $enable_prometheus  = true,
   Integer[1,400]      $cbor_expiration    = 365,
   Integer[1,400]      $pcap_expiration    = 7,
   Integer[1,15]       $cbor_process_cron  = 5,
+  Stdlib::Unixpath    $textfile_dir       = '/var/lib/prometheus/node-exporter',
   Array[String[1]]    $services           = ['IMRS'],
   Array[String[1]]    $mirror_filters     = [],
   Optional[String[1]] $wombat_filter_file = undef,
@@ -29,6 +33,7 @@ class wombat::datastore (
   include postgresql::server
   include postgresql::globals
   $postgress_version = $postgresql::globals::globals_version
+  $output_file = "${textfile_dir}/wombat_status.prom"
 
   $data = $wombat::config::data_path
   $_service_directories = $services.map |String $service| {
@@ -134,5 +139,17 @@ class wombat::datastore (
     ensure  => stdlib::ensure($enable_mirror, 'service'),
     enable  => $enable_mirror,
     require => Systemd::Dropin_file['wombat.conf'],
+  }
+  file { '/usr/local/bin/wombat-status-exporter':
+    ensure => stdlib::ensure($enable_prometheus, 'file'),
+    owner  => root,
+    mode   => '0755',
+    source => 'puppet:///modules/wombat/usr/local/bin/wombat_status_exporter.py',
+  }
+  systemd::timer_wrapper { 'wombat-status-exporter':
+    ensure      => stdlib::ensure($enable_prometheus),
+    command     => "/usr/local/bin/wombat-status-exporter ${output_file}",
+    on_calendar => 'minutely',
+    require     => File['/usr/local/bin/wombat-status-exporter'],
   }
 }
