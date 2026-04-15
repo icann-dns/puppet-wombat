@@ -1,5 +1,8 @@
 # Changelog
 
+## Release v4.1.1
+* Fix bug where prom file descriptions where not comments
+
 ## Release v4.1.0
 * add wombat-status-exporter and toimer to produce node-exporter textfiles dropins
 
