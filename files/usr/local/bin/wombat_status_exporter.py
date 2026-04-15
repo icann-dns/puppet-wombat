@@ -9,18 +9,18 @@ from subprocess import PIPE, CalledProcessError, run
 logger = logging.getLogger(__name__)
 
 HEADER = '''
-HELP wombat_queue_incoming Number of incoming jobs
-TYPE wombat_queue_incoming gauge
-HELP wombat_queue_queued Number of queued jobs
-TYPE wombat_queue_queued gauge
-HELP wombat_queue_running Number of running jobs
-TYPE wombat_queue_running gauge
-HELP wombat_queue_workers Number of workers
-TYPE wombat_queue_workers gauge
-HELP wombat_queue_active Queue active state (1=active)
-TYPE wombat_queue_active gauge
-HELP wombat_import_active Global import state (1=active)
-TYPE wombat_import_active gauge
+# HELP wombat_queue_incoming Number of incoming jobs
+# TYPE wombat_queue_incoming gauge
+# HELP wombat_queue_queued Number of queued jobs
+# TYPE wombat_queue_queued gauge
+# HELP wombat_queue_running Number of running jobs
+# TYPE wombat_queue_running gauge
+# HELP wombat_queue_workers Number of workers
+# TYPE wombat_queue_workers gauge
+# HELP wombat_queue_active Queue active state (1=active)
+# TYPE wombat_queue_active gauge
+# HELP wombat_import_active Global import state (1=active)
+# TYPE wombat_import_active gauge
 '''
 
 
