@@ -1,6 +1,6 @@
 # Changelog
 
-## Release Unreleased
+## Release v4.1.0
 * add wombat-status-exporter and toimer to produce node-exporter textfiles dropins
 
 ## Release 4.0.0
