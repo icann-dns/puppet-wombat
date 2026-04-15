@@ -1,5 +1,8 @@
 # Changelog
 
+## Release Unreleased
+* add wombat-status-exporter and toimer to produce node-exporter textfiles dropins
+
 ## Release 4.0.0
 * Add support for postgress 14
 

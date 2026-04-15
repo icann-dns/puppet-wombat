@@ -642,9 +642,11 @@ The following parameters are available in the `wombat::datastore` class:
 * [`standby`](#-wombat--datastore--standby)
 * [`enable_rotate`](#-wombat--datastore--enable_rotate)
 * [`enable_mirror`](#-wombat--datastore--enable_mirror)
+* [`enable_prometheus`](#-wombat--datastore--enable_prometheus)
 * [`cbor_expiration`](#-wombat--datastore--cbor_expiration)
 * [`pcap_expiration`](#-wombat--datastore--pcap_expiration)
 * [`cbor_process_cron`](#-wombat--datastore--cbor_process_cron)
+* [`textfile_dir`](#-wombat--datastore--textfile_dir)
 * [`services`](#-wombat--datastore--services)
 * [`mirror_filters`](#-wombat--datastore--mirror_filters)
 * [`wombat_filter_file`](#-wombat--datastore--wombat_filter_file)
@@ -681,6 +683,14 @@ Enable to wombat-import-mirror
 
 Default value: `true`
 
+##### <a name="-wombat--datastore--enable_prometheus"></a>`enable_prometheus`
+
+Data type: `Boolean`
+
+Enable the wombat status exporter for prometheus
+
+Default value: `true`
+
 ##### <a name="-wombat--datastore--cbor_expiration"></a>`cbor_expiration`
 
 Data type: `Integer[1,400]`
@@ -704,6 +714,14 @@ Data type: `Integer[1,15]`
 specifies the frequency for the cfor file detection and file queuing
 
 Default value: `5`
+
+##### <a name="-wombat--datastore--textfile_dir"></a>`textfile_dir`
+
+Data type: `Stdlib::Unixpath`
+
+specifies the directory for the prometheus textfile exporter
+
+Default value: `'/var/lib/prometheus/node-exporter'`
 
 ##### <a name="-wombat--datastore--services"></a>`services`
 
