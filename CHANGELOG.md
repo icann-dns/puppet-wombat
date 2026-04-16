@@ -1,5 +1,8 @@
 # Changelog
 
+## Release v4.1.2
+* Also parse wombat-import-details
+
 ## Release v4.1.1
 * Fix bug where prom file descriptions where not comments
 
