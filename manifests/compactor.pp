@@ -34,12 +34,13 @@
 # @param query_timeout query timeout
 # @param skew_timeout skew timeout
 # @param max_compression_threads maximum compression threads
+# @param log_network_stats_json enable log network stats in json format
 # @param compactor_options compactor options
 #
 class wombat::compactor (
   Stdlib::Absolutepath                $data                     = '/opt/pcap',
   Integer                             $disk_usage_watermark     = 70,
-  Integer                             $disk_file_aging          = 30,
+  Integer                             $disk_file_aging          = 60,
   Boolean                             $promiscuous_mode         = false,
   Integer[60,3600]                    $rotation_period          = 300,
   Optional[String]                    $max_output_size          = undef,
@@ -72,6 +73,7 @@ class wombat::compactor (
   Integer[1,5]                        $query_timeout            = 5,
   Integer[0]                          $skew_timeout             = 10,
   Integer[1,10]                       $max_compression_threads  = 2,
+  Boolean                             $log_network_stats_json   = false,
   Optional[String]                    $compactor_options        = undef,
 ) {
   $_listen_interfaces = $listen_interfaces.lest || { $facts['networking']['interfaces'].keys() }
