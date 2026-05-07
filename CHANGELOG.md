@@ -1,5 +1,9 @@
 # Changelog
 
+## Release v5.0.0
+* Add support for stats-json messages
+* introduce new fact to track compactor version
+
 ## Release v4.1.2
 * Also parse wombat-import-details
 
