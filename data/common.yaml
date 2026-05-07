@@ -9,64 +9,21 @@ wombat::cluster::odbc_logdir: /var/log/odbc
 wombat::cluster::odbcinst_file: /etc/odbcinst.ini
 wombat::cluster::owner: clickhouse
 wombat::cluster::packages:
-- unixodbc
-- odbcinst
-- odbc-postgresql
-- clickhouse-client
-- wombat-clickhouse-server
-- libxml2-utils
+  - unixodbc
+  - odbcinst
+  - odbc-postgresql
+  - clickhouse-client
+  - wombat-clickhouse-server
+  - libxml2-utils
 wombat::cluster::schema_dir: /usr/share/wombat-server/sql/clickhouse/ddl
 wombat::cluster::schema_update: true
-wombat::compactor::capture_data:
-- all
-wombat::compactor::compactor_options: null
-wombat::compactor::compression: xz
-wombat::compactor::compression_level: 2
-wombat::compactor::conf_dir: /etc/dns-stats-compactor
-wombat::compactor::data: /opt/pcap
-wombat::compactor::disk_file_aging: 60
-wombat::compactor::disk_usage_watermark: 70
-wombat::compactor::dnstap_socket: null
-wombat::compactor::dnstap_socket_group: root
-wombat::compactor::dnstap_socket_owner: root
-wombat::compactor::dnstap_socket_write: group
-wombat::compactor::enable: true
-wombat::compactor::filter: null
-wombat::compactor::ignored_pcap: true
-wombat::compactor::ip_addresses:
-- '%{facts.networking.ip}'
-wombat::compactor::listen_interfaces: null
-wombat::compactor::log_file_handling: false
-wombat::compactor::log_network_stats_period: 0
-wombat::compactor::max_compression_threads: 2
-wombat::compactor::max_output_size: null
-wombat::compactor::package: dns-stats-compactor
-wombat::compactor::pcap_compression: xz
-wombat::compactor::pcap_compression_level: 2
-wombat::compactor::promiscuous_mode: false
-wombat::compactor::query_timeout: 5
-wombat::compactor::raw_pcap: false
-wombat::compactor::rotation_period: 300
-wombat::compactor::sampling_enable: false
-wombat::compactor::sampling_rate: 10
-wombat::compactor::sampling_threshold: 10
-wombat::compactor::sampling_time: 100
-wombat::compactor::service: dns-stats-compactor
-wombat::compactor::skew_timeout: 10
-wombat::compactor::tools: /usr/local/bin
-wombat::compactor::uploads::bwlimit: 10000
-wombat::compactor::uploads::destination_base_path: /opt/cbor
-wombat::compactor::uploads::minute_frequency: null
-wombat::compactor::uploads::service: IMRS
-wombat::compactor::vlan_id:
-- 0
 wombat::config::anonymisation_passphrase: null
 wombat::config::clickhouse_dbdir: /var/lib/clickhouse/
 wombat::config::clickhouse_import_server: localhost
 wombat::config::clickhouse_node_shard_default: auto
 wombat::config::clickhouse_pass: wombat
 wombat::config::clickhouse_servers:
-- localhost
+  - localhost
 wombat::config::clickhouse_user: wombat
 wombat::config::compression_level: 2
 wombat::config::conf_dir: /etc/wombat
@@ -76,20 +33,20 @@ wombat::config::db_host: null
 wombat::config::db_name: wombat
 wombat::config::db_pass: wombat
 wombat::config::db_user: wombat
-wombat::config::incoming_dir_pattern: '*/*/incoming'
+wombat::config::incoming_dir_pattern: "*/*/incoming"
 wombat::config::loggers:
-    gear:
-        handlers: syslog
-        level: ERROR
-        propagate: false
-        qualname: gear
-    root:
-        handlers: syslog
-        level: INFO
+  gear:
+    handlers: syslog
+    level: ERROR
+    propagate: false
+    qualname: gear
+  root:
+    handlers: syslog
+    level: INFO
 wombat::config::maxmind_license_key: null
 wombat::config::pcap_compress: true
-wombat::config::pcap_dir_pattern: '*/*/pcap'
-wombat::config::reload_dir_pattern: '*/*/cbor'
+wombat::config::pcap_dir_pattern: "*/*/pcap"
+wombat::config::reload_dir_pattern: "*/*/cbor"
 wombat::config::rssac_load_time_threshold: 95
 wombat::config::rssac_outdir: /srv/www
 wombat::config::rssac_server: IMRS
@@ -99,16 +56,16 @@ wombat::config::user: wombat
 wombat::datastore::archive_dir: /var/pg_wal
 wombat::datastore::enable_rotate: true
 wombat::datastore::packages:
-- clickhouse-client
-- dns-stats-inspector
-- gearman-tools
-- gearman-job-server
-- python3-gear
-- python3-psycopg2
-- python3-yaml
-- wombat-import
-- wombat-import-mirror
-- wombat-rssac-notify
+  - clickhouse-client
+  - dns-stats-inspector
+  - gearman-tools
+  - gearman-job-server
+  - python3-gear
+  - python3-psycopg2
+  - python3-yaml
+  - wombat-import
+  - wombat-import-mirror
+  - wombat-rssac-notify
 wombat::datastore::primary::ipv4_address: 192.0.2.0/24
 wombat::datastore::primary::ipv6_address: 2001:db8::0/48
 wombat::datastore::primary::m_min_data_age: 365
@@ -118,17 +75,17 @@ wombat::datastore::primary::replicate: true
 wombat::datastore::primary::roles: {}
 wombat::datastore::primary::schema_dir: /usr/share/wombat-server/sql/postgres/ddl
 wombat::datastore::primary::schema_update: true
-wombat::datastore::primary::synchronous_commit: 'on'
+wombat::datastore::primary::synchronous_commit: "on"
 wombat::datastore::primary::threshold: 85
 wombat::datastore::standby: false
 wombat::datastore::standby::db_host: localhost
 wombat::datastore::standby::db_hostaddr:
-- 127.0.0.1
+  - 127.0.0.1
 wombat::datastore::standby::db_password: wombat
 wombat::datastore::standby::db_username: wombat
 wombat::datastore::wombat_filter_file: null
 wombat::rssac_report::packages:
-- wombat-rssac-reports
+  - wombat-rssac-reports
 wombat::rssac_report::report: all
 wombat::rssac_report::report_file_prefix: l-root
 wombat::rssac_report::report_server_name: l.root-servers.net

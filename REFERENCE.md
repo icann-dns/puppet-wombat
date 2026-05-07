@@ -169,6 +169,7 @@ The following parameters are available in the `wombat::compactor` class:
 * [`query_timeout`](#-wombat--compactor--query_timeout)
 * [`skew_timeout`](#-wombat--compactor--skew_timeout)
 * [`max_compression_threads`](#-wombat--compactor--max_compression_threads)
+* [`log_network_stats_json`](#-wombat--compactor--log_network_stats_json)
 * [`compactor_options`](#-wombat--compactor--compactor_options)
 
 ##### <a name="-wombat--compactor--data"></a>`data`
@@ -177,11 +178,15 @@ Data type: `Stdlib::Absolutepath`
 
 path where data is stored
 
+Default value: `'/opt/pcap'`
+
 ##### <a name="-wombat--compactor--disk_usage_watermark"></a>`disk_usage_watermark`
 
 Data type: `Integer`
 
 percentage of disk usage to trigger compaction
+
+Default value: `70`
 
 ##### <a name="-wombat--compactor--disk_file_aging"></a>`disk_file_aging`
 
@@ -189,11 +194,15 @@ Data type: `Integer`
 
 number of days to keep files
 
+Default value: `60`
+
 ##### <a name="-wombat--compactor--promiscuous_mode"></a>`promiscuous_mode`
 
 Data type: `Boolean`
 
 enable promiscuous mode
+
+Default value: `false`
 
 ##### <a name="-wombat--compactor--rotation_period"></a>`rotation_period`
 
@@ -201,11 +210,15 @@ Data type: `Integer[60,3600]`
 
 period to rotate files
 
+Default value: `300`
+
 ##### <a name="-wombat--compactor--max_output_size"></a>`max_output_size`
 
 Data type: `Optional[String]`
 
 maximum output size
+
+Default value: `undef`
 
 ##### <a name="-wombat--compactor--raw_pcap"></a>`raw_pcap`
 
@@ -213,11 +226,15 @@ Data type: `Boolean`
 
 enable raw pcap
 
+Default value: `false`
+
 ##### <a name="-wombat--compactor--ignored_pcap"></a>`ignored_pcap`
 
 Data type: `Boolean`
 
 enable ignored pcap
+
+Default value: `true`
 
 ##### <a name="-wombat--compactor--capture_data"></a>`capture_data`
 
@@ -225,11 +242,15 @@ Data type: `Array[Wombat::Capture_data]`
 
 array of capture data
 
+Default value: `['all']`
+
 ##### <a name="-wombat--compactor--ip_addresses"></a>`ip_addresses`
 
 Data type: `Array[Stdlib::IP::Address]`
 
 array of ip addresses
+
+Default value: `[$facts['networking']['ip']]`
 
 ##### <a name="-wombat--compactor--listen_interfaces"></a>`listen_interfaces`
 
@@ -237,11 +258,15 @@ Data type: `Optional[Wombat::Listen_interfaces]`
 
 array of listen interfaces
 
+Default value: `undef`
+
 ##### <a name="-wombat--compactor--filter"></a>`filter`
 
 Data type: `Optional[String]`
 
 filter to use
+
+Default value: `undef`
 
 ##### <a name="-wombat--compactor--compression"></a>`compression`
 
@@ -249,11 +274,15 @@ Data type: `ENUM['gzip','xz']`
 
 compression type
 
+Default value: `'xz'`
+
 ##### <a name="-wombat--compactor--compression_level"></a>`compression_level`
 
 Data type: `Integer[0,9]`
 
 compression level
+
+Default value: `2`
 
 ##### <a name="-wombat--compactor--pcap_compression"></a>`pcap_compression`
 
@@ -261,11 +290,15 @@ Data type: `ENUM['gzip','xz']`
 
 pcap compression type
 
+Default value: `'xz'`
+
 ##### <a name="-wombat--compactor--pcap_compression_level"></a>`pcap_compression_level`
 
 Data type: `Integer[0,9]`
 
 pcap compression level
+
+Default value: `2`
 
 ##### <a name="-wombat--compactor--vlan_id"></a>`vlan_id`
 
@@ -273,11 +306,15 @@ Data type: `Array[Integer[0,4096]]`
 
 array of vlan ids
 
+Default value: `[0]`
+
 ##### <a name="-wombat--compactor--dnstap_socket"></a>`dnstap_socket`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 dnstap socket
+
+Default value: `undef`
 
 ##### <a name="-wombat--compactor--dnstap_socket_owner"></a>`dnstap_socket_owner`
 
@@ -285,11 +322,15 @@ Data type: `String`
 
 dnstap socket owner
 
+Default value: `'root'`
+
 ##### <a name="-wombat--compactor--dnstap_socket_group"></a>`dnstap_socket_group`
 
 Data type: `String`
 
 dnstap socket group
+
+Default value: `'root'`
 
 ##### <a name="-wombat--compactor--dnstap_socket_write"></a>`dnstap_socket_write`
 
@@ -297,11 +338,15 @@ Data type: `ENUM['all','user','group']`
 
 dnstap socket write
 
+Default value: `'group'`
+
 ##### <a name="-wombat--compactor--package"></a>`package`
 
 Data type: `String`
 
 package to install
+
+Default value: `'dns-stats-compactor'`
 
 ##### <a name="-wombat--compactor--conf_dir"></a>`conf_dir`
 
@@ -309,11 +354,15 @@ Data type: `Stdlib::Absolutepath`
 
 configuration directory
 
+Default value: `'/etc/dns-stats-compactor'`
+
 ##### <a name="-wombat--compactor--tools"></a>`tools`
 
 Data type: `Stdlib::Absolutepath`
 
 tools directory
+
+Default value: `'/usr/local/bin'`
 
 ##### <a name="-wombat--compactor--service"></a>`service`
 
@@ -321,11 +370,15 @@ Data type: `String`
 
 service name
 
+Default value: `'dns-stats-compactor'`
+
 ##### <a name="-wombat--compactor--enable"></a>`enable`
 
 Data type: `Boolean`
 
 enable the service
+
+Default value: `true`
 
 ##### <a name="-wombat--compactor--log_network_stats_period"></a>`log_network_stats_period`
 
@@ -333,11 +386,15 @@ Data type: `Integer[0,3600]`
 
 period to log network stats
 
+Default value: `0`
+
 ##### <a name="-wombat--compactor--log_file_handling"></a>`log_file_handling`
 
 Data type: `Boolean`
 
 enable log file handling
+
+Default value: `false`
 
 ##### <a name="-wombat--compactor--sampling_enable"></a>`sampling_enable`
 
@@ -345,11 +402,15 @@ Data type: `Boolean`
 
 enable sampling
 
+Default value: `false`
+
 ##### <a name="-wombat--compactor--sampling_threshold"></a>`sampling_threshold`
 
 Data type: `Integer[1,100]`
 
 sampling threshold
+
+Default value: `10`
 
 ##### <a name="-wombat--compactor--sampling_rate"></a>`sampling_rate`
 
@@ -357,11 +418,15 @@ Data type: `Integer[2,1000]`
 
 sampling rate
 
+Default value: `10`
+
 ##### <a name="-wombat--compactor--sampling_time"></a>`sampling_time`
 
 Data type: `Integer[10,3600]`
 
 sampling time
+
+Default value: `100`
 
 ##### <a name="-wombat--compactor--query_timeout"></a>`query_timeout`
 
@@ -369,11 +434,15 @@ Data type: `Integer[1,5]`
 
 query timeout
 
+Default value: `5`
+
 ##### <a name="-wombat--compactor--skew_timeout"></a>`skew_timeout`
 
 Data type: `Integer[0]`
 
 skew timeout
+
+Default value: `10`
 
 ##### <a name="-wombat--compactor--max_compression_threads"></a>`max_compression_threads`
 
@@ -381,11 +450,23 @@ Data type: `Integer[1,10]`
 
 maximum compression threads
 
+Default value: `2`
+
+##### <a name="-wombat--compactor--log_network_stats_json"></a>`log_network_stats_json`
+
+Data type: `Boolean`
+
+enable log network stats in json format
+
+Default value: `false`
+
 ##### <a name="-wombat--compactor--compactor_options"></a>`compactor_options`
 
 Data type: `Optional[String]`
 
 compactor options
+
+Default value: `undef`
 
 ### <a name="wombat--compactor--uploads"></a>`wombat::compactor::uploads`
 

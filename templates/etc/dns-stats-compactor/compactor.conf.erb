@@ -1,4 +1,9 @@
 # Managed by Puppet
+<%-
+  def supported(version)
+    return scope.call_function('versioncmp', [@facts['compactor_version'], version]) >= 0
+  end
+-%>
 # Configuration for DNS-STATS compactor.
 #
 # Commented out items show the default values.
@@ -74,7 +79,7 @@ filter=<%= @filter %>
 <%- elsif @ip_addresses.any? then -%>
 filter=host <%= @ip_addresses.join(' or host ') %>
 <%- end -%>
-  
+
 # Enable promiscuous mode.
 # promiscuous-mode=false
 <%- if @promiscuous_mode then -%>
@@ -84,6 +89,11 @@ promiscuous-mode=true
 # Log basic collection stats to syslog every n seconds. 0 (default) == never.
 # log-network-stats-period=0
 log-network-stats-period=<%= @log_network_stats_period %>
+
+<%- if @log_network_stats_json and supported('1.2.4') then -%>
+# Log basic collection stats to syslog in JSON format. log-network-stats-period must be > 0.
+log-network-stats-json=true
+<%- end -%>
 
 # Log detailed file processing for debugging.
 # log-file-handling=false
